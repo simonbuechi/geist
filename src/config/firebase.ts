@@ -1,0 +1,132 @@
+import { initializeApp, getApps, getApp, type FirebaseApp } from 'firebase/app';
+import { 
+  getAuth, 
+  GoogleAuthProvider, 
+  signInWithPopup, 
+  signOut as fbSignOut, 
+  onAuthStateChanged, 
+  type Auth 
+} from 'firebase/auth';
+import { 
+  getFirestore, 
+  doc, 
+  setDoc, 
+  collection, 
+  getDocs, 
+  type Firestore 
+} from 'firebase/firestore';
+import type { WeekPlan } from '../types';
+
+export interface FirebaseCustomConfig {
+  apiKey?: string;
+  authDomain?: string;
+  projectId?: string;
+  storageBucket?: string;
+  messagingSenderId?: string;
+  appId?: string;
+}
+
+const LOCAL_STORAGE_KEY_FIREBASE = 'kgs_firebase_config';
+
+export function getStoredFirebaseConfig(): FirebaseCustomConfig | null {
+  try {
+    const raw = localStorage.getItem(LOCAL_STORAGE_KEY_FIREBASE);
+    if (raw) return JSON.parse(raw);
+  } catch (e) {
+    console.error('Failed to load custom firebase config', e);
+  }
+  return null;
+}
+
+export function saveStoredFirebaseConfig(config: FirebaseCustomConfig) {
+  try {
+    localStorage.setItem(LOCAL_STORAGE_KEY_FIREBASE, JSON.stringify(config));
+  } catch (e) {
+    console.error('Failed to save firebase config', e);
+  }
+}
+
+export function getDefaultFirebaseConfig(): FirebaseCustomConfig {
+  const custom = getStoredFirebaseConfig();
+  if (custom && custom.apiKey && custom.projectId) {
+    return custom;
+  }
+
+  return {
+    apiKey: import.meta.env.VITE_FIREBASE_API_KEY || 'AIzaSyBKmmRJdolnT2abMN9cLXIn5u1XMiKJzy0',
+    authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || 'geist-8cbce.firebaseapp.com',
+    projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || 'geist-8cbce',
+    storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || 'geist-8cbce.firebasestorage.app',
+    messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || '671968848501',
+    appId: import.meta.env.VITE_FIREBASE_APP_ID || '1:671968848501:web:8fd0ddd1c30c22f02c663c'
+  };
+}
+
+let app: FirebaseApp | null = null;
+let auth: Auth | null = null;
+let db: Firestore | null = null;
+let googleProvider: GoogleAuthProvider | null = null;
+
+export function isFirebaseConfigured(): boolean {
+  const cfg = getDefaultFirebaseConfig();
+  return Boolean(cfg.apiKey && cfg.projectId);
+}
+
+export function initFirebase() {
+  const config = getDefaultFirebaseConfig();
+  if (!config.apiKey || !config.projectId) {
+    return { app: null, auth: null, db: null, googleProvider: null };
+  }
+
+  try {
+    if (!getApps().length) {
+      app = initializeApp(config);
+    } else {
+      app = getApp();
+    }
+    auth = getAuth(app);
+    db = getFirestore(app);
+    googleProvider = new GoogleAuthProvider();
+    googleProvider.setCustomParameters({ prompt: 'select_account' });
+  } catch (err) {
+    console.warn('Firebase initialization notice:', err);
+  }
+
+  return { app, auth, db, googleProvider };
+}
+
+// Initial attempt
+initFirebase();
+
+export { app, auth, db, googleProvider, signInWithPopup, fbSignOut, onAuthStateChanged };
+
+// Firestore Database Helpers
+export async function syncWeekPlanToFirestore(userId: string, weekPlan: WeekPlan): Promise<void> {
+  if (!db || !userId) return;
+  try {
+    const planRef = doc(db, 'users', userId, 'weekPlans', weekPlan.id);
+    await setDoc(planRef, {
+      ...weekPlan,
+      updatedAt: Date.now()
+    }, { merge: true });
+  } catch (err) {
+    console.error('Error syncing week plan to Firestore:', err);
+    throw err;
+  }
+}
+
+export async function fetchUserWeekPlansFromFirestore(userId: string): Promise<Record<string, WeekPlan>> {
+  if (!db || !userId) return {};
+  try {
+    const colRef = collection(db, 'users', userId, 'weekPlans');
+    const snapshot = await getDocs(colRef);
+    const plans: Record<string, WeekPlan> = {};
+    snapshot.forEach((docSnap) => {
+      plans[docSnap.id] = docSnap.data() as WeekPlan;
+    });
+    return plans;
+  } catch (err) {
+    console.error('Error fetching week plans from Firestore:', err);
+    return {};
+  }
+}
