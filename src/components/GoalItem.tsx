@@ -77,21 +77,23 @@ export const GoalItem: React.FC<GoalItemProps> = ({
                 if (e.key === 'Escape') setIsEditing(false);
               }}
               autoFocus
-              className="w-full text-sm px-3 py-1.5 rounded-xl border border-stone-300 dark:border-stone-600 bg-white dark:bg-stone-800 text-stone-900 dark:text-stone-100 focus:outline-none focus:ring-2 focus:ring-pink-500/20"
+              className="w-full text-base sm:text-sm px-3 py-2 sm:py-1.5 rounded-xl border border-stone-300 dark:border-stone-600 bg-white dark:bg-stone-800 text-stone-900 dark:text-stone-100 focus:outline-none focus:ring-2 focus:ring-pink-500/20"
             />
             <button
               onClick={handleSaveEdit}
-              className="p-1.5 rounded-lg bg-stone-900 dark:bg-stone-100 text-white dark:text-stone-900 hover:opacity-90 transition-opacity"
+              className="p-2 sm:p-1.5 rounded-xl bg-stone-900 dark:bg-stone-100 text-white dark:text-stone-900 hover:opacity-90 active:scale-95 transition-all shrink-0"
               title={t.actions.save}
+              aria-label={t.actions.save}
             >
-              <Check className="w-3.5 h-3.5" />
+              <Check className="w-4 h-4 sm:w-3.5 sm:h-3.5" />
             </button>
             <button
               onClick={() => setIsEditing(false)}
-              className="p-1.5 rounded-lg bg-stone-200 dark:bg-stone-700 text-stone-700 dark:text-stone-300 hover:bg-stone-300 dark:hover:bg-stone-600 transition-colors"
+              className="p-2 sm:p-1.5 rounded-xl bg-stone-200 dark:bg-stone-700 text-stone-700 dark:text-stone-300 hover:bg-stone-300 dark:hover:bg-stone-600 active:scale-95 transition-all shrink-0"
               title={t.actions.cancel}
+              aria-label={t.actions.cancel}
             >
-              <X className="w-3.5 h-3.5" />
+              <X className="w-4 h-4 sm:w-3.5 sm:h-3.5" />
             </button>
           </div>
         ) : (
@@ -102,13 +104,14 @@ export const GoalItem: React.FC<GoalItemProps> = ({
 
         {/* Action icons (Edit / Delete) */}
         {!isEditing && (
-          <div className="flex items-center gap-1 opacity-60 group-hover:opacity-100 transition-opacity">
+          <div className="flex items-center gap-1 opacity-80 sm:opacity-40 sm:group-hover:opacity-100 transition-opacity">
             <button
               onClick={() => setIsEditing(true)}
-              className="p-1 text-stone-400 hover:text-stone-700 dark:hover:text-stone-200 transition-colors rounded-lg"
+              className="p-2 sm:p-1.5 text-stone-500 hover:text-stone-800 dark:text-stone-400 dark:hover:text-stone-200 active:scale-90 transition-all rounded-lg"
               title={t.actions.edit}
+              aria-label={t.actions.edit}
             >
-              <Edit3 className="w-3.5 h-3.5" />
+              <Edit3 className="w-4 h-4 sm:w-3.5 sm:h-3.5" />
             </button>
             <button
               onClick={() => {
@@ -116,10 +119,11 @@ export const GoalItem: React.FC<GoalItemProps> = ({
                   onDelete();
                 }
               }}
-              className="p-1 text-stone-400 hover:text-rose-600 dark:hover:text-rose-400 transition-colors rounded-lg"
+              className="p-2 sm:p-1.5 text-stone-500 hover:text-rose-600 dark:text-stone-400 dark:hover:text-rose-400 active:scale-90 transition-all rounded-lg"
               title={t.actions.delete}
+              aria-label={t.actions.delete}
             >
-              <Trash2 className="w-3.5 h-3.5" />
+              <Trash2 className="w-4 h-4 sm:w-3.5 sm:h-3.5" />
             </button>
           </div>
         )}

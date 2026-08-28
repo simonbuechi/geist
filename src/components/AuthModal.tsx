@@ -82,10 +82,15 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-stone-900/60 backdrop-blur-sm animate-fade-in">
-      <div className="relative w-full max-w-md bg-white dark:bg-stone-900 rounded-3xl shadow-2xl border border-stone-200 dark:border-stone-800 overflow-hidden animate-scale-in">
+    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center sm:p-4 bg-stone-900/60 backdrop-blur-sm animate-fade-in">
+      <div className="relative w-full max-w-md bg-white dark:bg-stone-900 rounded-t-[28px] sm:rounded-3xl shadow-2xl border-t sm:border border-stone-200 dark:border-stone-800 max-h-[92vh] flex flex-col overflow-hidden animate-slide-up sm:animate-scale-in pb-safe">
+        {/* Mobile Drag Handle */}
+        <div className="sm:hidden pt-2.5 pb-1 flex justify-center shrink-0">
+          <div className="w-10 h-1 bg-stone-300 dark:bg-stone-700 rounded-full" />
+        </div>
+
         {/* Header */}
-        <div className="p-5 border-b border-stone-200 dark:border-stone-800 flex items-center justify-between">
+        <div className="p-4 sm:p-5 border-b border-stone-200 dark:border-stone-800 flex items-center justify-between shrink-0">
           <div className="flex items-center gap-2.5">
             <div className="p-2 rounded-xl bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300">
               <User className="w-5 h-5" />
@@ -94,13 +99,17 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
               {user ? 'Benutzerprofil' : t.auth.cloudSyncTitle}
             </h3>
           </div>
-          <button onClick={onClose} className="p-2 text-stone-400 hover:text-stone-600 dark:hover:text-stone-200">
+          <button 
+            onClick={onClose} 
+            aria-label="Close"
+            className="p-2 text-stone-400 hover:text-stone-600 dark:hover:text-stone-200 active:scale-95 transition-all"
+          >
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Content */}
-        <div className="p-6 space-y-6">
+        <div className="p-4 sm:p-6 space-y-5 sm:space-y-6 overflow-y-auto overscroll-contain">
           {/* User Status Card */}
           {user ? (
             <div className="p-4 rounded-2xl bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-200 dark:border-emerald-900 flex items-center justify-between gap-3">
@@ -183,28 +192,28 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                 placeholder="API Key"
                 value={apiKey}
                 onChange={(e) => setApiKey(e.target.value)}
-                className="w-full text-xs p-2 rounded-lg border border-stone-300 dark:border-stone-600 bg-white dark:bg-stone-900"
+                className="w-full text-base sm:text-xs p-2.5 sm:p-2 rounded-xl border border-stone-300 dark:border-stone-600 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100"
               />
               <input
                 type="text"
                 placeholder="Project ID"
                 value={projectId}
                 onChange={(e) => setProjectId(e.target.value)}
-                className="w-full text-xs p-2 rounded-lg border border-stone-300 dark:border-stone-600 bg-white dark:bg-stone-900"
+                className="w-full text-base sm:text-xs p-2.5 sm:p-2 rounded-xl border border-stone-300 dark:border-stone-600 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100"
               />
               <input
                 type="text"
                 placeholder="Auth Domain (optional)"
                 value={authDomain}
                 onChange={(e) => setAuthDomain(e.target.value)}
-                className="w-full text-xs p-2 rounded-lg border border-stone-300 dark:border-stone-600 bg-white dark:bg-stone-900"
+                className="w-full text-base sm:text-xs p-2.5 sm:p-2 rounded-xl border border-stone-300 dark:border-stone-600 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100"
               />
               <input
                 type="text"
                 placeholder="App ID (optional)"
                 value={appId}
                 onChange={(e) => setAppId(e.target.value)}
-                className="w-full text-xs p-2 rounded-lg border border-stone-300 dark:border-stone-600 bg-white dark:bg-stone-900"
+                className="w-full text-base sm:text-xs p-2.5 sm:p-2 rounded-xl border border-stone-300 dark:border-stone-600 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100"
               />
               <div className="flex items-center justify-between pt-1">
                 {saveSuccess ? (
@@ -214,7 +223,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                 ) : <span />}
                 <button
                   type="submit"
-                  className="px-3.5 py-1.5 bg-gradient-to-r from-[#9123A6] to-[#D7195F] text-white rounded-xl text-xs font-medium shadow-sm active:scale-95 transition-all"
+                  className="px-4 py-2 bg-gradient-to-r from-[#9123A6] to-[#D7195F] text-white rounded-xl text-xs font-medium shadow-sm active:scale-95 transition-all"
                 >
                   Speichern & Verbinden
                 </button>
@@ -227,17 +236,17 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
             <h5 className="text-xs font-semibold uppercase tracking-wider text-stone-500 dark:text-stone-400">
               Datensicherung & Export
             </h5>
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-2 gap-2.5">
               <button
                 onClick={handleExport}
-                className="p-2.5 rounded-xl border border-stone-200 dark:border-stone-700 hover:bg-stone-50 dark:hover:bg-stone-800 text-xs font-medium text-stone-700 dark:text-stone-300 flex items-center justify-center gap-1.5 transition-colors"
+                className="p-3 rounded-xl border border-stone-200 dark:border-stone-700 hover:bg-stone-50 dark:hover:bg-stone-800 text-xs font-medium text-stone-700 dark:text-stone-300 flex items-center justify-center gap-1.5 active:scale-95 transition-all min-h-[44px]"
               >
-                <Download className="w-3.5 h-3.5" />
+                <Download className="w-4 h-4" />
                 <span>{t.actions.exportData}</span>
               </button>
 
-              <label className="p-2.5 rounded-xl border border-stone-200 dark:border-stone-700 hover:bg-stone-50 dark:hover:bg-stone-800 text-xs font-medium text-stone-700 dark:text-stone-300 flex items-center justify-center gap-1.5 cursor-pointer transition-colors">
-                <Upload className="w-3.5 h-3.5" />
+              <label className="p-3 rounded-xl border border-stone-200 dark:border-stone-700 hover:bg-stone-50 dark:hover:bg-stone-800 text-xs font-medium text-stone-700 dark:text-stone-300 flex items-center justify-center gap-1.5 cursor-pointer active:scale-95 transition-all min-h-[44px]">
+                <Upload className="w-4 h-4" />
                 <span>{t.actions.importData}</span>
                 <input
                   type="file"

@@ -3,8 +3,17 @@
 @tailwind utilities;
 
 @layer base {
-  html {
+  html, body {
+    overscroll-behavior-y: none;
+    -webkit-text-size-adjust: 100%;
     -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Prevent auto-zoom on iOS inputs when focused */
+  @media (max-width: 640px) {
+    input, textarea, select {
+      font-size: 16px;
+    }
   }
   
   /* Mindful subtle custom scrollbars */
@@ -23,6 +32,24 @@
   
   ::-webkit-scrollbar-thumb:hover {
     @apply bg-stone-400 dark:bg-stone-600;
+  }
+}
+
+@layer utilities {
+  .pt-safe {
+    padding-top: env(safe-area-inset-top, 0px);
+  }
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  .pl-safe {
+    padding-left: env(safe-area-inset-left, 0px);
+  }
+  .pr-safe {
+    padding-right: env(safe-area-inset-right, 0px);
+  }
+  .bottom-safe {
+    bottom: env(safe-area-inset-bottom, 0px);
   }
 }
 

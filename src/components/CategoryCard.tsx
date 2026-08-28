@@ -75,21 +75,21 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({ category }) => {
   return (
     <div className={`flex flex-col h-full rounded-3xl bg-white dark:bg-[#161c19] border ${theme.border} ${theme.hoverBorder} shadow-sm transition-all overflow-hidden`}>
       {/* Category Header */}
-      <div className={`p-5 bg-gradient-to-b ${theme.gradient} border-b border-stone-200/60 dark:border-stone-800/60 flex items-start justify-between gap-3`}>
+      <div className={`p-4 sm:p-5 bg-gradient-to-b ${theme.gradient} border-b border-stone-200/60 dark:border-stone-800/60 flex items-start justify-between gap-3`}>
         <div className="flex items-start gap-3">
-          <div className={`p-2.5 rounded-2xl bg-white dark:bg-stone-800 shadow-2xs border border-stone-200/60 dark:border-stone-700/60`}>
+          <div className={`p-2 sm:p-2.5 rounded-2xl bg-white dark:bg-stone-800 shadow-2xs border border-stone-200/60 dark:border-stone-700/60 shrink-0`}>
             {theme.icon}
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <h2 className="text-xl font-serif font-bold tracking-tight text-stone-900 dark:text-stone-50">
+              <h2 className="text-lg sm:text-xl font-serif font-bold tracking-tight text-stone-900 dark:text-stone-50">
                 {categoryInfo.title}
               </h2>
               <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${theme.badgeBg}`}>
                 {categoryGoals.length} {categoryGoals.length === 1 ? 'Ziel' : 'Ziele'}
               </span>
             </div>
-            <p className="text-xs text-stone-500 dark:text-stone-400 mt-0.5 leading-relaxed font-sans">
+            <p className="text-xs text-stone-500 dark:text-stone-400 mt-0.5 leading-relaxed font-sans line-clamp-2 sm:line-clamp-none">
               {categoryInfo.subtitle}
             </p>
           </div>
@@ -99,7 +99,8 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({ category }) => {
         <button
           onClick={() => setIsAdding(!isAdding)}
           title={t.actions.addGoal}
-          className={`p-2 rounded-xl transition-all ${
+          aria-label={t.actions.addGoal}
+          className={`p-2.5 sm:p-2 rounded-xl transition-all active:scale-90 shrink-0 ${
             isAdding
               ? 'bg-stone-200 dark:bg-stone-700 text-stone-700 dark:text-stone-300'
               : 'bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-300 hover:bg-stone-200 dark:hover:bg-stone-700'
@@ -110,17 +111,17 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({ category }) => {
       </div>
 
       {/* Goals List */}
-      <div className="p-4 flex-1 flex flex-col gap-2.5 overflow-y-auto">
+      <div className="p-3 sm:p-4 flex-1 flex flex-col gap-2.5 overflow-y-auto">
         {/* Inline Add Form */}
         {isAdding && (
-          <form onSubmit={handleAddGoal} className="p-3 rounded-2xl bg-stone-50 dark:bg-stone-800/90 border border-dashed border-stone-300 dark:border-stone-700 flex flex-col gap-2 animate-slide-up">
+          <form onSubmit={handleAddGoal} className="p-3 rounded-2xl bg-stone-50 dark:bg-stone-800/90 border border-dashed border-stone-300 dark:border-stone-700 flex flex-col gap-2.5 animate-slide-up">
             <textarea
               value={newGoalText}
               onChange={(e) => setNewGoalText(e.target.value)}
               placeholder={categoryInfo.placeholder}
               rows={2}
               autoFocus
-              className="w-full text-sm p-2.5 rounded-xl border border-stone-300 dark:border-stone-600 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/30"
+              className="w-full text-base sm:text-sm p-3 sm:p-2.5 rounded-xl border border-stone-300 dark:border-stone-600 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/30"
               onKeyDown={(e) => {
                 if (e.key === 'Enter' && !e.shiftKey) {
                   e.preventDefault();
@@ -132,14 +133,14 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({ category }) => {
               <button
                 type="button"
                 onClick={() => setIsAdding(false)}
-                className="px-3 py-1.5 rounded-lg text-xs text-stone-600 dark:text-stone-400 hover:bg-stone-200 dark:hover:bg-stone-700 transition-colors"
+                className="px-3.5 py-2 sm:py-1.5 rounded-xl text-xs text-stone-600 dark:text-stone-400 hover:bg-stone-200 dark:hover:bg-stone-700 active:scale-95 transition-all"
               >
                 {t.actions.cancel}
               </button>
               <button
                 type="submit"
                 disabled={!newGoalText.trim()}
-                className="px-3.5 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 disabled:opacity-50 text-white text-xs font-medium transition-colors shadow-2xs flex items-center gap-1"
+                className="px-4 py-2 sm:py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 disabled:opacity-50 text-white text-xs font-medium active:scale-95 transition-all shadow-2xs flex items-center gap-1.5"
               >
                 <Check className="w-3.5 h-3.5" />
                 <span>{t.actions.save}</span>
@@ -177,7 +178,7 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({ category }) => {
         <div className="p-3 bg-stone-50/50 dark:bg-stone-900/40 border-t border-stone-100 dark:border-stone-800/50 flex items-center justify-between">
           <button
             onClick={() => setIsAdding(true)}
-            className="text-xs font-medium text-stone-500 hover:text-stone-800 dark:hover:text-stone-200 flex items-center gap-1.5 transition-colors"
+            className="py-1.5 px-2 -ml-1 text-xs font-medium text-stone-600 dark:text-stone-300 hover:text-stone-900 dark:hover:text-white rounded-xl active:bg-stone-200/60 dark:active:bg-stone-800 flex items-center gap-1.5 active:scale-95 transition-all"
           >
             <Plus className="w-3.5 h-3.5" />
             <span>{t.actions.addGoal}</span>

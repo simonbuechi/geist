@@ -41,7 +41,7 @@ export const PwaInstallBanner: React.FC = () => {
   if (!showBanner) return null;
 
   return (
-    <div className="fixed bottom-4 left-4 right-4 sm:left-auto sm:right-6 sm:max-w-sm z-40 p-4 rounded-3xl bg-stone-900/95 dark:bg-stone-800/95 text-white shadow-2xl backdrop-blur-md border border-stone-700/80 animate-slide-up flex flex-col gap-3">
+    <div className="fixed bottom-20 md:bottom-4 left-3.5 right-3.5 sm:left-auto sm:right-6 sm:max-w-sm z-40 p-4 rounded-3xl bg-stone-900/95 dark:bg-stone-800/95 text-white shadow-2xl backdrop-blur-md border border-stone-700/80 animate-slide-up flex flex-col gap-3">
       <div className="flex items-start justify-between gap-3">
         <div className="flex items-start gap-2.5">
           <KgsLogo size={24} />

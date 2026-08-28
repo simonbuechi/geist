@@ -10,8 +10,11 @@ export const translations = {
     historyTitle: 'Vergangene Wochen',
     backToCurrentWeek: 'Zur aktuellen Woche',
     reviewAndPlan: 'Rückblick & Neue Woche planen',
+    reviewAndPlanShort: 'Rückblick & Planen',
     reviewWeek: 'Wochenrückblick',
     planWeek: 'Woche planen',
+    allCategories: 'Alle Bereiche',
+    all: 'Alle',
     status: {
       pending: 'Offen',
       good: 'Gut erreicht',
@@ -111,8 +114,11 @@ export const translations = {
     historyTitle: 'Past Weeks',
     backToCurrentWeek: 'Back to Current Week',
     reviewAndPlan: 'Review & Plan Next Week',
+    reviewAndPlanShort: 'Review & Plan',
     reviewWeek: 'Weekly Review',
     planWeek: 'Plan Week',
+    allCategories: 'All Dimensions',
+    all: 'All',
     status: {
       pending: 'Pending',
       good: 'Well achieved',

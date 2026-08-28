@@ -47,21 +47,22 @@ export const HistoryView: React.FC<HistoryViewProps> = ({ onClose }) => {
   };
 
   return (
-    <div className="w-full max-w-5xl mx-auto px-4 py-6 space-y-6 animate-fade-in">
+    <div className="w-full max-w-5xl mx-auto px-3.5 sm:px-4 py-4 sm:py-6 space-y-4 sm:space-y-6 animate-fade-in pb-20 md:pb-6">
       {/* Header Bar */}
-      <div className="flex items-center justify-between gap-4 pb-4 border-b border-stone-200 dark:border-stone-800">
+      <div className="flex items-center justify-between gap-3 pb-3 sm:pb-4 border-b border-stone-200 dark:border-stone-800">
         <div className="flex items-center gap-3">
           <button
             onClick={onClose}
-            className="p-2 rounded-xl bg-stone-200/60 dark:bg-stone-800 text-stone-700 dark:text-stone-300 hover:bg-stone-300/60 dark:hover:bg-stone-700 transition-colors"
+            aria-label="Back"
+            className="w-10 h-10 rounded-xl bg-stone-200/60 dark:bg-stone-800 text-stone-700 dark:text-stone-300 hover:bg-stone-300/60 dark:hover:bg-stone-700 active:scale-95 transition-all flex items-center justify-center shrink-0"
           >
             <ArrowLeft className="w-4 h-4" />
           </button>
           <div>
-            <h2 className="text-2xl font-serif font-bold text-stone-900 dark:text-stone-50">
+            <h2 className="text-xl sm:text-2xl font-serif font-bold text-stone-900 dark:text-stone-50">
               {t.historyTitle}
             </h2>
-            <p className="text-xs text-stone-500 dark:text-stone-400 font-sans">
+            <p className="text-2xs sm:text-xs text-stone-500 dark:text-stone-400 font-sans">
               Deine bisherigen Wochen und Erfolge im Rückblick
             </p>
           </div>
@@ -69,9 +70,9 @@ export const HistoryView: React.FC<HistoryViewProps> = ({ onClose }) => {
       </div>
 
       {sortedPlans.length === 0 ? (
-        <div className="p-12 text-center rounded-3xl bg-white/60 dark:bg-stone-900/60 border border-stone-200 dark:border-stone-800 space-y-3">
-          <History className="w-12 h-12 mx-auto text-stone-400" />
-          <h3 className="text-lg font-serif font-semibold text-stone-800 dark:text-stone-200">
+        <div className="p-8 sm:p-12 text-center rounded-3xl bg-white/60 dark:bg-stone-900/60 border border-stone-200 dark:border-stone-800 space-y-3">
+          <History className="w-10 h-10 sm:w-12 sm:h-12 mx-auto text-stone-400" />
+          <h3 className="text-base sm:text-lg font-serif font-semibold text-stone-800 dark:text-stone-200">
             {t.historyView.noHistoryYet}
           </h3>
           <p className="text-xs text-stone-500 dark:text-stone-400 max-w-sm mx-auto">
@@ -79,7 +80,7 @@ export const HistoryView: React.FC<HistoryViewProps> = ({ onClose }) => {
           </p>
         </div>
       ) : (
-        <div className="space-y-4">
+        <div className="space-y-3 sm:space-y-4">
           {sortedPlans.map((plan) => {
             const { weekNumber, year, startDate, endDate } = parseWeekId(plan.id);
             const isExpanded = expandedWeekId === plan.id;
@@ -96,45 +97,45 @@ export const HistoryView: React.FC<HistoryViewProps> = ({ onClose }) => {
                 {/* Week summary header */}
                 <div
                   onClick={() => setExpandedWeekId(isExpanded ? null : plan.id)}
-                  className="p-4 sm:p-5 flex flex-wrap items-center justify-between gap-4 cursor-pointer hover:bg-stone-50/50 dark:hover:bg-stone-800/40 transition-colors"
+                  className="p-3.5 sm:p-5 flex flex-wrap items-center justify-between gap-2.5 sm:gap-4 cursor-pointer hover:bg-stone-50/50 dark:hover:bg-stone-800/40 active:bg-stone-100/50 dark:active:bg-stone-800/60 transition-colors"
                 >
-                  <div className="flex items-center gap-3">
-                    <div className="p-3 rounded-2xl bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-300 font-serif font-bold text-sm">
+                  <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-300 font-serif font-bold text-xs sm:text-sm flex items-center justify-center shrink-0">
                       KW {weekNumber}
                     </div>
-                    <div>
-                      <h4 className="text-base font-semibold text-stone-900 dark:text-stone-100 flex items-center gap-2">
+                    <div className="min-w-0">
+                      <h4 className="text-sm sm:text-base font-semibold text-stone-900 dark:text-stone-100 flex items-center gap-1.5 flex-wrap">
                         <span>{t.week} {weekNumber} ({year})</span>
                         {plan.reviewedAt && (
-                          <span className="text-2xs px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 font-medium">
+                          <span className="text-2xs px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 font-medium whitespace-nowrap">
                             ✓ {t.reviewWeek}
                           </span>
                         )}
                       </h4>
-                      <p className="text-xs text-stone-500 dark:text-stone-400">
+                      <p className="text-2xs sm:text-xs text-stone-500 dark:text-stone-400 truncate">
                         {formatWeekRange(startDate, endDate, language)}
                       </p>
                     </div>
                   </div>
 
                   {/* Goal Outcome Pills */}
-                  <div className="flex items-center gap-2 sm:gap-4">
-                    <div className="flex items-center gap-2 text-xs font-medium">
-                      <span className="flex items-center gap-1 text-emerald-600 dark:text-emerald-400">
+                  <div className="flex items-center gap-2 sm:gap-4 ml-auto shrink-0">
+                    <div className="flex items-center gap-1.5 sm:gap-2 text-2xs sm:text-xs font-medium">
+                      <span className="flex items-center gap-0.5 text-emerald-600 dark:text-emerald-400">
                         <CheckCircle2 className="w-3.5 h-3.5" />
                         {goodCount}
                       </span>
-                      <span className="flex items-center gap-1 text-amber-600 dark:text-amber-400">
+                      <span className="flex items-center gap-0.5 text-amber-600 dark:text-amber-400">
                         <MinusCircle className="w-3.5 h-3.5" />
                         {partlyCount}
                       </span>
-                      <span className="flex items-center gap-1 text-rose-600 dark:text-rose-400">
+                      <span className="flex items-center gap-0.5 text-rose-600 dark:text-rose-400">
                         <XCircle className="w-3.5 h-3.5" />
                         {poorCount}
                       </span>
                     </div>
 
-                    <div className="px-3 py-1 rounded-xl bg-stone-100 dark:bg-stone-800 text-xs font-semibold text-stone-700 dark:text-stone-300">
+                    <div className="px-2.5 py-1 rounded-xl bg-stone-100 dark:bg-stone-800 text-2xs sm:text-xs font-semibold text-stone-700 dark:text-stone-300">
                       {goals.length} {t.historyView.totalGoals}
                     </div>
 
@@ -203,7 +204,7 @@ export const HistoryView: React.FC<HistoryViewProps> = ({ onClose }) => {
                           selectWeek(plan.id);
                           onClose();
                         }}
-                        className="px-3 py-1.5 rounded-xl bg-stone-200/70 dark:bg-stone-800 hover:bg-emerald-600 hover:text-white dark:hover:bg-emerald-600 text-stone-700 dark:text-stone-300 text-xs font-medium transition-colors"
+                        className="w-full sm:w-auto px-4 py-2.5 sm:py-1.5 rounded-xl bg-stone-200/70 dark:bg-stone-800 hover:bg-emerald-600 hover:text-white dark:hover:bg-emerald-600 text-stone-700 dark:text-stone-300 text-xs font-medium active:scale-95 transition-all flex items-center justify-center"
                       >
                         Diese Woche öffnen & bearbeiten →
                       </button>
