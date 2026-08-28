@@ -33,7 +33,7 @@ export const HistoryView: React.FC<HistoryViewProps> = ({ onClose }) => {
     switch (category) {
       case 'body': return <CategoryIcon category="body" className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" size={14} />;
       case 'mind': return <CategoryIcon category="mind" className="w-3.5 h-3.5 text-sky-600 dark:text-sky-400" size={14} />;
-      case 'soul': return <CategoryIcon category="soul" className="w-3.5 h-3.5 text-violet-600 dark:text-violet-400" size={14} />;
+      case 'soul': return <CategoryIcon category="soul" className="w-3.5 h-3.5 text-red-600 dark:text-red-400" size={14} />;
     }
   };
 

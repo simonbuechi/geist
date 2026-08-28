@@ -47,12 +47,12 @@ export default {
           badge: '#3b82f6',
         },
         soul: {
-          light: '#fdf2f8',
-          border: '#fbcfe8',
-          accent: '#db2777',
-          darkBg: '#2d1225',
-          darkBorder: '#631d50',
-          badge: '#ec4899',
+          light: '#fef2f2',
+          border: '#fecaca',
+          accent: '#dc2626',
+          darkBg: '#2b1114',
+          darkBorder: '#5c1d24',
+          badge: '#ef4444',
         }
       },
       backgroundImage: {

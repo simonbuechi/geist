@@ -60,11 +60,11 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({ category }) => {
         };
       case 'soul':
         return {
-          icon: <CategoryIcon category="soul" className="w-5 h-5 text-violet-600 dark:text-violet-400" />,
-          gradient: 'from-violet-500/10 via-purple-500/5 to-transparent',
-          border: 'border-violet-200/80 dark:border-violet-900/60',
-          badgeBg: 'bg-violet-100 dark:bg-violet-950/80 text-violet-800 dark:text-violet-300',
-          hoverBorder: 'hover:border-violet-400 dark:hover:border-violet-800'
+          icon: <CategoryIcon category="soul" className="w-5 h-5 text-red-600 dark:text-red-400" />,
+          gradient: 'from-red-500/10 via-rose-500/5 to-transparent',
+          border: 'border-red-200/80 dark:border-red-900/60',
+          badgeBg: 'bg-red-100 dark:bg-red-950/80 text-red-800 dark:text-red-300',
+          hoverBorder: 'hover:border-red-400 dark:hover:border-red-800'
         };
     }
   };

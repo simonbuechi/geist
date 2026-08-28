@@ -109,7 +109,7 @@ export const ReviewModal: React.FC<ReviewModalProps> = ({ isOpen, onClose }) => 
     switch (cat) {
       case 'body': return <CategoryIcon category="body" className="w-4 h-4 text-emerald-600 dark:text-emerald-400" size={16} />;
       case 'mind': return <CategoryIcon category="mind" className="w-4 h-4 text-sky-600 dark:text-sky-400" size={16} />;
-      case 'soul': return <CategoryIcon category="soul" className="w-4 h-4 text-violet-600 dark:text-violet-400" size={16} />;
+      case 'soul': return <CategoryIcon category="soul" className="w-4 h-4 text-red-600 dark:text-red-400" size={16} />;
     }
   };
 
