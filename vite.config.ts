@@ -9,7 +9,7 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.svg', 'apple-touch-icon.png', 'masked-icon.svg', 'logo.png', 'logo.webp', 'favicon.png'],
+      includeAssets: ['favicon.svg', 'apple-touch-icon.png', 'masked-icon.svg', 'logo.png', 'logo.webp', 'favicon.png', 'arm_flaticon.png'],
       manifest: {
         name: 'Körper Geist Seele',
         short_name: 'KGS',
