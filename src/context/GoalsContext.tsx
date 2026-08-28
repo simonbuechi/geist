@@ -125,11 +125,12 @@ export const GoalsProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   useEffect(() => {
     if (!user) return;
     let isMounted = true;
+    const currentUid = user.uid;
 
     async function loadCloudData() {
       setLoading(true);
       try {
-        const cloudPlans = await fetchUserWeekPlansFromFirestore(user!.uid);
+        const cloudPlans = await fetchUserWeekPlansFromFirestore(currentUid);
         if (!isMounted) return;
 
         setWeekPlans(prev => {
@@ -151,7 +152,7 @@ export const GoalsProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
     loadCloudData();
     return () => { isMounted = false; };
-  }, [user?.uid]);
+  }, [user]);
 
   // Persist a modified week plan locally and to Firestore
   const persistPlan = useCallback(async (updatedPlan: WeekPlan) => {
@@ -167,7 +168,7 @@ export const GoalsProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         console.warn('Could not sync to cloud immediately (offline/error):', err);
       }
     }
-  }, [user?.uid]);
+  }, [user]);
 
   // Ensure current week plan exists
   const currentWeekPlan: WeekPlan = weekPlans[selectedWeekId] || createDefaultWeekPlan(selectedWeekId);
