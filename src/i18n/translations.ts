@@ -58,7 +58,8 @@ export const translations = {
       close: 'Schließen',
       addReflection: 'Wochen-Fazit (optional)',
       addComment: 'Notiz / Reflexion',
-      deleteConfirm: 'Möchtest du dieses Ziel wirklich löschen?'
+      deleteConfirm: 'Möchtest du dieses Ziel wirklich löschen?',
+      skip: 'Überspringen'
     },
     reviewModal: {
       title: 'Wochenrückblick & Auswertung',
@@ -162,7 +163,8 @@ export const translations = {
       close: 'Close',
       addReflection: 'Weekly Reflection (optional)',
       addComment: 'Note / Reflection',
-      deleteConfirm: 'Are you sure you want to delete this goal?'
+      deleteConfirm: 'Are you sure you want to delete this goal?',
+      skip: 'Skip'
     },
     reviewModal: {
       title: 'Weekly Review & Reflection',

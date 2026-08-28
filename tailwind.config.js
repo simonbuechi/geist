@@ -65,6 +65,8 @@ export default {
         'fade-in': 'fadeIn 0.25s ease-out',
         'slide-up': 'slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
         'scale-in': 'scaleIn 0.2s cubic-bezier(0.16, 1, 0.3, 1)',
+        'progress': 'progress 2.2s ease-in-out forwards',
+        'spin-slow': 'spin 4s linear infinite',
       },
       keyframes: {
         fadeIn: {
@@ -78,6 +80,10 @@ export default {
         scaleIn: {
           '0%': { opacity: '0', transform: 'scale(0.96)' },
           '100%': { opacity: '1', transform: 'scale(1)' },
+        },
+        progress: {
+          '0%': { width: '0%' },
+          '100%': { width: '100%' },
         },
       }
     },

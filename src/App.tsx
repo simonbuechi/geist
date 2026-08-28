@@ -9,6 +9,7 @@ import { ReviewModal } from './components/ReviewModal';
 import { HistoryView } from './components/HistoryView';
 import { AuthModal } from './components/AuthModal';
 import { PwaInstallBanner } from './components/PwaInstallBanner';
+import { WelcomeAnimation } from './components/WelcomeAnimation';
 
 import { Sparkles } from 'lucide-react';
 import { useLanguage } from './context/LanguageContext';
@@ -25,6 +26,14 @@ const MainDashboard: React.FC = () => {
   const [isAuthOpen, setIsAuthOpen] = useState(false);
   const [isHistoryView, setIsHistoryView] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<CategoryFilter>('all');
+  const [showWelcome, setShowWelcome] = useState(() => {
+    return !sessionStorage.getItem('kgs_welcome_seen');
+  });
+
+  const handleWelcomeComplete = () => {
+    sessionStorage.setItem('kgs_welcome_seen', 'true');
+    setShowWelcome(false);
+  };
 
   const goals = currentWeekPlan.goals || [];
   const bodyGoals = goals.filter(g => g.category === 'body');
@@ -71,15 +80,16 @@ const MainDashboard: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen flex flex-col bg-stone-50/50 dark:bg-[#121614] transition-colors selection:bg-brand-500 selection:text-white">
-      <Header
-        onOpenReview={() => setIsReviewOpen(true)}
-        onOpenAuth={() => setIsAuthOpen(true)}
-        isHistoryView={isHistoryView}
-        onToggleHistory={() => setIsHistoryView(!isHistoryView)}
-      />
+    <div className="min-h-screen flex flex-col bg-stone-50/50 dark:bg-[#121614] transition-colors selection:bg-brand-500 selection:text-white relative">
+      <div className={`flex-1 flex flex-col transition-all duration-500 ${showWelcome ? 'filter blur-lg pointer-events-none select-none' : 'filter blur-0'}`}>
+        <Header
+          onOpenReview={() => setIsReviewOpen(true)}
+          onOpenAuth={() => setIsAuthOpen(true)}
+          isHistoryView={isHistoryView}
+          onToggleHistory={() => setIsHistoryView(!isHistoryView)}
+        />
 
-      <main className="flex-1 max-w-6xl w-full mx-auto px-3.5 sm:px-6 py-4 sm:py-6 flex flex-col gap-4 sm:gap-6 pb-24 md:pb-6">
+        <main className="flex-1 max-w-6xl w-full mx-auto px-3.5 sm:px-6 py-4 sm:py-6 flex flex-col gap-4 sm:gap-6 pb-24 md:pb-6">
         {isHistoryView ? (
           <HistoryView onClose={() => setIsHistoryView(false)} />
         ) : (
@@ -154,6 +164,7 @@ const MainDashboard: React.FC = () => {
           </div>
         </div>
       )}
+      </div>
 
       {/* Modals & Overlays */}
       <ReviewModal
@@ -167,6 +178,11 @@ const MainDashboard: React.FC = () => {
       />
 
       <PwaInstallBanner />
+
+      {/* Welcome Splash Screen Animation */}
+      {showWelcome && (
+        <WelcomeAnimation onComplete={handleWelcomeComplete} />
+      )}
     </div>
   );
 };
