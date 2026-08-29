@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useRef, useCallback } from 'react';
-import { InspiringConstructLogo } from './InspiringConstructLogo';
+import React, { useState, useRef, useCallback, useEffect } from 'react';
+import { SacredConstructLogo } from './SacredLogo';
 import { useLanguage } from '../context/LanguageContext';
 import { ArrowRight } from 'lucide-react';
 
@@ -18,24 +18,24 @@ export const WelcomeAnimation: React.FC<WelcomeAnimationProps> = ({ onComplete }
     setIsFadingOut(true);
     setTimeout(() => {
       onComplete();
-    }, 350);
+    }, 250);
   }, [onComplete]);
 
   useEffect(() => {
-    // As soon as the animation completes (~1.85s), immediately reveal the app
-    const finishTimer = setTimeout(() => {
+    // 1.5s total animation duration
+    const timer = setTimeout(() => {
       handleFinish();
-    }, 1850);
+    }, 1500);
 
     return () => {
-      clearTimeout(finishTimer);
+      clearTimeout(timer);
     };
   }, [handleFinish]);
 
   return (
     <div
       onClick={handleFinish}
-      className={`fixed inset-0 z-50 flex flex-col items-center justify-center p-6 bg-stone-50/80 dark:bg-[#0c0e0d]/80 backdrop-blur-md transition-opacity duration-350 cursor-pointer select-none ${
+      className={`fixed inset-0 z-50 flex flex-col items-center justify-center p-6 bg-stone-50/80 dark:bg-[#0c0e0d]/80 backdrop-blur-md transition-opacity duration-250 cursor-pointer select-none ${
         isFadingOut ? 'opacity-0 pointer-events-none' : 'opacity-100'
       }`}
       aria-label="Welcome Screen"
@@ -56,9 +56,9 @@ export const WelcomeAnimation: React.FC<WelcomeAnimationProps> = ({ onComplete }
 
       {/* Main Inspiring Stage */}
       <div className="relative flex flex-col items-center justify-center max-w-sm w-full text-center">
-        {/* Constructing Logo Stage */}
+        {/* Sacred Geometry Construction Stage */}
         <div className="relative w-48 h-48 sm:w-56 sm:h-56 flex items-center justify-center my-2">
-          <InspiringConstructLogo size={160} />
+          <SacredConstructLogo size={160} />
         </div>
 
         {/* App Title visible from the beginning */}

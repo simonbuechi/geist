@@ -27,6 +27,7 @@ const MainDashboard: React.FC = () => {
   const [isHistoryView, setIsHistoryView] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<CategoryFilter>('all');
   const [showWelcome, setShowWelcome] = useState(() => {
+    if (typeof window !== 'undefined' && window.location.search.includes('welcome')) return true;
     return !sessionStorage.getItem('kgs_welcome_seen');
   });
 
@@ -87,6 +88,7 @@ const MainDashboard: React.FC = () => {
           onOpenAuth={() => setIsAuthOpen(true)}
           isHistoryView={isHistoryView}
           onToggleHistory={() => setIsHistoryView(!isHistoryView)}
+          onReplayWelcome={() => setShowWelcome(true)}
         />
 
         <main className="flex-1 max-w-6xl w-full mx-auto px-3.5 sm:px-6 py-4 sm:py-6 flex flex-col gap-4 sm:gap-6 pb-24 md:pb-6">

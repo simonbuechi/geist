@@ -27,13 +27,15 @@ interface HeaderProps {
   onOpenAuth: () => void;
   isHistoryView: boolean;
   onToggleHistory: () => void;
+  onReplayWelcome?: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
   onOpenReview,
   onOpenAuth,
   isHistoryView,
-  onToggleHistory
+  onToggleHistory,
+  onReplayWelcome
 }) => {
   const { t, language, toggleLanguage } = useLanguage();
   const { theme, toggleTheme } = useTheme();
@@ -55,13 +57,17 @@ export const Header: React.FC<HeaderProps> = ({
           <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
             <button 
               onClick={() => {
-                if (isHistoryView) onToggleHistory();
-                goToCurrentWeek();
+                if (onReplayWelcome) {
+                  onReplayWelcome();
+                } else {
+                  if (isHistoryView) onToggleHistory();
+                  goToCurrentWeek();
+                }
               }}
               className="text-left group flex items-center gap-2.5 sm:gap-3 focus:outline-none min-w-0"
               aria-label="Home"
             >
-              <KgsLogo size={36} className="sm:w-[42px] sm:h-[42px]" />
+              <KgsLogo size={36} className="sm:w-[42px] sm:h-[42px] transition-transform group-hover:scale-105" />
               <div className="min-w-0">
                 <h1 className="text-lg sm:text-2xl font-serif font-semibold tracking-tight text-stone-900 dark:text-stone-50 truncate">
                   {t.appTitle}
