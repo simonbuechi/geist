@@ -30,11 +30,7 @@ export const HistoryView: React.FC<HistoryViewProps> = ({ onClose }) => {
   });
 
   const getCategoryIcon = (category: Category) => {
-    switch (category) {
-      case 'body': return <CategoryIcon category="body" className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" size={14} />;
-      case 'mind': return <CategoryIcon category="mind" className="w-3.5 h-3.5 text-sky-600 dark:text-sky-400" size={14} />;
-      case 'soul': return <CategoryIcon category="soul" className="w-3.5 h-3.5 text-red-600 dark:text-red-400" size={14} />;
-    }
+    return <CategoryIcon category={category} className="w-3.5 h-3.5 text-[#9123A6] dark:text-[#f472b6]" size={14} />;
   };
 
   const getStatusIcon = (status: GoalStatus) => {
@@ -100,8 +96,8 @@ export const HistoryView: React.FC<HistoryViewProps> = ({ onClose }) => {
                   className="p-3.5 sm:p-5 flex flex-wrap items-center justify-between gap-2.5 sm:gap-4 cursor-pointer hover:bg-stone-50/50 dark:hover:bg-stone-800/40 active:bg-stone-100/50 dark:active:bg-stone-800/60 transition-colors"
                 >
                   <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
-                    <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-300 font-serif font-bold text-xs sm:text-sm flex items-center justify-center shrink-0">
-                      KW {weekNumber}
+                    <div className="px-2.5 sm:px-3 h-10 sm:h-12 rounded-2xl bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-300 font-serif font-bold text-xs sm:text-sm flex items-center justify-center shrink-0 whitespace-nowrap">
+                      {t.week} {weekNumber}
                     </div>
                     <div className="min-w-0">
                       <h4 className="text-sm sm:text-base font-semibold text-stone-900 dark:text-stone-100 flex items-center gap-1.5 flex-wrap">

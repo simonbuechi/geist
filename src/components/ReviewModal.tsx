@@ -106,11 +106,7 @@ export const ReviewModal: React.FC<ReviewModalProps> = ({ isOpen, onClose }) => 
   };
 
   const getCategoryIcon = (cat: Category) => {
-    switch (cat) {
-      case 'body': return <CategoryIcon category="body" className="w-4 h-4 text-emerald-600 dark:text-emerald-400" size={16} />;
-      case 'mind': return <CategoryIcon category="mind" className="w-4 h-4 text-sky-600 dark:text-sky-400" size={16} />;
-      case 'soul': return <CategoryIcon category="soul" className="w-4 h-4 text-red-600 dark:text-red-400" size={16} />;
-    }
+    return <CategoryIcon category={cat} className="w-4 h-4 text-[#9123A6] dark:text-[#f472b6]" size={16} />;
   };
 
   return (
@@ -133,7 +129,7 @@ export const ReviewModal: React.FC<ReviewModalProps> = ({ isOpen, onClose }) => 
                 {t.reviewModal.title}
               </h3>
               <p className="text-xs sm:text-sm text-pink-100/90 font-sans">
-                {t.calendarWeek} {weekNumber} • {formatWeekRange(startDate, endDate, language)}
+                {t.week} {weekNumber} • {formatWeekRange(startDate, endDate, language)}
               </p>
             </div>
           </div>
@@ -156,7 +152,7 @@ export const ReviewModal: React.FC<ReviewModalProps> = ({ isOpen, onClose }) => 
               {t.reviewModal.successMessage}
             </h4>
             <p className="text-xs sm:text-sm text-stone-600 dark:text-stone-400 max-w-md">
-              Deine Reflexion wurde gespeichert. Bereit für die nächste Woche (KW {nextWeekDetails.weekNumber})?
+              Deine Reflexion wurde gespeichert. Bereit für die nächste Woche ({t.week} {nextWeekDetails.weekNumber})?
             </p>
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 sm:gap-3 mt-4 w-full sm:w-auto">
               <button

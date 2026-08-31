@@ -39,59 +39,32 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({ category }) => {
     }
   };
 
-  // Visual Theme Configuration per Category
-  const getCategoryTheme = () => {
-    switch (category) {
-      case 'body':
-        return {
-          icon: <CategoryIcon category="body" className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />,
-          gradient: 'from-emerald-500/10 via-teal-500/5 to-transparent',
-          border: 'border-emerald-200/80 dark:border-emerald-900/60',
-          badgeBg: 'bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300',
-          hoverBorder: 'hover:border-emerald-400 dark:hover:border-emerald-800'
-        };
-      case 'mind':
-        return {
-          icon: <CategoryIcon category="mind" className="w-5 h-5 text-sky-600 dark:text-sky-400" />,
-          gradient: 'from-sky-500/10 via-blue-500/5 to-transparent',
-          border: 'border-sky-200/80 dark:border-sky-900/60',
-          badgeBg: 'bg-sky-100 dark:bg-sky-950/80 text-sky-800 dark:text-sky-300',
-          hoverBorder: 'hover:border-sky-400 dark:hover:border-sky-800'
-        };
-      case 'soul':
-        return {
-          icon: <CategoryIcon category="soul" className="w-5 h-5 text-red-600 dark:text-red-400" />,
-          gradient: 'from-red-500/10 via-rose-500/5 to-transparent',
-          border: 'border-red-200/80 dark:border-red-900/60',
-          badgeBg: 'bg-red-100 dark:bg-red-950/80 text-red-800 dark:text-red-300',
-          hoverBorder: 'hover:border-red-400 dark:hover:border-red-800'
-        };
-    }
+  // Unified Visual Theme Configuration using Primary Colors (Button Palette)
+  const theme = {
+    icon: <CategoryIcon category={category} className="w-5 h-5 text-[#9123A6] dark:text-[#f472b6]" />,
+    gradient: 'from-[#9123A6]/10 via-[#D7195F]/5 to-transparent',
+    border: 'border-[#9123A6]/20 dark:border-[#9123A6]/30',
+    badgeBg: 'bg-[#9123A6]/10 dark:bg-[#9123A6]/25 text-[#9123A6] dark:text-pink-300',
+    hoverBorder: 'hover:border-[#9123A6]/50 dark:hover:border-[#9123A6]/60'
   };
 
-  const theme = getCategoryTheme();
   const goodCount = categoryGoals.filter(g => g.status === 'good').length;
 
   return (
     <div className={`flex flex-col h-full rounded-3xl bg-white dark:bg-[#161c19] border ${theme.border} ${theme.hoverBorder} shadow-sm transition-all overflow-hidden`}>
       {/* Category Header */}
-      <div className={`p-4 sm:p-5 bg-gradient-to-b ${theme.gradient} border-b border-stone-200/60 dark:border-stone-800/60 flex items-start justify-between gap-3`}>
-        <div className="flex items-start gap-3">
+      <div className={`p-4 sm:p-5 bg-gradient-to-b ${theme.gradient} border-b border-stone-200/60 dark:border-stone-800/60 flex items-center justify-between gap-3`}>
+        <div className="flex items-center gap-3">
           <div className={`p-2 sm:p-2.5 rounded-2xl bg-white dark:bg-stone-800 shadow-2xs border border-stone-200/60 dark:border-stone-700/60 shrink-0`}>
             {theme.icon}
           </div>
-          <div>
-            <div className="flex items-center gap-2">
-              <h2 className="text-lg sm:text-xl font-serif font-bold tracking-tight text-stone-900 dark:text-stone-50">
-                {categoryInfo.title}
-              </h2>
-              <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${theme.badgeBg}`}>
-                {categoryGoals.length} {categoryGoals.length === 1 ? 'Ziel' : 'Ziele'}
-              </span>
-            </div>
-            <p className="text-xs text-stone-500 dark:text-stone-400 mt-0.5 leading-relaxed font-sans line-clamp-2 sm:line-clamp-none">
-              {categoryInfo.subtitle}
-            </p>
+          <div className="flex items-center gap-2">
+            <h2 className="text-lg sm:text-xl font-serif font-bold tracking-tight text-stone-900 dark:text-stone-50">
+              {categoryInfo.title}
+            </h2>
+            <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${theme.badgeBg}`}>
+              {categoryGoals.length} {categoryGoals.length === 1 ? 'Ziel' : 'Ziele'}
+            </span>
           </div>
         </div>
 
@@ -121,7 +94,7 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({ category }) => {
               placeholder={categoryInfo.placeholder}
               rows={2}
               autoFocus
-              className="w-full text-base sm:text-sm p-3 sm:p-2.5 rounded-xl border border-stone-300 dark:border-stone-600 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/30"
+              className="w-full text-base sm:text-sm p-3 sm:p-2.5 rounded-xl border border-stone-300 dark:border-stone-600 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-[#9123A6]/30 focus:border-[#9123A6]"
               onKeyDown={(e) => {
                 if (e.key === 'Enter' && !e.shiftKey) {
                   e.preventDefault();
@@ -140,7 +113,7 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({ category }) => {
               <button
                 type="submit"
                 disabled={!newGoalText.trim()}
-                className="px-4 py-2 sm:py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 disabled:opacity-50 text-white text-xs font-medium active:scale-95 transition-all shadow-2xs flex items-center gap-1.5"
+                className="px-4 py-2 sm:py-1.5 rounded-xl bg-gradient-to-r from-[#9123A6] to-[#D7195F] hover:from-[#7e1c91] hover:to-[#c21453] disabled:opacity-50 text-white text-xs font-medium active:scale-95 transition-all shadow-2xs flex items-center gap-1.5"
               >
                 <Check className="w-3.5 h-3.5" />
                 <span>{t.actions.save}</span>
@@ -184,7 +157,7 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({ category }) => {
             <span>{t.actions.addGoal}</span>
           </button>
           {goodCount > 0 && (
-            <span className="text-xs text-emerald-600 dark:text-emerald-400 font-medium">
+            <span className="text-xs text-[#9123A6] dark:text-[#f472b6] font-medium">
               {goodCount} / {categoryGoals.length} {t.stats.goalsCompleted}
             </span>
           )}

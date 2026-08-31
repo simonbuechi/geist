@@ -3,13 +3,10 @@ import {
   Calendar, 
   ChevronLeft, 
   ChevronRight, 
-  Sparkles, 
-  Sun, 
-  Moon, 
+  Sparkles,
   User as UserIcon 
 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
-import { useTheme } from '../context/ThemeContext';
 import { useAuth } from '../context/AuthContext';
 import { useGoals } from '../context/GoalsContext';
 import { 
@@ -27,18 +24,15 @@ interface HeaderProps {
   onOpenAuth: () => void;
   isHistoryView: boolean;
   onToggleHistory: () => void;
-  onReplayWelcome?: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
   onOpenReview,
   onOpenAuth,
   isHistoryView,
-  onToggleHistory,
-  onReplayWelcome
+  onToggleHistory
 }) => {
-  const { t, language, toggleLanguage } = useLanguage();
-  const { theme, toggleTheme } = useTheme();
+  const { t, language } = useLanguage();
   const { user } = useAuth();
   const { 
     currentWeekId, 
@@ -57,12 +51,8 @@ export const Header: React.FC<HeaderProps> = ({
           <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
             <button 
               onClick={() => {
-                if (onReplayWelcome) {
-                  onReplayWelcome();
-                } else {
-                  if (isHistoryView) onToggleHistory();
-                  goToCurrentWeek();
-                }
+                if (isHistoryView) onToggleHistory();
+                goToCurrentWeek();
               }}
               className="text-left group flex items-center gap-2.5 sm:gap-3 focus:outline-none min-w-0"
               aria-label="Home"
@@ -80,13 +70,13 @@ export const Header: React.FC<HeaderProps> = ({
           </div>
 
           {/* Right Action Icons */}
-          <div className="flex items-center gap-1 sm:gap-2 shrink-0">
+          <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
             {/* History Toggle */}
             <button
               onClick={onToggleHistory}
               title={t.history}
               aria-label={t.history}
-              className={`px-2.5 py-1.5 sm:px-3 rounded-xl text-xs sm:text-sm font-medium transition-all active:scale-95 min-h-[36px] flex items-center justify-center ${
+              className={`px-3 py-1.5 sm:px-3.5 rounded-xl text-xs sm:text-sm font-medium transition-all active:scale-95 min-h-[36px] flex items-center justify-center ${
                 isHistoryView
                   ? 'bg-gradient-to-r from-[#9123A6] to-[#D7195F] text-white shadow-sm'
                   : 'bg-stone-200/60 dark:bg-stone-800 text-stone-700 dark:text-stone-200 hover:bg-stone-300/60 dark:hover:bg-stone-700'
@@ -95,32 +85,12 @@ export const Header: React.FC<HeaderProps> = ({
               <span>{t.history}</span>
             </button>
 
-            {/* Language Switch */}
-            <button
-              onClick={toggleLanguage}
-              title={language === 'de' ? 'Switch to English' : 'Auf Deutsch wechseln'}
-              aria-label="Change Language"
-              className="w-9 h-9 sm:w-auto sm:h-auto sm:px-2.5 sm:py-1.5 rounded-xl text-xs font-bold uppercase tracking-wider bg-stone-200/60 dark:bg-stone-800 text-stone-700 dark:text-stone-300 hover:bg-stone-300/60 dark:hover:bg-stone-700 active:scale-95 transition-all flex items-center justify-center"
-            >
-              <span>{language}</span>
-            </button>
-
-            {/* Theme Toggle */}
-            <button
-              onClick={toggleTheme}
-              title={theme === 'dark' ? 'Light Mode' : 'Dark Mode'}
-              aria-label="Toggle Theme"
-              className="w-9 h-9 sm:w-auto sm:h-auto p-2 rounded-xl bg-stone-200/60 dark:bg-stone-800 text-stone-700 dark:text-stone-300 hover:bg-stone-300/60 dark:hover:bg-stone-700 active:scale-95 transition-all flex items-center justify-center"
-            >
-              {theme === 'dark' ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-stone-600" />}
-            </button>
-
             {/* User / Settings Profile */}
             <button
               onClick={onOpenAuth}
               title={user ? `${user.displayName || user.email || 'Konto'} (Angemeldet)` : `${t.auth.guestMode} (Lokal)`}
-              aria-label="User Profile"
-              className="relative w-9 h-9 sm:w-auto sm:h-auto p-2 rounded-xl bg-stone-200/60 dark:bg-stone-800 text-stone-700 dark:text-stone-300 hover:bg-stone-300/60 dark:hover:bg-stone-700 active:scale-95 transition-all flex items-center justify-center"
+              aria-label="Settings and Profile"
+              className="relative w-9 h-9 sm:w-auto sm:h-auto p-2 rounded-xl bg-stone-200/60 dark:bg-stone-800 text-stone-700 dark:text-stone-300 hover:bg-stone-300/60 dark:hover:bg-stone-700 active:scale-95 transition-all flex items-center justify-center min-h-[36px]"
             >
               {user?.photoURL ? (
                 <img src={user.photoURL} alt="Avatar" className="w-5 h-5 rounded-full object-cover" />
@@ -154,10 +124,10 @@ export const Header: React.FC<HeaderProps> = ({
               <div className="flex items-center justify-center gap-1.5 sm:gap-2 px-2.5 py-1.5 rounded-xl bg-white/70 dark:bg-stone-900/70 border border-stone-200/60 dark:border-stone-800/60 shadow-2xs flex-1 sm:flex-initial min-w-0">
                 <Calendar className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#9123A6] dark:text-[#f1add4] shrink-0" />
                 <span className="text-xs sm:text-sm font-semibold text-stone-900 dark:text-stone-100 whitespace-nowrap">
-                  {t.calendarWeek} {weekNumber}
+                  {t.week} {weekNumber}
                 </span>
-                <span className="text-stone-400 dark:text-stone-600 text-xs hidden xs:inline">•</span>
-                <span className="text-2xs sm:text-xs text-stone-600 dark:text-stone-300 truncate hidden xs:inline">
+                <span className="text-stone-400 dark:text-stone-600 text-xs shrink-0">•</span>
+                <span className="text-2xs sm:text-xs text-stone-600 dark:text-stone-300 truncate font-medium">
                   {formatWeekRange(startDate, endDate, language)}
                 </span>
               </div>

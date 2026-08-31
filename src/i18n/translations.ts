@@ -4,7 +4,7 @@ export const translations = {
     appShort: 'KGS',
     tagline: 'Wöchentliche Ausrichtung für ein harmonisches Leben',
     currentWeek: 'Aktuelle Woche',
-    calendarWeek: 'Kalenderwoche',
+    calendarWeek: 'Woche',
     week: 'Woche',
     history: 'Verlauf',
     historyTitle: 'Vergangene Wochen',
@@ -90,6 +90,16 @@ export const translations = {
       signedInAs: 'Angemeldet als',
       offlineActive: 'Offline-Speicher aktiv'
     },
+    settings: {
+      title: 'Einstellungen & Profil',
+      appearance: 'Erscheinungsbild & Sprache',
+      theme: 'Farbschema',
+      light: 'Hell',
+      dark: 'Dunkel',
+      language: 'Sprache',
+      german: 'Deutsch',
+      english: 'English'
+    },
     pwa: {
       installTitle: 'KGS als App installieren',
       installDesc: 'Nutze Körper Geist Seele direkt auf deinem Home-Bildschirm – schnell, offline-fähig & ablenkungsfrei.',
@@ -102,14 +112,31 @@ export const translations = {
       notCompleted: 'Offen/Kaum',
       balance: 'Balance'
     },
-    emptyCategory: 'Noch keine Ziele für diesen Bereich festgelegt. Klicke auf "+", um ein neues Ziel hinzuzufügen.'
+    emptyCategory: 'Noch keine Ziele für diesen Bereich festgelegt. Klicke auf "+", um ein neues Ziel hinzuzufügen.',
+    notifications: {
+      title: 'Erinnerungen & Benachrichtigungen',
+      subtitle: 'Lass dich sonntags und montags an deinen Wochenrückblick erinnern.',
+      pushTitle: 'Push-Benachrichtigungen',
+      pushDesc: 'Browser- & Smartphone-Mitteilungen auf deinem Sperrbildschirm.',
+      emailTitle: 'E-Mail-Erinnerungen',
+      emailDesc: 'Erinnerungen per E-Mail an:',
+      scheduleInfo: 'Sonntag 17:00 Uhr (Wochenrückblick) & Montag 17:00 Uhr (Follow-up, falls noch offen).',
+      iosNotice: 'iPhone / iPad Hinweis: Öffne das Teilen-Menü in Safari und wähle "Zum Home-Bildschirm", um Benachrichtigungen zu aktivieren.',
+      permissionDenied: 'Benachrichtigungen sind blockiert. Bitte erlaube sie in deinen Browser-Einstellungen.',
+      notSupported: 'Push-Benachrichtigungen werden von diesem Browser leider nicht unterstützt.',
+      sendTestPush: 'Test-Benachrichtigung senden',
+      testPushSent: 'Test-Mitteilung gesendet!',
+      statusEnabled: 'Aktiviert',
+      statusDisabled: 'Deaktiviert',
+      loginRequired: 'Melde dich an, um automatische Erinnerungen zu aktivieren.'
+    }
   },
   en: {
     appTitle: 'Body Mind Soul',
     appShort: 'BMS',
     tagline: 'Weekly alignment for a harmonious life',
     currentWeek: 'Current Week',
-    calendarWeek: 'Calendar Week',
+    calendarWeek: 'Week',
     week: 'Week',
     history: 'History',
     historyTitle: 'Past Weeks',
@@ -195,6 +222,16 @@ export const translations = {
       signedInAs: 'Signed in as',
       offlineActive: 'Offline Storage Active'
     },
+    settings: {
+      title: 'Settings & Profile',
+      appearance: 'Appearance & Language',
+      theme: 'Theme',
+      light: 'Light',
+      dark: 'Dark',
+      language: 'Language',
+      german: 'Deutsch',
+      english: 'English'
+    },
     pwa: {
       installTitle: 'Install KGS as an App',
       installDesc: 'Add Body Mind Soul to your home screen for quick, offline-ready and distraction-free access.',
@@ -207,6 +244,23 @@ export const translations = {
       notCompleted: 'Pending/Hardly',
       balance: 'Balance'
     },
-    emptyCategory: 'No goals set for this dimension yet. Click "+" to set your first goal.'
+    emptyCategory: 'No goals set for this dimension yet. Click "+" to set your first goal.',
+    notifications: {
+      title: 'Reminders & Notifications',
+      subtitle: 'Receive mindful nudges on Sunday & Monday to review your week.',
+      pushTitle: 'Push Notifications',
+      pushDesc: 'Browser and smartphone alerts on your lock screen.',
+      emailTitle: 'Email Reminders',
+      emailDesc: 'Email reminders sent to:',
+      scheduleInfo: 'Sunday 17:00 (Weekly Review) & Monday 17:00 (Follow-up if review is still pending).',
+      iosNotice: 'iPhone / iPad note: In Safari, tap Share and select "Add to Home Screen" to enable push notifications.',
+      permissionDenied: 'Notifications are blocked. Please allow them in your browser settings.',
+      notSupported: 'Push notifications are unfortunately not supported in this browser.',
+      sendTestPush: 'Send Test Notification',
+      testPushSent: 'Test notification sent!',
+      statusEnabled: 'Enabled',
+      statusDisabled: 'Disabled',
+      loginRequired: 'Sign in to enable automatic reminders across your devices.'
+    }
   }
 };

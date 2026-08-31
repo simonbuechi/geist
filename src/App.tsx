@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ThemeProvider } from './context/ThemeContext';
 import { LanguageProvider } from './context/LanguageContext';
 import { AuthProvider } from './context/AuthContext';
@@ -9,7 +9,7 @@ import { ReviewModal } from './components/ReviewModal';
 import { HistoryView } from './components/HistoryView';
 import { AuthModal } from './components/AuthModal';
 import { PwaInstallBanner } from './components/PwaInstallBanner';
-import { WelcomeAnimation } from './components/WelcomeAnimation';
+import { setupForegroundNotificationListener } from './config/notifications';
 
 import { Sparkles } from 'lucide-react';
 import { useLanguage } from './context/LanguageContext';
@@ -22,19 +22,38 @@ type CategoryFilter = 'all' | Category;
 const MainDashboard: React.FC = () => {
   const { t } = useLanguage();
   const { currentWeekPlan } = useGoals();
-  const [isReviewOpen, setIsReviewOpen] = useState(false);
+  const [isReviewOpen, setIsReviewOpen] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      return params.get('action') === 'review';
+    }
+    return false;
+  });
   const [isAuthOpen, setIsAuthOpen] = useState(false);
   const [isHistoryView, setIsHistoryView] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<CategoryFilter>('all');
-  const [showWelcome, setShowWelcome] = useState(() => {
-    if (typeof window !== 'undefined' && window.location.search.includes('welcome')) return true;
-    return !sessionStorage.getItem('kgs_welcome_seen');
-  });
 
-  const handleWelcomeComplete = () => {
-    sessionStorage.setItem('kgs_welcome_seen', 'true');
-    setShowWelcome(false);
-  };
+  // Clean URL parameter if opened via action=review
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('action') === 'review') {
+        const cleanUrl = window.location.pathname + window.location.hash;
+        window.history.replaceState({}, '', cleanUrl);
+      }
+    }
+  }, []);
+
+  // Foreground push message listener
+  useEffect(() => {
+    const unsubscribe = setupForegroundNotificationListener((payload) => {
+      console.log('Foreground push notification received:', payload);
+      if (payload.data?.url?.includes('action=review')) {
+        setIsReviewOpen(true);
+      }
+    });
+    return () => unsubscribe();
+  }, []);
 
   const goals = currentWeekPlan.goals || [];
   const bodyGoals = goals.filter(g => g.category === 'body');
@@ -57,38 +76,37 @@ const MainDashboard: React.FC = () => {
     { 
       id: 'body', 
       label: t.categories.body.title, 
-      icon: <CategoryIcon category="body" size={14} className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />,
+      icon: <CategoryIcon category="body" size={14} className="w-3.5 h-3.5 text-[#9123A6] dark:text-[#f472b6]" />,
       count: bodyGoals.length,
       completed: bodyGoals.filter(g => g.status === 'good').length,
-      accentColor: 'text-emerald-700 dark:text-emerald-300'
+      accentColor: 'text-[#9123A6] dark:text-[#f472b6]'
     },
     { 
       id: 'mind', 
       label: t.categories.mind.title, 
-      icon: <CategoryIcon category="mind" size={14} className="w-3.5 h-3.5 text-sky-600 dark:text-sky-400" />,
+      icon: <CategoryIcon category="mind" size={14} className="w-3.5 h-3.5 text-[#9123A6] dark:text-[#f472b6]" />,
       count: mindGoals.length,
       completed: mindGoals.filter(g => g.status === 'good').length,
-      accentColor: 'text-sky-700 dark:text-sky-300'
+      accentColor: 'text-[#9123A6] dark:text-[#f472b6]'
     },
     { 
       id: 'soul', 
       label: t.categories.soul.title, 
-      icon: <CategoryIcon category="soul" size={14} className="w-3.5 h-3.5 text-rose-600 dark:text-rose-400" />,
+      icon: <CategoryIcon category="soul" size={14} className="w-3.5 h-3.5 text-[#9123A6] dark:text-[#f472b6]" />,
       count: soulGoals.length,
       completed: soulGoals.filter(g => g.status === 'good').length,
-      accentColor: 'text-rose-700 dark:text-rose-300'
+      accentColor: 'text-[#9123A6] dark:text-[#f472b6]'
     },
   ];
 
   return (
     <div className="min-h-screen flex flex-col bg-stone-50/50 dark:bg-[#121614] transition-colors selection:bg-brand-500 selection:text-white relative">
-      <div className={`flex-1 flex flex-col transition-all duration-500 ${showWelcome ? 'filter blur-lg pointer-events-none select-none' : 'filter blur-0'}`}>
+      <div className="flex-1 flex flex-col">
         <Header
           onOpenReview={() => setIsReviewOpen(true)}
           onOpenAuth={() => setIsAuthOpen(true)}
           isHistoryView={isHistoryView}
           onToggleHistory={() => setIsHistoryView(!isHistoryView)}
-          onReplayWelcome={() => setShowWelcome(true)}
         />
 
         <main className="flex-1 max-w-6xl w-full mx-auto px-3.5 sm:px-6 py-4 sm:py-6 flex flex-col gap-4 sm:gap-6 pb-24 md:pb-6">
@@ -180,11 +198,6 @@ const MainDashboard: React.FC = () => {
       />
 
       <PwaInstallBanner />
-
-      {/* Welcome Splash Screen Animation */}
-      {showWelcome && (
-        <WelcomeAnimation onComplete={handleWelcomeComplete} />
-      )}
     </div>
   );
 };
