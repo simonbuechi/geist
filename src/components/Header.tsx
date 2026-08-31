@@ -127,7 +127,7 @@ export const Header: React.FC<HeaderProps> = ({
                   {t.week} {weekNumber}
                 </span>
                 <span className="text-stone-400 dark:text-stone-600 text-xs shrink-0">•</span>
-                <span className="text-2xs sm:text-xs text-stone-600 dark:text-stone-300 truncate font-medium">
+                <span className="text-xs text-stone-600 dark:text-stone-300 truncate font-medium">
                   {formatWeekRange(startDate, endDate, language)}
                 </span>
               </div>

@@ -103,13 +103,14 @@ fontFamily: {
 
 | Role | Class | Font & Weight | Size / Line Height | Usage Example |
 | :--- | :--- | :--- | :--- | :--- |
-| **Display / Hero** | `text-xl sm:text-2xl` | Playfair Display, Bold | 24px–28px, tight | App Title, Modal Titles |
-| **Section Heading** | `text-lg sm:text-xl` | Playfair Display, Bold | 18px–20px, tight | Category Titles (Körper, Geist, Seele) |
+| **Display / Hero** | `text-lg sm:text-2xl` | Playfair Display, SemiBold/Bold | 18px–24px, tight | App Title |
+| **Section & Modal Heading** | `text-base sm:text-xl` | Playfair Display, Bold | 16px–20px, tight | Category Titles (Körper, Geist, Seele), Modal Titles |
 | **Subsection Heading** | `text-sm sm:text-base` | Plus Jakarta Sans, SemiBold | 14px–16px, snug | Week List Item, Group Titles |
-| **Body / Goal Item** | `text-sm font-normal` | Plus Jakarta Sans, Regular | 14px, relaxed (1.5) | Goal descriptions, modal instructions |
+| **Body & Goal Items** | `text-sm` | Plus Jakarta Sans, Regular | 14px, relaxed (1.5) | Goal descriptions, modal instructions |
+| **Form Inputs & Textareas** | `text-sm` / `text-xs` | Plus Jakarta Sans, Regular | 12px–14px | Goal textareas (`text-sm`), comments & config (`text-xs`) |
 | **Button / Navigation** | `text-xs sm:text-sm` | Plus Jakarta Sans, Medium/SemiBold | 12px–14px | Actions, Nav links, Date badges |
 | **Badges & Counters** | `text-xs font-medium` | Plus Jakarta Sans, Medium | 12px | Goal counts (e.g. "3 Ziele") |
-| **Micro-Copy / Dates** | `text-2xs sm:text-xs` | Plus Jakarta Sans, Medium | 10px–12px | Week date ranges, timestamps, input hints |
+| **Dates & Metadata** | `text-xs` | Plus Jakarta Sans, Medium | 12px | Week date ranges, timestamps, input hints |
 
 ---
 

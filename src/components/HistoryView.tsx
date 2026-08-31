@@ -55,10 +55,10 @@ export const HistoryView: React.FC<HistoryViewProps> = ({ onClose }) => {
             <ArrowLeft className="w-4 h-4" />
           </button>
           <div>
-            <h2 className="text-xl sm:text-2xl font-serif font-bold text-stone-900 dark:text-stone-50">
+            <h2 className="text-lg sm:text-xl font-serif font-bold text-stone-900 dark:text-stone-50">
               {t.historyTitle}
             </h2>
-            <p className="text-2xs sm:text-xs text-stone-500 dark:text-stone-400 font-sans">
+            <p className="text-xs text-stone-500 dark:text-stone-400 font-sans">
               Deine bisherigen Wochen und Erfolge im Rückblick
             </p>
           </div>
@@ -108,7 +108,7 @@ export const HistoryView: React.FC<HistoryViewProps> = ({ onClose }) => {
                           </span>
                         )}
                       </h4>
-                      <p className="text-2xs sm:text-xs text-stone-500 dark:text-stone-400 truncate">
+                      <p className="text-xs text-stone-500 dark:text-stone-400 truncate">
                         {formatWeekRange(startDate, endDate, language)}
                       </p>
                     </div>
@@ -116,7 +116,7 @@ export const HistoryView: React.FC<HistoryViewProps> = ({ onClose }) => {
 
                   {/* Goal Outcome Pills */}
                   <div className="flex items-center gap-2 sm:gap-4 ml-auto shrink-0">
-                    <div className="flex items-center gap-1.5 sm:gap-2 text-2xs sm:text-xs font-medium">
+                    <div className="flex items-center gap-1.5 sm:gap-2 text-xs font-medium">
                       <span className="flex items-center gap-0.5 text-emerald-600 dark:text-emerald-400">
                         <CheckCircle2 className="w-3.5 h-3.5" />
                         {goodCount}
@@ -131,7 +131,7 @@ export const HistoryView: React.FC<HistoryViewProps> = ({ onClose }) => {
                       </span>
                     </div>
 
-                    <div className="px-2.5 py-1 rounded-xl bg-stone-100 dark:bg-stone-800 text-2xs sm:text-xs font-semibold text-stone-700 dark:text-stone-300">
+                    <div className="px-2.5 py-1 rounded-xl bg-stone-100 dark:bg-stone-800 text-xs font-semibold text-stone-700 dark:text-stone-300">
                       {goals.length} {t.historyView.totalGoals}
                     </div>
 

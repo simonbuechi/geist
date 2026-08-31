@@ -59,7 +59,7 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({ category }) => {
             {theme.icon}
           </div>
           <div className="flex items-center gap-2">
-            <h2 className="text-lg sm:text-xl font-serif font-bold tracking-tight text-stone-900 dark:text-stone-50">
+            <h2 className="text-base sm:text-lg font-serif font-bold tracking-tight text-stone-900 dark:text-stone-50">
               {categoryInfo.title}
             </h2>
             <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${theme.badgeBg}`}>
@@ -94,7 +94,7 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({ category }) => {
               placeholder={categoryInfo.placeholder}
               rows={2}
               autoFocus
-              className="w-full text-base sm:text-sm p-3 sm:p-2.5 rounded-xl border border-stone-300 dark:border-stone-600 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-[#9123A6]/30 focus:border-[#9123A6]"
+              className="w-full text-sm p-2.5 sm:p-3 rounded-xl border border-stone-300 dark:border-stone-600 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-[#9123A6]/30 focus:border-[#9123A6]"
               onKeyDown={(e) => {
                 if (e.key === 'Enter' && !e.shiftKey) {
                   e.preventDefault();

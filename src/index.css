@@ -8,13 +8,6 @@
     -webkit-text-size-adjust: 100%;
     -webkit-tap-highlight-color: transparent;
   }
-
-  /* Prevent auto-zoom on iOS inputs when focused */
-  @media (max-width: 640px) {
-    input, textarea, select {
-      font-size: 16px;
-    }
-  }
   
   /* Mindful subtle custom scrollbars */
   ::-webkit-scrollbar {

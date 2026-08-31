@@ -125,7 +125,7 @@ export const ReviewModal: React.FC<ReviewModalProps> = ({ isOpen, onClose }) => 
               <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 text-amber-300" />
             </div>
             <div>
-              <h3 className="text-lg sm:text-2xl font-serif font-bold tracking-tight">
+              <h3 className="text-base sm:text-xl font-serif font-bold tracking-tight">
                 {t.reviewModal.title}
               </h3>
               <p className="text-xs sm:text-sm text-pink-100/90 font-sans">
@@ -148,7 +148,7 @@ export const ReviewModal: React.FC<ReviewModalProps> = ({ isOpen, onClose }) => 
             <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-pink-100 dark:bg-pink-950 flex items-center justify-center text-[#9123A6] dark:text-[#f472b6] shadow-md shrink-0">
               <Check className="w-7 h-7 sm:w-8 sm:h-8" />
             </div>
-            <h4 className="text-xl sm:text-2xl font-serif font-bold text-stone-900 dark:text-stone-50">
+            <h4 className="text-lg sm:text-xl font-serif font-bold text-stone-900 dark:text-stone-50">
               {t.reviewModal.successMessage}
             </h4>
             <p className="text-xs sm:text-sm text-stone-600 dark:text-stone-400 max-w-md">
@@ -257,7 +257,7 @@ export const ReviewModal: React.FC<ReviewModalProps> = ({ isOpen, onClose }) => 
                               value={currentEval.comment}
                               onChange={(e) => handleCommentChange(goal.id, e.target.value)}
                               placeholder="Kurze Reflexion zu diesem Ziel..."
-                              className="w-full text-base sm:text-xs p-2 sm:p-2 rounded-xl border border-stone-300 dark:border-stone-600 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 placeholder-stone-400 focus:outline-none focus:ring-1 focus:ring-emerald-500"
+                              className="w-full text-xs p-2 rounded-xl border border-stone-300 dark:border-stone-600 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 placeholder-stone-400 focus:outline-none focus:ring-1 focus:ring-emerald-500"
                             />
                           </div>
 
@@ -290,7 +290,7 @@ export const ReviewModal: React.FC<ReviewModalProps> = ({ isOpen, onClose }) => 
                   onChange={(e) => setGeneralReflection(e.target.value)}
                   placeholder={t.reviewModal.generalReflectionPlaceholder}
                   rows={3}
-                  className="w-full text-base sm:text-sm p-3 rounded-2xl border border-stone-300 dark:border-stone-600 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 font-sans"
+                  className="w-full text-sm p-3 rounded-2xl border border-stone-300 dark:border-stone-600 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 font-sans"
                 />
               </div>
             </div>

@@ -191,7 +191,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
             <div className="p-2 rounded-xl bg-purple-100 dark:bg-purple-950 text-[#9123A6] dark:text-[#f472b6]">
               <Settings className="w-5 h-5" />
             </div>
-            <h3 className="text-lg font-serif font-bold text-stone-900 dark:text-stone-100">
+            <h3 className="text-base sm:text-lg font-serif font-bold text-stone-900 dark:text-stone-100">
               {t.settings.title}
             </h3>
           </div>
@@ -288,28 +288,28 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                 placeholder="API Key"
                 value={apiKey}
                 onChange={(e) => setApiKey(e.target.value)}
-                className="w-full text-base sm:text-xs p-2.5 sm:p-2 rounded-xl border border-stone-300 dark:border-stone-600 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100"
+                className="w-full text-xs p-2 rounded-xl border border-stone-300 dark:border-stone-600 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100"
               />
               <input
                 type="text"
                 placeholder="Project ID"
                 value={projectId}
                 onChange={(e) => setProjectId(e.target.value)}
-                className="w-full text-base sm:text-xs p-2.5 sm:p-2 rounded-xl border border-stone-300 dark:border-stone-600 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100"
+                className="w-full text-xs p-2 rounded-xl border border-stone-300 dark:border-stone-600 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100"
               />
               <input
                 type="text"
                 placeholder="Auth Domain (optional)"
                 value={authDomain}
                 onChange={(e) => setAuthDomain(e.target.value)}
-                className="w-full text-base sm:text-xs p-2.5 sm:p-2 rounded-xl border border-stone-300 dark:border-stone-600 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100"
+                className="w-full text-xs p-2 rounded-xl border border-stone-300 dark:border-stone-600 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100"
               />
               <input
                 type="text"
                 placeholder="App ID (optional)"
                 value={appId}
                 onChange={(e) => setAppId(e.target.value)}
-                className="w-full text-base sm:text-xs p-2.5 sm:p-2 rounded-xl border border-stone-300 dark:border-stone-600 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100"
+                className="w-full text-xs p-2 rounded-xl border border-stone-300 dark:border-stone-600 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100"
               />
               <div className="flex items-center justify-between pt-1">
                 {saveSuccess ? (
