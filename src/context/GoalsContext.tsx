@@ -10,6 +10,12 @@ import {
   syncWeekPlanToFirestore, 
   fetchUserWeekPlansFromFirestore 
 } from '../config/firebase';
+import {
+  getStorageKey,
+  GUEST_STORAGE_KEY,
+  LEGACY_STORAGE_KEY,
+  mergeAllWeekPlans
+} from '../utils/planSyncUtils';
 
 interface GoalsContextType {
   currentWeekId: string; // The currently selected/viewed week ID (e.g. 2026-W35)
@@ -42,7 +48,25 @@ interface GoalsContextType {
   importData: (jsonStr: string) => boolean;
 }
 
-const LOCAL_STORAGE_KEY_PLANS = 'kgs_week_plans';
+function loadPlansFromStorage(userId?: string | null): Record<string, WeekPlan> | null {
+  try {
+    const key = getStorageKey(userId);
+    const saved = localStorage.getItem(key);
+    if (saved) {
+      return JSON.parse(saved);
+    }
+    // Backward-compatibility: if reading guest and legacy key exists, load legacy key
+    if (!userId) {
+      const legacy = localStorage.getItem(LEGACY_STORAGE_KEY);
+      if (legacy) {
+        return JSON.parse(legacy);
+      }
+    }
+  } catch (e) {
+    console.error('Failed to load week plans from storage', e);
+  }
+  return null;
+}
 
 function createDefaultWeekPlan(weekId: string): WeekPlan {
   const { year, weekNumber, startDate, endDate } = parseWeekId(weekId);
@@ -95,13 +119,9 @@ export const GoalsProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const realCurrentWeekId = getWeekId(new Date());
   const [selectedWeekId, setSelectedWeekId] = useState<string>(realCurrentWeekId);
   const [weekPlans, setWeekPlans] = useState<Record<string, WeekPlan>>(() => {
-    try {
-      const saved = localStorage.getItem(LOCAL_STORAGE_KEY_PLANS);
-      if (saved) {
-        return JSON.parse(saved);
-      }
-    } catch (e) {
-      console.error('Failed to load local week plans', e);
+    const saved = loadPlansFromStorage(user?.uid);
+    if (saved && Object.keys(saved).length > 0) {
+      return saved;
     }
     
     // First time setup with starter sample goals for current week
@@ -111,55 +131,128 @@ export const GoalsProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   });
   
   const [loading, setLoading] = useState(false);
+  const prevUserUidRef = React.useRef<string | null | undefined>(user?.uid);
 
-  // Sync state to LocalStorage
+  // Sync state to namespaced LocalStorage
   useEffect(() => {
     try {
-      localStorage.setItem(LOCAL_STORAGE_KEY_PLANS, JSON.stringify(weekPlans));
+      const key = getStorageKey(user?.uid);
+      localStorage.setItem(key, JSON.stringify(weekPlans));
     } catch (e) {
       console.error('Failed to save week plans to localStorage', e);
     }
-  }, [weekPlans]);
+  }, [weekPlans, user?.uid]);
 
-  // Sync with Firestore when user signs in
+  // Handle User Login / Logout / Sync with Firestore
   useEffect(() => {
-    if (!user) return;
-    let isMounted = true;
-    const currentUid = user.uid;
+    const prevUid = prevUserUidRef.current;
+    const currentUid = user?.uid;
+    prevUserUidRef.current = currentUid;
 
-    async function loadCloudData() {
+    // 1. User logged out
+    if (!currentUid) {
+      if (prevUid) {
+        // Switched from authenticated to guest -> reset to clean guest data
+        const guestData = loadPlansFromStorage(null);
+        if (guestData && Object.keys(guestData).length > 0) {
+          setWeekPlans(guestData);
+        } else {
+          const initialPlan = createDefaultWeekPlan(realCurrentWeekId);
+          initialPlan.goals = INITIAL_STARTER_GOALS;
+          setWeekPlans({ [realCurrentWeekId]: initialPlan });
+        }
+      }
+      return;
+    }
+
+    // 2. User logged in (currentUid is present)
+    const uid = currentUid;
+    let isMounted = true;
+
+    async function handleLoginSync() {
       setLoading(true);
       try {
-        const cloudPlans = await fetchUserWeekPlansFromFirestore(currentUid);
+        // A. Read guest storage (offline data created before login)
+        const guestPlans = loadPlansFromStorage(null) || {};
+        // Also read any cached plans for this user from before
+        const userCachedPlans = loadPlansFromStorage(uid) || {};
+        const localCombined = { ...userCachedPlans, ...guestPlans };
+
+        // B. Fetch user cloud plans from Firestore
+        const cloudPlans = await fetchUserWeekPlansFromFirestore(uid);
         if (!isMounted) return;
 
-        setWeekPlans(prev => {
-          // Merge cloud & local (cloud wins if newer)
-          const merged = { ...prev };
-          Object.entries(cloudPlans).forEach(([id, plan]) => {
-            if (!merged[id] || (plan.updatedAt || 0) >= (merged[id].updatedAt || 0)) {
-              merged[id] = plan;
-            }
-          });
-          return merged;
-        });
+        // C. Deep merge offline/guest/cached plans with cloud plans
+        const { mergedPlans, plansToUpload } = mergeAllWeekPlans(localCombined, cloudPlans);
+
+        // If completely empty, initialize current week
+        if (Object.keys(mergedPlans).length === 0) {
+          const initialPlan = createDefaultWeekPlan(realCurrentWeekId);
+          initialPlan.goals = INITIAL_STARTER_GOALS;
+          mergedPlans[realCurrentWeekId] = initialPlan;
+        }
+
+        // D. Save merged plans to user's namespaced storage immediately
+        try {
+          const userKey = getStorageKey(uid);
+          localStorage.setItem(userKey, JSON.stringify(mergedPlans));
+        } catch (e) {
+          console.error('Failed to save merged plans to user storage', e);
+        }
+
+        // E. Push newly created offline/guest plans to Firestore
+        if (plansToUpload.length > 0) {
+          await Promise.all(
+            plansToUpload.map(plan => 
+              syncWeekPlanToFirestore(uid, plan).catch(err =>
+                console.warn(`Could not sync week ${plan.id} to Firestore:`, err)
+              )
+            )
+          );
+        }
+
+        // F. Clear guest storage and legacy storage so guest state is clean on subsequent logout
+        try {
+          localStorage.removeItem(GUEST_STORAGE_KEY);
+          localStorage.removeItem(LEGACY_STORAGE_KEY);
+        } catch (e) {
+          console.warn('Could not remove guest storage keys:', e);
+        }
+
+        if (isMounted) {
+          setWeekPlans(mergedPlans);
+        }
       } catch (e) {
-        console.error('Failed to load cloud plans', e);
+        console.error('Failed to handle cloud sync on login', e);
       } finally {
-        if (isMounted) setLoading(false);
+        if (isMounted) {
+          setLoading(false);
+        }
       }
     }
 
-    loadCloudData();
-    return () => { isMounted = false; };
-  }, [user]);
+    handleLoginSync();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [user?.uid, realCurrentWeekId]);
 
   // Persist a modified week plan locally and to Firestore
   const persistPlan = useCallback(async (updatedPlan: WeekPlan) => {
-    setWeekPlans(prev => ({
-      ...prev,
-      [updatedPlan.id]: updatedPlan
-    }));
+    setWeekPlans(prev => {
+      const next = {
+        ...prev,
+        [updatedPlan.id]: updatedPlan
+      };
+      try {
+        const storageKey = getStorageKey(user?.uid);
+        localStorage.setItem(storageKey, JSON.stringify(next));
+      } catch (e) {
+        console.error('Failed to save plan to localStorage:', e);
+      }
+      return next;
+    });
 
     if (user?.uid) {
       try {
@@ -168,7 +261,7 @@ export const GoalsProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         console.warn('Could not sync to cloud immediately (offline/error):', err);
       }
     }
-  }, [user]);
+  }, [user?.uid]);
 
   // Ensure current week plan exists
   const currentWeekPlan: WeekPlan = weekPlans[selectedWeekId] || createDefaultWeekPlan(selectedWeekId);
