@@ -86,6 +86,31 @@ KGS is fully functional immediately without any setup in local Guest Mode. To en
   - `ReviewModal.tsx` — Weekly reflection dialog with rating chips, comments, and rollover selection.
   - `HistoryView.tsx` — Chronological timeline of completed past weeks.
   - `WeeklyBalanceWidget.tsx` — Harmony score and dimensional balance indicators.
-  - `AuthModal.tsx` — Google Sign-In, Firebase connection modal, and JSON import/export.
+  - `AuthModal.tsx` — Google Sign-In, notification settings, Firebase connection modal, and JSON import/export.
   - `PwaInstallBanner.tsx` — Install prompt banner for mobile and desktop.
+
+---
+
+## Reminders & Notifications (Web Push + Email)
+
+KGS includes an automated reminder system for weekly reflection:
+1. **Sunday 17:00**: *"Review your week now"* — Mindful nudge to complete your review.
+2. **Monday 17:00 (Conditional)**: *"Forgot something?"* — **Only triggered if the previous week was not reviewed**.
+
+### Features:
+- **Web Push Notifications (FCM)**: Native lock screen & tray notifications on Android, macOS, and Windows. On iOS (iPhone/iPad, iOS 16.4+), users simply add the PWA to their Home Screen ("Share" -> "Add to Home Screen").
+- **Transactional Email Reminders**: Responsive, mindful HTML email reminders delivered via [Resend](https://resend.com).
+- **Deep Linking**: Notification and email links open the PWA directly with `?action=review` to immediately display the Review Modal.
+
+### Deploying Cloud Functions:
+```bash
+# 1. Install dependencies
+cd functions && npm install
+
+# 2. Build TypeScript
+npm run build
+
+# 3. Deploy functions to Firebase
+firebase deploy --only functions
+```
 

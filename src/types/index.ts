@@ -34,3 +34,19 @@ export interface UserProfile {
 
 export type Language = 'de' | 'en';
 export type ThemeMode = 'light' | 'dark';
+
+export interface UserFcmToken {
+  token: string;
+  createdAt: number;
+  lastUsedAt: number;
+  userAgent?: string;
+}
+
+export interface NotificationPreferences {
+  pushEnabled: boolean;
+  emailEnabled: boolean;
+  emailAddress?: string;
+  reminderTimeSunday: string; // e.g. "17:00"
+  reminderTimeMonday: string; // e.g. "17:00"
+  updatedAt?: number;
+}
