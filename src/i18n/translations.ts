@@ -11,15 +11,19 @@ export const translations = {
     backToCurrentWeek: 'Zur aktuellen Woche',
     reviewAndPlan: 'Rückblick & Neue Woche planen',
     reviewAndPlanShort: 'Rückblick & Planen',
+    viewReview: 'Wochenrückblick ansehen',
+    editReview: 'Rückblick bearbeiten',
+    reviewCompletedTitle: 'Wochenrückblick abgeschlossen',
+    reviewed: 'Reflektiert',
     reviewWeek: 'Wochenrückblick',
     planWeek: 'Woche planen',
     allCategories: 'Alle Bereiche',
     all: 'Alle',
     status: {
       pending: 'Offen',
-      good: 'Gut erreicht',
+      good: 'Erreicht',
       partly: 'Teilweise',
-      poor: 'Kaum / Nicht erreicht'
+      poor: 'Nicht erreicht'
     },
     categories: {
       body: {
@@ -91,8 +95,11 @@ export const translations = {
       offlineActive: 'Offline-Speicher aktiv'
     },
     settings: {
-      title: 'Einstellungen & Profil',
+      title: 'Einstellungen',
+      account: 'Konto & Synchronisierung',
       appearance: 'Erscheinungsbild & Sprache',
+      notifications: 'Benachrichtigungen',
+      data: 'Daten & Sicherung',
       theme: 'Farbschema',
       light: 'Hell',
       dark: 'Dunkel',
@@ -109,7 +116,7 @@ export const translations = {
     stats: {
       goalsCompleted: 'Erreicht',
       partlyCompleted: 'Teilweise',
-      notCompleted: 'Offen/Kaum',
+      notCompleted: 'Nicht erreicht',
       balance: 'Balance'
     },
     emptyCategory: 'Noch keine Ziele für diesen Bereich festgelegt. Klicke auf "+", um ein neues Ziel hinzuzufügen.',
@@ -128,7 +135,11 @@ export const translations = {
       testPushSent: 'Test-Mitteilung gesendet!',
       statusEnabled: 'Aktiviert',
       statusDisabled: 'Deaktiviert',
-      loginRequired: 'Melde dich an, um automatische Erinnerungen zu aktivieren.'
+      loginRequired: 'Melde dich an, um automatische Erinnerungen zu aktivieren.',
+      deviceActive: 'Dieses Gerät ist aktiv',
+      deviceNotRegistered: 'Dieses Gerät empfängt noch keine Mitteilungen',
+      enableCurrentDevice: 'Für dieses Gerät aktivieren',
+      devicesRegistered: 'Gerät(e) registriert'
     }
   },
   en: {
@@ -143,15 +154,19 @@ export const translations = {
     backToCurrentWeek: 'Back to Current Week',
     reviewAndPlan: 'Review & Plan Next Week',
     reviewAndPlanShort: 'Review & Plan',
+    viewReview: 'View Weekly Review',
+    editReview: 'Edit Review',
+    reviewCompletedTitle: 'Weekly Review Completed',
+    reviewed: 'Reviewed',
     reviewWeek: 'Weekly Review',
     planWeek: 'Plan Week',
     allCategories: 'All Dimensions',
     all: 'All',
     status: {
       pending: 'Pending',
-      good: 'Well achieved',
+      good: 'Achieved',
       partly: 'Partly',
-      poor: 'Hardly / Not achieved'
+      poor: 'Not achieved'
     },
     categories: {
       body: {
@@ -223,8 +238,11 @@ export const translations = {
       offlineActive: 'Offline Storage Active'
     },
     settings: {
-      title: 'Settings & Profile',
+      title: 'Settings',
+      account: 'Account & Cloud Sync',
       appearance: 'Appearance & Language',
+      notifications: 'Notifications',
+      data: 'Data & Backup',
       theme: 'Theme',
       light: 'Light',
       dark: 'Dark',
@@ -241,7 +259,7 @@ export const translations = {
     stats: {
       goalsCompleted: 'Achieved',
       partlyCompleted: 'Partly',
-      notCompleted: 'Pending/Hardly',
+      notCompleted: 'Not achieved',
       balance: 'Balance'
     },
     emptyCategory: 'No goals set for this dimension yet. Click "+" to set your first goal.',
@@ -260,7 +278,11 @@ export const translations = {
       testPushSent: 'Test notification sent!',
       statusEnabled: 'Enabled',
       statusDisabled: 'Disabled',
-      loginRequired: 'Sign in to enable automatic reminders across your devices.'
+      loginRequired: 'Sign in to enable automatic reminders across your devices.',
+      deviceActive: 'This device is active',
+      deviceNotRegistered: 'This device is not receiving notifications yet',
+      enableCurrentDevice: 'Enable on this device',
+      devicesRegistered: 'device(s) registered'
     }
   }
 };
