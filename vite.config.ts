@@ -10,7 +10,7 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.svg', 'apple-touch-icon.png', 'masked-icon.svg', 'logo.png', 'logo.webp', 'favicon.png', 'arm_flaticon.png'],
+      includeAssets: ['favicon.svg', 'apple-touch-icon.png', 'masked-icon.svg', 'logo.png', 'logo.webp', 'favicon.png'],
       manifest: {
         name: 'Körper Geist Seele',
         short_name: 'KGS',
@@ -50,9 +50,8 @@ export default defineConfig({
           if (id.includes('node_modules')) {
             if (id.includes('firebase')) return 'vendor-firebase';
             if (id.includes('react') || id.includes('scheduler')) return 'vendor-react';
-            if (id.includes('lottie')) return 'vendor-lottie';
             if (id.includes('lucide-react')) return 'vendor-icons';
-            if (id.includes('date-fns') || id.includes('canvas-confetti')) return 'vendor-utils';
+            if (id.includes('date-fns')) return 'vendor-utils';
             return 'vendor';
           }
         }

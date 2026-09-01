@@ -7,11 +7,6 @@ afterEach(() => {
   cleanup();
 });
 
-// Mock canvas-confetti
-vi.mock('canvas-confetti', () => ({
-  default: vi.fn(),
-}));
-
 // Mock window.matchMedia for theme detection
 Object.defineProperty(window, 'matchMedia', {
   writable: true,

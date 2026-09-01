@@ -44,6 +44,14 @@
   .bottom-safe {
     bottom: env(safe-area-inset-bottom, 0px);
   }
+  .text-2xs {
+    font-size: 0.6875rem !important; /* 11px */
+    line-height: 0.875rem !important; /* 14px */
+  }
+  .text-3xs {
+    font-size: 0.625rem !important; /* 10px */
+    line-height: 0.75rem !important; /* 12px */
+  }
 }
 
 /* Glassmorphism helpers */
@@ -53,140 +61,5 @@
 
 .glass-card {
   @apply bg-white/90 dark:bg-stone-900/90 backdrop-blur-sm border border-stone-200/70 dark:border-stone-800/70 shadow-sm transition-all duration-200;
-}
-
-/* Sacred Assembly Welcome Animation (1.5s) */
-@keyframes sacredDiscBlossom {
-  0% {
-    transform: scale(0.2);
-    opacity: 0;
-  }
-  60% {
-    transform: scale(1.05);
-    opacity: 1;
-  }
-  100% {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
-
-@keyframes sacredFlyTop {
-  0% {
-    transform: translate(0px, -280px) scale(0.2) rotate(-45deg);
-    opacity: 0;
-  }
-  20% {
-    opacity: 1;
-  }
-  85% {
-    transform: translate(0px, 8px) scale(1.05) rotate(2deg);
-    opacity: 1;
-  }
-  100% {
-    transform: translate(0px, 0px) scale(1) rotate(0deg);
-    opacity: 1;
-  }
-}
-
-@keyframes sacredFlyLeft {
-  0% {
-    transform: translate(-260px, 220px) scale(0.18) rotate(55deg);
-    opacity: 0;
-  }
-  20% {
-    opacity: 1;
-  }
-  85% {
-    transform: translate(6px, -4px) scale(1.04) rotate(-2deg);
-    opacity: 1;
-  }
-  100% {
-    transform: translate(0px, 0px) scale(1) rotate(0deg);
-    opacity: 1;
-  }
-}
-
-@keyframes sacredFlyRight {
-  0% {
-    transform: translate(260px, 220px) scale(0.18) rotate(-55deg);
-    opacity: 0;
-  }
-  20% {
-    opacity: 1;
-  }
-  85% {
-    transform: translate(-6px, -4px) scale(1.04) rotate(2deg);
-    opacity: 1;
-  }
-  100% {
-    transform: translate(0px, 0px) scale(1) rotate(0deg);
-    opacity: 1;
-  }
-}
-
-@keyframes sacredLockIn {
-  0%, 65% {
-    opacity: 0;
-    transform: scale(0.96);
-  }
-  72% {
-    opacity: 1;
-    transform: scale(1.04);
-  }
-  86% {
-    transform: scale(0.99);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-@keyframes sacredSheenGleam {
-  0%, 68% {
-    transform: translate(-450px, -450px) rotate(28deg);
-    opacity: 0;
-  }
-  74% {
-    opacity: 0.75;
-  }
-  92% {
-    opacity: 0.75;
-  }
-  100% {
-    transform: translate(750px, 750px) rotate(28deg);
-    opacity: 0;
-  }
-}
-
-.sacred-disc {
-  transform-origin: 496px 500.5px;
-  animation: sacredDiscBlossom 0.5s cubic-bezier(0.16, 1.2, 0.3, 1) forwards;
-}
-
-.sacred-lobe-top {
-  transform-origin: 496px 500.5px;
-  animation: sacredFlyTop 0.72s cubic-bezier(0.16, 1.15, 0.3, 1) 0.12s both;
-}
-
-.sacred-lobe-left {
-  transform-origin: 496px 500.5px;
-  animation: sacredFlyLeft 0.74s cubic-bezier(0.18, 1.15, 0.32, 1) 0.20s both;
-}
-
-.sacred-lobe-right {
-  transform-origin: 496px 500.5px;
-  animation: sacredFlyRight 0.72s cubic-bezier(0.2, 1.15, 0.35, 1) 0.28s both;
-}
-
-.sacred-emblem-lock {
-  transform-origin: 496px 500.5px;
-  animation: sacredLockIn 1.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-.sacred-sheen-beam {
-  transform-origin: 496px 500.5px;
-  animation: sacredSheenGleam 1.45s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
 }
 
