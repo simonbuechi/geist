@@ -9,6 +9,7 @@ import {
 } from 'firebase/auth';
 import { 
   getFirestore, 
+  initializeFirestore,
   doc, 
   setDoc, 
   collection, 
@@ -85,7 +86,13 @@ export function initFirebase() {
       app = getApp();
     }
     auth = getAuth(app);
-    db = getFirestore(app);
+    try {
+      db = initializeFirestore(app, {
+        ignoreUndefinedProperties: true
+      });
+    } catch {
+      db = getFirestore(app);
+    }
     googleProvider = new GoogleAuthProvider();
     googleProvider.setCustomParameters({ prompt: 'select_account' });
   } catch (err) {
@@ -105,10 +112,12 @@ export async function syncWeekPlanToFirestore(userId: string, weekPlan: WeekPlan
   if (!db || !userId) return;
   try {
     const planRef = doc(db, 'users', userId, 'weekPlans', weekPlan.id);
-    await setDoc(planRef, {
+    // Sanitize any undefined properties to guarantee reliable Firestore synchronization
+    const cleanedPlan = JSON.parse(JSON.stringify({
       ...weekPlan,
       updatedAt: Date.now()
-    }, { merge: true });
+    }));
+    await setDoc(planRef, cleanedPlan, { merge: true });
   } catch (err) {
     console.error('Error syncing week plan to Firestore:', err);
     throw err;

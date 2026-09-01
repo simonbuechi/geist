@@ -69,9 +69,9 @@ Used during weekly reviews and in status chips to reflect self-evaluations:
 
 | Status | Meaning | Text / Icon Color | Background (Light) | Background (Dark) |
 | :--- | :--- | :--- | :--- | :--- |
-| **Gut erreicht** (`good`) | Goal fully accomplished | `text-emerald-600 dark:text-emerald-400` | `bg-emerald-50 border-emerald-200` | `bg-emerald-950/60 border-emerald-800/60` |
+| **Erreicht** (`good`) | Goal accomplished | `text-emerald-600 dark:text-emerald-400` | `bg-emerald-50 border-emerald-200` | `bg-emerald-950/60 border-emerald-800/60` |
 | **Teilweise** (`partly`) | In progress / Partially met | `text-amber-600 dark:text-amber-400` | `bg-amber-50 border-amber-200` | `bg-amber-950/60 border-amber-800/60` |
-| **Kaum / Nicht** (`poor`) | Postponed or unachieved | `text-rose-600 dark:text-rose-400` | `bg-rose-50 border-rose-200` | `bg-rose-950/60 border-rose-800/60` |
+| **Nicht erreicht** (`poor`) | Postponed or unachieved | `text-rose-600 dark:text-rose-400` | `bg-rose-50 border-rose-200` | `bg-rose-950/60 border-rose-800/60` |
 | **Offen** (`pending`) | Active during current week | `text-stone-500 dark:text-stone-400` | `bg-stone-100 border-stone-200` | `bg-stone-800 border-stone-700` |
 
 ---
@@ -99,18 +99,19 @@ fontFamily: {
    - **Weights**: `font-normal` (400), `font-medium` (500), `font-semibold` (600), `font-bold` (700).
    - **Character**: Clean geometry, high x-height, and exceptional readability on screens.
 
-### 3.2 Typographic Hierarchy
+### 3.2 Typographic Hierarchy (Refined & Mobile-Optimized)
 
 | Role | Class | Font & Weight | Size / Line Height | Usage Example |
 | :--- | :--- | :--- | :--- | :--- |
-| **Display / Hero** | `text-lg sm:text-2xl` | Playfair Display, SemiBold/Bold | 18px–24px, tight | App Title |
-| **Section & Modal Heading** | `text-base sm:text-xl` | Playfair Display, Bold | 16px–20px, tight | Category Titles (Körper, Geist, Seele), Modal Titles |
-| **Subsection Heading** | `text-sm sm:text-base` | Plus Jakarta Sans, SemiBold | 14px–16px, snug | Week List Item, Group Titles |
-| **Body & Goal Items** | `text-sm` | Plus Jakarta Sans, Regular | 14px, relaxed (1.5) | Goal descriptions, modal instructions |
-| **Form Inputs & Textareas** | `text-sm` / `text-xs` | Plus Jakarta Sans, Regular | 12px–14px | Goal textareas (`text-sm`), comments & config (`text-xs`) |
-| **Button / Navigation** | `text-xs sm:text-sm` | Plus Jakarta Sans, Medium/SemiBold | 12px–14px | Actions, Nav links, Date badges |
-| **Badges & Counters** | `text-xs font-medium` | Plus Jakarta Sans, Medium | 12px | Goal counts (e.g. "3 Ziele") |
-| **Dates & Metadata** | `text-xs` | Plus Jakarta Sans, Medium | 12px | Week date ranges, timestamps, input hints |
+| **App Title** | `text-sm sm:text-base` | Playfair Display, Bold | 14px–16px, tight | Header App Title |
+| **Modal & Screen Heading** | `text-base sm:text-lg` | Playfair Display, Bold | 16px–18px, tight | Modal Titles, History Screen Title |
+| **Category Card Heading** | `text-sm sm:text-base` | Playfair Display, SemiBold | 14px–16px, tight | Category Titles (Körper, Geist, Seele) |
+| **Subsection / Week Title** | `text-xs sm:text-sm` | Plus Jakarta Sans, SemiBold | 12px–14px, snug | Week List Item, Review Summary Title |
+| **Goal Item Description** | `text-xs sm:text-sm` | Plus Jakarta Sans, Regular | 12px–14px, relaxed | Goal descriptions in dashboard cards |
+| **Form Inputs & Textareas** | `text-xs sm:text-sm` | Plus Jakarta Sans, Regular | 12px–14px | Reflection textareas, Quick-add input |
+| **Buttons & Primary CTAs** | `text-xs sm:text-sm` | Plus Jakarta Sans, Medium | 12px–14px | "Wochenrückblick ansehen", "Exportieren" |
+| **Badges, Tags & Counters** | `text-2xs font-medium` | Plus Jakarta Sans, Medium | 11px (0.6875rem) | "2 Ziele", "✓ Reflektiert", "4 Erreicht" |
+| **Dates, Hints & Captions** | `text-2xs sm:text-xs` | Plus Jakarta Sans, Medium | 11px–12px | Week date ranges ("31. Aug. – 6. Sep."), quotes |
 
 ---
 
@@ -122,9 +123,9 @@ Each of the three core life dimensions is represented by an identifiable icon, s
 
 | Dimension | Icon Description | Source / Implementation | Meaning |
 | :--- | :--- | :--- | :--- |
-| **Körper** (Body) | Biceps / Arm Muscle | Custom `ArmBicepsIcon` with SVG/PNG alpha mask (`maskImage: url(/arm_flaticon.png)`) | Physical vitality, movement, nutrition, rest |
-| **Geist** (Mind) | Brain outline | Lucide `Brain` (stroke width `2.4`) | Intellect, learning, clarity, deliberate focus |
-| **Seele** (Soul) | Solid heart | Lucide `Heart` (filled with `currentColor`) | Inner peace, mindfulness, gratitude, connection |
+| **Körper** (Body) | Meditating figure / Energy posture | Custom SVG (`public/icons/body.svg`), inline with `fill="currentColor"` | Physical vitality, movement, rest, and embodiment |
+| **Geist** (Mind) | Head profile with mind silhouette | Custom SVG (`public/icons/mind.svg`), inline with `fill="currentColor"` | Intellect, learning, clarity, deliberate focus |
+| **Seele** (Soul) | Faceted origami heart symbol | Custom SVG (`public/icons/soul.svg`), inline with `fill="currentColor"` | Inner peace, mindfulness, gratitude, soul connection |
 
 ### 4.2 Application Logo / Emblem
 

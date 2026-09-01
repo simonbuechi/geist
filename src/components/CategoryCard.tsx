@@ -41,28 +41,28 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({ category }) => {
 
   // Unified Visual Theme Configuration using Primary Colors (Button Palette)
   const theme = {
-    icon: <CategoryIcon category={category} className="w-5 h-5 text-[#9123A6] dark:text-[#f472b6]" />,
+    icon: <CategoryIcon category={category} size={18} className="w-4 h-4 text-[#9123A6] dark:text-[#f472b6]" />,
     gradient: 'from-[#9123A6]/10 via-[#D7195F]/5 to-transparent',
-    border: 'border-[#9123A6]/20 dark:border-[#9123A6]/30',
-    badgeBg: 'bg-[#9123A6]/10 dark:bg-[#9123A6]/25 text-[#9123A6] dark:text-pink-300',
-    hoverBorder: 'hover:border-[#9123A6]/50 dark:hover:border-[#9123A6]/60'
+    border: 'border-stone-200/80 dark:border-stone-800/80',
+    hoverBorder: 'hover:border-[#9123A6]/40 dark:hover:border-[#9123A6]/40',
+    badgeBg: 'bg-pink-100/70 dark:bg-pink-950/60 text-[#9123A6] dark:text-[#f8d2e8]'
   };
 
   const goodCount = categoryGoals.filter(g => g.status === 'good').length;
 
   return (
-    <div className={`flex flex-col h-full rounded-3xl bg-white dark:bg-[#161c19] border ${theme.border} ${theme.hoverBorder} shadow-sm transition-all overflow-hidden`}>
+    <div className={`flex flex-col h-full rounded-3xl bg-white dark:bg-[#161c19] border ${theme.border} ${theme.hoverBorder} shadow-2xs transition-all overflow-hidden`}>
       {/* Category Header */}
-      <div className={`p-4 sm:p-5 bg-gradient-to-b ${theme.gradient} border-b border-stone-200/60 dark:border-stone-800/60 flex items-center justify-between gap-3`}>
-        <div className="flex items-center gap-3">
-          <div className={`p-2 sm:p-2.5 rounded-2xl bg-white dark:bg-stone-800 shadow-2xs border border-stone-200/60 dark:border-stone-700/60 shrink-0`}>
+      <div className={`p-3.5 sm:p-4 bg-gradient-to-b ${theme.gradient} border-b border-stone-200/60 dark:border-stone-800/60 flex items-center justify-between gap-2.5`}>
+        <div className="flex items-center gap-2.5">
+          <div className="p-1.5 rounded-xl bg-white dark:bg-stone-800 shadow-2xs border border-stone-200/60 dark:border-stone-700/60 shrink-0">
             {theme.icon}
           </div>
           <div className="flex items-center gap-2">
-            <h2 className="text-base sm:text-lg font-serif font-bold tracking-tight text-stone-900 dark:text-stone-50">
+            <h2 className="text-sm sm:text-base font-serif font-semibold tracking-tight text-stone-900 dark:text-stone-50">
               {categoryInfo.title}
             </h2>
-            <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${theme.badgeBg}`}>
+            <span className={`text-2xs px-2 py-0.5 rounded-full font-medium ${theme.badgeBg}`}>
               {categoryGoals.length} {categoryGoals.length === 1 ? 'Ziel' : 'Ziele'}
             </span>
           </div>
@@ -73,13 +73,13 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({ category }) => {
           onClick={() => setIsAdding(!isAdding)}
           title={t.actions.addGoal}
           aria-label={t.actions.addGoal}
-          className={`p-2.5 sm:p-2 rounded-xl transition-all active:scale-90 shrink-0 ${
+          className={`p-1.5 rounded-lg transition-all active:scale-90 shrink-0 ${
             isAdding
               ? 'bg-stone-200 dark:bg-stone-700 text-stone-700 dark:text-stone-300'
               : 'bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-300 hover:bg-stone-200 dark:hover:bg-stone-700'
           }`}
         >
-          {isAdding ? <X className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
+          {isAdding ? <X className="w-3.5 h-3.5" /> : <Plus className="w-3.5 h-3.5" />}
         </button>
       </div>
 
@@ -148,16 +148,16 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({ category }) => {
 
       {/* Footer / Quick Add Trigger Bar */}
       {!isAdding && categoryGoals.length > 0 && (
-        <div className="p-3 bg-stone-50/50 dark:bg-stone-900/40 border-t border-stone-100 dark:border-stone-800/50 flex items-center justify-between">
+        <div className="px-3 py-2 bg-stone-50/50 dark:bg-stone-900/40 border-t border-stone-100 dark:border-stone-800/50 flex items-center justify-between text-2xs">
           <button
             onClick={() => setIsAdding(true)}
-            className="py-1.5 px-2 -ml-1 text-xs font-medium text-stone-600 dark:text-stone-300 hover:text-stone-900 dark:hover:text-white rounded-xl active:bg-stone-200/60 dark:active:bg-stone-800 flex items-center gap-1.5 active:scale-95 transition-all"
+            className="py-1 px-1.5 -ml-1 text-2xs font-medium text-stone-500 dark:text-stone-400 hover:text-stone-900 dark:hover:text-white rounded-lg active:bg-stone-200/60 dark:active:bg-stone-800 flex items-center gap-1 active:scale-95 transition-all"
           >
-            <Plus className="w-3.5 h-3.5" />
+            <Plus className="w-3 h-3" />
             <span>{t.actions.addGoal}</span>
           </button>
           {goodCount > 0 && (
-            <span className="text-xs text-[#9123A6] dark:text-[#f472b6] font-medium">
+            <span className="text-2xs text-[#9123A6] dark:text-[#f472b6] font-medium">
               {goodCount} / {categoryGoals.length} {t.stats.goalsCompleted}
             </span>
           )}

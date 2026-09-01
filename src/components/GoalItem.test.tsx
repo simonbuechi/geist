@@ -139,7 +139,7 @@ describe('GoalItem', () => {
       />
     );
 
-    // Should display good status label (e.g. Gut erreicht in German default)
-    expect(screen.getByText(/gut erreicht|good/i)).toBeInTheDocument();
+    // Should display good status label (e.g. Erreicht in German default)
+    expect(screen.getByText(/erreicht|achieved/i)).toBeInTheDocument();
   });
 });

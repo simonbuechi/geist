@@ -11,6 +11,8 @@ import {
   setDoc, 
   getDoc, 
   deleteDoc, 
+  collection,
+  getDocs,
   serverTimestamp 
 } from 'firebase/firestore';
 import { app, db, getDefaultFirebaseConfig } from './firebase';
@@ -118,6 +120,9 @@ export async function registerPushNotification(
 
     if (currentToken) {
       await saveFcmTokenToFirestore(userId, currentToken);
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('kgs_fcm_token', currentToken);
+      }
       return { token: currentToken };
     }
 
@@ -125,6 +130,31 @@ export async function registerPushNotification(
   } catch (err) {
     console.error('Error during push registration:', err);
     return { token: null, error: (err as Error).message || 'Failed to register push token' };
+  }
+}
+
+/**
+ * Checks if the current device/browser has granted permission and has an active registered token
+ */
+export function isCurrentDeviceRegistered(): boolean {
+  if (typeof window === 'undefined') return false;
+  if (!('Notification' in window)) return false;
+  if (Notification.permission !== 'granted') return false;
+  return Boolean(localStorage.getItem('kgs_fcm_token'));
+}
+
+/**
+ * Returns the count of registered device tokens for a given user
+ */
+export async function getRegisteredDevicesCount(userId: string): Promise<number> {
+  if (!db || !userId) return 0;
+  try {
+    const coll = collection(db, 'users', userId, 'fcmTokens');
+    const snap = await getDocs(coll);
+    return snap.size;
+  } catch (err) {
+    console.warn('Error fetching registered devices count:', err);
+    return 0;
   }
 }
 
@@ -156,6 +186,9 @@ export async function removeFcmTokenFromFirestore(userId: string, token: string)
   try {
     const tokenRef = doc(db, 'users', userId, 'fcmTokens', token);
     await deleteDoc(tokenRef);
+    if (typeof window !== 'undefined' && localStorage.getItem('kgs_fcm_token') === token) {
+      localStorage.removeItem('kgs_fcm_token');
+    }
   } catch (err) {
     console.error('Error removing FCM token from Firestore:', err);
   }

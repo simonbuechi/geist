@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { 
-  History, 
   ChevronRight, 
   ChevronDown, 
   CheckCircle2, 
   MinusCircle, 
-  XCircle, 
-  ArrowLeft, 
-  Quote 
+  XCircle,
+  History,
+  ArrowLeft,
+  Quote
 } from 'lucide-react';
 import { useGoals } from '../context/GoalsContext';
 import { useLanguage } from '../context/LanguageContext';
@@ -55,10 +55,10 @@ export const HistoryView: React.FC<HistoryViewProps> = ({ onClose }) => {
             <ArrowLeft className="w-4 h-4" />
           </button>
           <div>
-            <h2 className="text-lg sm:text-xl font-serif font-bold text-stone-900 dark:text-stone-50">
+            <h2 className="text-base sm:text-lg font-serif font-bold text-stone-900 dark:text-stone-50">
               {t.historyTitle}
             </h2>
-            <p className="text-xs text-stone-500 dark:text-stone-400 font-sans">
+            <p className="text-2xs sm:text-xs text-stone-500 dark:text-stone-400 font-sans">
               Deine bisherigen Wochen und Erfolge im Rückblick
             </p>
           </div>
@@ -66,17 +66,17 @@ export const HistoryView: React.FC<HistoryViewProps> = ({ onClose }) => {
       </div>
 
       {sortedPlans.length === 0 ? (
-        <div className="p-8 sm:p-12 text-center rounded-3xl bg-white/60 dark:bg-stone-900/60 border border-stone-200 dark:border-stone-800 space-y-3">
-          <History className="w-10 h-10 sm:w-12 sm:h-12 mx-auto text-stone-400" />
-          <h3 className="text-base sm:text-lg font-serif font-semibold text-stone-800 dark:text-stone-200">
+        <div className="p-8 sm:p-12 text-center rounded-3xl bg-white/60 dark:bg-stone-900/60 border border-stone-200 dark:border-stone-800 space-y-2.5">
+          <History className="w-8 h-8 sm:w-10 sm:h-10 mx-auto text-stone-400" />
+          <h3 className="text-sm sm:text-base font-serif font-semibold text-stone-800 dark:text-stone-200">
             {t.historyView.noHistoryYet}
           </h3>
-          <p className="text-xs text-stone-500 dark:text-stone-400 max-w-sm mx-auto">
+          <p className="text-2xs sm:text-xs text-stone-500 dark:text-stone-400 max-w-sm mx-auto">
             {t.historyView.noHistorySub}
           </p>
         </div>
       ) : (
-        <div className="space-y-3 sm:space-y-4">
+        <div className="space-y-2.5 sm:space-y-3">
           {sortedPlans.map((plan) => {
             const { weekNumber, year, startDate, endDate } = parseWeekId(plan.id);
             const isExpanded = expandedWeekId === plan.id;
@@ -88,50 +88,50 @@ export const HistoryView: React.FC<HistoryViewProps> = ({ onClose }) => {
             return (
               <div
                 key={plan.id}
-                className="rounded-3xl bg-white dark:bg-[#161c19] border border-stone-200/80 dark:border-stone-800/80 shadow-2xs hover:shadow-xs transition-all overflow-hidden"
+                className="rounded-2xl bg-white dark:bg-[#161c19] border border-stone-200/80 dark:border-stone-800/80 shadow-2xs hover:shadow-xs transition-all overflow-hidden"
               >
                 {/* Week summary header */}
                 <div
                   onClick={() => setExpandedWeekId(isExpanded ? null : plan.id)}
-                  className="p-3.5 sm:p-5 flex flex-wrap items-center justify-between gap-2.5 sm:gap-4 cursor-pointer hover:bg-stone-50/50 dark:hover:bg-stone-800/40 active:bg-stone-100/50 dark:active:bg-stone-800/60 transition-colors"
+                  className="p-3 sm:p-4 flex flex-wrap items-center justify-between gap-2 sm:gap-3 cursor-pointer hover:bg-stone-50/50 dark:hover:bg-stone-800/40 active:bg-stone-100/50 dark:active:bg-stone-800/60 transition-colors"
                 >
-                  <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
-                    <div className="px-2.5 sm:px-3 h-10 sm:h-12 rounded-2xl bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-300 font-serif font-bold text-xs sm:text-sm flex items-center justify-center shrink-0 whitespace-nowrap">
+                  <div className="flex items-center gap-2.5 min-w-0">
+                    <div className="px-2.5 py-1 rounded-xl bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-300 font-serif font-semibold text-xs flex items-center justify-center shrink-0 whitespace-nowrap">
                       {t.week} {weekNumber}
                     </div>
                     <div className="min-w-0">
-                      <h4 className="text-sm sm:text-base font-semibold text-stone-900 dark:text-stone-100 flex items-center gap-1.5 flex-wrap">
+                      <h4 className="text-xs sm:text-sm font-semibold text-stone-900 dark:text-stone-100 flex items-center gap-1.5 flex-wrap">
                         <span>{t.week} {weekNumber} ({year})</span>
                         {plan.reviewedAt && (
-                          <span className="text-2xs px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 font-medium whitespace-nowrap">
+                          <span className="text-2xs px-1.5 py-0.2 rounded-full bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 font-medium whitespace-nowrap">
                             ✓ {t.reviewWeek}
                           </span>
                         )}
                       </h4>
-                      <p className="text-xs text-stone-500 dark:text-stone-400 truncate">
+                      <p className="text-2xs sm:text-xs text-stone-500 dark:text-stone-400 truncate">
                         {formatWeekRange(startDate, endDate, language)}
                       </p>
                     </div>
                   </div>
 
                   {/* Goal Outcome Pills */}
-                  <div className="flex items-center gap-2 sm:gap-4 ml-auto shrink-0">
-                    <div className="flex items-center gap-1.5 sm:gap-2 text-xs font-medium">
+                  <div className="flex items-center gap-2 sm:gap-3 ml-auto shrink-0">
+                    <div className="flex items-center gap-1.5 text-xs font-medium">
                       <span className="flex items-center gap-0.5 text-emerald-600 dark:text-emerald-400">
-                        <CheckCircle2 className="w-3.5 h-3.5" />
+                        <CheckCircle2 className="w-3 h-3" />
                         {goodCount}
                       </span>
                       <span className="flex items-center gap-0.5 text-amber-600 dark:text-amber-400">
-                        <MinusCircle className="w-3.5 h-3.5" />
+                        <MinusCircle className="w-3 h-3" />
                         {partlyCount}
                       </span>
                       <span className="flex items-center gap-0.5 text-rose-600 dark:text-rose-400">
-                        <XCircle className="w-3.5 h-3.5" />
+                        <XCircle className="w-3 h-3" />
                         {poorCount}
                       </span>
                     </div>
 
-                    <div className="px-2.5 py-1 rounded-xl bg-stone-100 dark:bg-stone-800 text-xs font-semibold text-stone-700 dark:text-stone-300">
+                    <div className="px-2 py-0.5 rounded-lg bg-stone-100 dark:bg-stone-800 text-2xs font-medium text-stone-600 dark:text-stone-400">
                       {goals.length} {t.historyView.totalGoals}
                     </div>
 
