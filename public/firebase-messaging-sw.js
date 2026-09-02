@@ -5,12 +5,12 @@ importScripts('https://www.gstatic.com/firebasejs/10.13.0/firebase-messaging-com
 
 // Parse configuration from query params or use default project configuration
 const urlParams = new URL(location.href).searchParams;
-const apiKey = urlParams.get('apiKey') || 'AIzaSyBKmmRJdolnT2abMN9cLXIn5u1XMiKJzy0';
-const projectId = urlParams.get('projectId') || 'geist-8cbce';
-const messagingSenderId = urlParams.get('messagingSenderId') || '671968848501';
-const appId = urlParams.get('appId') || '1:671968848501:web:8fd0ddd1c30c22f02c663c';
+const apiKey = urlParams.get('apiKey') || '';
+const projectId = urlParams.get('projectId') || '';
+const messagingSenderId = urlParams.get('messagingSenderId') || '';
+const appId = urlParams.get('appId') || '';
 
-if (!firebase.apps.length) {
+if (!firebase.apps.length && apiKey && projectId) {
   firebase.initializeApp({
     apiKey,
     projectId,

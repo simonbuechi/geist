@@ -54,12 +54,12 @@ export function getDefaultFirebaseConfig(): FirebaseCustomConfig {
   }
 
   return {
-    apiKey: import.meta.env.VITE_FIREBASE_API_KEY || 'AIzaSyBKmmRJdolnT2abMN9cLXIn5u1XMiKJzy0',
-    authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || 'geist-8cbce.firebaseapp.com',
-    projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || 'geist-8cbce',
-    storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || 'geist-8cbce.firebasestorage.app',
-    messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || '671968848501',
-    appId: import.meta.env.VITE_FIREBASE_APP_ID || '1:671968848501:web:8fd0ddd1c30c22f02c663c'
+    apiKey: import.meta.env.VITE_FIREBASE_API_KEY || '',
+    authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || '',
+    projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || '',
+    storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || '',
+    messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || '',
+    appId: import.meta.env.VITE_FIREBASE_APP_ID || ''
   };
 }
 
