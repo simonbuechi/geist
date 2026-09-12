@@ -172,6 +172,8 @@ export async function saveFcmTokenToFirestore(userId: string, token: string): Pr
       userAgent: typeof navigator !== 'undefined' ? navigator.userAgent : undefined
     };
     await setDoc(tokenRef, tokenData, { merge: true });
+    const userRef = doc(db, 'users', userId);
+    await setDoc(userRef, { updatedAt: serverTimestamp() }, { merge: true });
   } catch (err) {
     console.error('Error saving FCM token to Firestore:', err);
     throw err;
@@ -207,6 +209,13 @@ export async function saveNotificationPreferences(
     await setDoc(prefRef, {
       ...preferences,
       updatedAt: serverTimestamp()
+    }, { merge: true });
+
+    // Touch the parent user document so it is discovered by collection queries
+    const userRef = doc(db, 'users', userId);
+    await setDoc(userRef, {
+      updatedAt: serverTimestamp(),
+      ...(preferences.emailAddress ? { email: preferences.emailAddress } : {})
     }, { merge: true });
   } catch (err) {
     console.error('Error saving notification preferences:', err);

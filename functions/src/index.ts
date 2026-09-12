@@ -8,8 +8,8 @@ admin.initializeApp();
 const db = admin.firestore();
 const messaging = admin.messaging();
 
-const APP_URL = process.env.APP_URL || 'https://geist.buechi.dev';
-const SENDER_EMAIL = process.env.SENDER_EMAIL || 'KGS <noreply@buechi.dev>';
+const APP_URL = process.env.APP_URL || 'https://geist.simibu.ch';
+const SENDER_EMAIL = process.env.SENDER_EMAIL || 'Körper Geist Seele <noreply@geist.simibu.ch>';
 const RESEND_API_KEY = process.env.RESEND_API_KEY || '';
 const resend = RESEND_API_KEY ? new Resend(RESEND_API_KEY) : null;
 
@@ -158,30 +158,35 @@ export const sundayReminder = onSchedule(
     const currentWeekId = getIsoWeekId(new Date());
     console.log(`[sundayReminder] Running for ISO week ${currentWeekId}...`);
 
-    // Find all users with notification preferences
-    const usersSnap = await db.collection('users').get();
+    // Find all users (including those with only subcollections like settings/notifications)
+    const userRefs = await db.collection('users').listDocuments();
 
     let pushSent = 0;
     let emailSent = 0;
 
-    for (const userDoc of usersSnap.docs) {
-      const userId = userDoc.id;
+    for (const userRef of userRefs) {
+      const userId = userRef.id;
 
       // Read user's notification preferences
-      const prefSnap = await db.collection('users').doc(userId).collection('settings').doc('notifications').get();
+      const prefSnap = await userRef.collection('settings').doc('notifications').get();
       if (!prefSnap.exists) continue;
 
       const prefs = prefSnap.data() as NotificationPrefs;
       if (!prefs.pushEnabled && !prefs.emailEnabled) continue;
 
       // Check if current week has already been reviewed
-      const planSnap = await db.collection('users').doc(userId).collection('weekPlans').doc(currentWeekId).get();
+      const planSnap = await userRef.collection('weekPlans').doc(currentWeekId).get();
       const planData = planSnap.exists ? planSnap.data() : null;
 
       if (planData && planData.reviewedAt) {
         console.log(`[sundayReminder] User ${userId} already completed review for ${currentWeekId}. Skipping.`);
         continue;
       }
+
+      // Read user document for display name if available
+      const userSnap = await userRef.get();
+      const userData = userSnap.exists ? userSnap.data() : null;
+      const displayName = userData?.displayName || undefined;
 
       // Send Push if enabled
       if (prefs.pushEnabled) {
@@ -198,7 +203,7 @@ export const sundayReminder = onSchedule(
       if (prefs.emailEnabled && prefs.emailAddress) {
         const template = renderSundayReminderEmail({
           appUrl: APP_URL,
-          userName: userDoc.data().displayName || undefined
+          userName: displayName
         });
         const ok = await sendEmailToUser(prefs.emailAddress, template.subject, template.html, template.text);
         if (ok) emailSent++;
@@ -223,22 +228,22 @@ export const mondayReminder = onSchedule(
     const previousWeekId = getPreviousIsoWeekId(new Date());
     console.log(`[mondayReminder] Checking completion for previous ISO week ${previousWeekId}...`);
 
-    const usersSnap = await db.collection('users').get();
+    const userRefs = await db.collection('users').listDocuments();
 
     let pushSent = 0;
     let emailSent = 0;
 
-    for (const userDoc of usersSnap.docs) {
-      const userId = userDoc.id;
+    for (const userRef of userRefs) {
+      const userId = userRef.id;
 
-      const prefSnap = await db.collection('users').doc(userId).collection('settings').doc('notifications').get();
+      const prefSnap = await userRef.collection('settings').doc('notifications').get();
       if (!prefSnap.exists) continue;
 
       const prefs = prefSnap.data() as NotificationPrefs;
       if (!prefs.pushEnabled && !prefs.emailEnabled) continue;
 
       // Check if previous week was already reviewed
-      const planSnap = await db.collection('users').doc(userId).collection('weekPlans').doc(previousWeekId).get();
+      const planSnap = await userRef.collection('weekPlans').doc(previousWeekId).get();
       const planData = planSnap.exists ? planSnap.data() : null;
 
       // CONDITIONAL LOGIC: If reviewedAt exists, do NOT send reminder!
@@ -246,6 +251,11 @@ export const mondayReminder = onSchedule(
         console.log(`[mondayReminder] User ${userId} already completed review for ${previousWeekId}. Skipping.`);
         continue;
       }
+
+      // Read user document for display name if available
+      const userSnap = await userRef.get();
+      const userData = userSnap.exists ? userSnap.data() : null;
+      const displayName = userData?.displayName || undefined;
 
       // Otherwise send follow-up nudge!
       if (prefs.pushEnabled) {
@@ -261,7 +271,7 @@ export const mondayReminder = onSchedule(
       if (prefs.emailEnabled && prefs.emailAddress) {
         const template = renderMondayReminderEmail({
           appUrl: APP_URL,
-          userName: userDoc.data().displayName || undefined
+          userName: displayName
         });
         const ok = await sendEmailToUser(prefs.emailAddress, template.subject, template.html, template.text);
         if (ok) emailSent++;
