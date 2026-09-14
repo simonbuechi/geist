@@ -5,7 +5,8 @@ import {
   ChevronRight, 
   Sparkles,
   User as UserIcon,
-  Check
+  Check,
+  Lock
 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { useAuth } from '../context/AuthContext';
@@ -14,8 +15,7 @@ import {
   formatWeekRange, 
   parseWeekId, 
   getPreviousWeekId, 
-  getNextWeekId, 
-  isCurrentWeekId 
+  getNextWeekId 
 } from '../utils/dateUtils';
 
 import { KgsLogo } from './KgsLogo';
@@ -37,13 +37,27 @@ export const Header: React.FC<HeaderProps> = ({
   const { user } = useAuth();
   const { 
     currentWeekId, 
+    realCurrentWeekId,
+    unreviewedPastWeekId,
     currentWeekPlan,
     selectWeek, 
-    goToCurrentWeek 
+    goToCurrentWeek,
+    isWeekAccessible
   } = useGoals();
 
   const { weekNumber, startDate, endDate } = parseWeekId(currentWeekId);
-  const isCurrent = isCurrentWeekId(currentWeekId);
+  const nextWeekId = getNextWeekId(currentWeekId);
+  const isNextAccessible = isWeekAccessible(nextWeekId);
+  const activeWorkingWeekId = unreviewedPastWeekId || realCurrentWeekId;
+  const isCurrent = currentWeekId === activeWorkingWeekId;
+
+  const handleNextWeek = () => {
+    if (!isNextAccessible) {
+      onOpenReview();
+    } else {
+      selectWeek(nextWeekId);
+    }
+  };
 
   return (
     <header className="sticky top-0 z-30 w-full backdrop-blur-md bg-stone-50/90 dark:bg-[#121614]/90 border-b border-stone-200/80 dark:border-stone-800/80 transition-colors pt-safe">
@@ -136,12 +150,20 @@ export const Header: React.FC<HeaderProps> = ({
               </div>
 
               <button
-                onClick={() => selectWeek(getNextWeekId(currentWeekId))}
-                className="p-1.5 rounded-xl text-stone-600 dark:text-stone-300 hover:bg-stone-200/70 dark:hover:bg-stone-800 active:scale-90 transition-all shrink-0 min-h-[32px] min-w-[32px] flex items-center justify-center"
-                title="Nächste Woche"
-                aria-label="Nächste Woche"
+                onClick={handleNextWeek}
+                className={`p-1.5 rounded-xl transition-all shrink-0 min-h-[32px] min-w-[32px] flex items-center justify-center ${
+                  !isNextAccessible
+                    ? 'text-stone-400 dark:text-stone-500 hover:bg-stone-200/50 dark:hover:bg-stone-800/50'
+                    : 'text-stone-600 dark:text-stone-300 hover:bg-stone-200/70 dark:hover:bg-stone-800 active:scale-90'
+                }`}
+                title={!isNextAccessible ? t.unlockNextWeek : "Nächste Woche"}
+                aria-label={!isNextAccessible ? t.unlockNextWeek : "Nächste Woche"}
               >
-                <ChevronRight className="w-3.5 h-3.5" />
+                {!isNextAccessible ? (
+                  <Lock className="w-3.5 h-3.5 text-stone-400 dark:text-stone-500" />
+                ) : (
+                  <ChevronRight className="w-3.5 h-3.5" />
+                )}
               </button>
 
               {!isCurrent && (

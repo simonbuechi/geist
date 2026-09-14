@@ -2,6 +2,58 @@ import type { Goal, WeekPlan } from '../types';
 
 export const GUEST_STORAGE_KEY = 'kgs_week_plans_guest';
 export const LEGACY_STORAGE_KEY = 'kgs_week_plans';
+export const USER_HAS_STARTED_KEY = 'kgs_user_has_started';
+
+/**
+ * Checks whether the user has started using the app.
+ * A user has started if:
+ * 1. The persistent localStorage flag is set.
+ * 2. Or they have existing plans containing real user goals, reviews, or reflections.
+ * 3. Or they have existing plans where sample goals were modified.
+ */
+export function hasUserStartedUsingApp(plans?: Record<string, WeekPlan> | null): boolean {
+  if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
+    try {
+      if (localStorage.getItem(USER_HAS_STARTED_KEY) === 'true') {
+        return true;
+      }
+    } catch (e) {
+      console.warn('Could not read user started key from localStorage', e);
+    }
+  }
+
+  if (plans && Object.keys(plans).length > 0) {
+    for (const plan of Object.values(plans)) {
+      if (!plan) continue;
+      // If plan was reviewed, or has reflection, or has real user goals
+      if (plan.reviewedAt || (plan.generalReflection && plan.generalReflection.trim().length > 0)) {
+        return true;
+      }
+      if (hasRealUserGoals(plan)) {
+        return true;
+      }
+      // If plan has goals that were edited or status changed
+      if (plan.goals && plan.goals.some(g => g.status !== 'pending' || (g.comment && g.comment.trim().length > 0))) {
+        return true;
+      }
+    }
+  }
+
+  return false;
+}
+
+/**
+ * Marks the user as having started using the app in persistent storage.
+ */
+export function markUserHasStarted(): void {
+  if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
+    try {
+      localStorage.setItem(USER_HAS_STARTED_KEY, 'true');
+    } catch (e) {
+      console.warn('Could not write user started key to localStorage', e);
+    }
+  }
+}
 
 /**
  * Returns the namespaced storage key for the current user or guest.

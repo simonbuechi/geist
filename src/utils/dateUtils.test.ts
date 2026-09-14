@@ -8,7 +8,10 @@ import {
   getSundayOfWeek,
   formatWeekRange,
   isCurrentWeekId,
+  findUnreviewedPastWeek,
+  isWeekAccessible
 } from './dateUtils';
+import type { WeekPlan } from '../types';
 
 describe('dateUtils', () => {
   describe('getWeekId', () => {
@@ -98,6 +101,135 @@ describe('dateUtils', () => {
       const currentId = getWeekId(new Date());
       expect(isCurrentWeekId(currentId)).toBe(true);
       expect(isCurrentWeekId('1999-W01')).toBe(false);
+    });
+  });
+
+  describe('findUnreviewedPastWeek', () => {
+    it('returns null when no plans exist', () => {
+      expect(findUnreviewedPastWeek({}, '2026-W37')).toBeNull();
+    });
+
+    it('returns null when past plans have no goals', () => {
+      const plans: Record<string, WeekPlan> = {
+        '2026-W36': {
+          id: '2026-W36',
+          year: 2026,
+          weekNumber: 36,
+          startDate: '',
+          endDate: '',
+          goals: [],
+          updatedAt: 1
+        }
+      };
+      expect(findUnreviewedPastWeek(plans, '2026-W37')).toBeNull();
+    });
+
+    it('returns null when all past plans with goals have been reviewed', () => {
+      const plans: Record<string, WeekPlan> = {
+        '2026-W36': {
+          id: '2026-W36',
+          year: 2026,
+          weekNumber: 36,
+          startDate: '',
+          endDate: '',
+          goals: [{ id: '1', category: 'body', description: 'Run', status: 'good', createdAt: 1 }],
+          reviewedAt: 123456,
+          updatedAt: 1
+        }
+      };
+      expect(findUnreviewedPastWeek(plans, '2026-W37')).toBeNull();
+    });
+
+    it('returns unreviewed past week ID if it contains goals and is not reviewed', () => {
+      const plans: Record<string, WeekPlan> = {
+        '2026-W36': {
+          id: '2026-W36',
+          year: 2026,
+          weekNumber: 36,
+          startDate: '',
+          endDate: '',
+          goals: [{ id: '1', category: 'body', description: 'Run', status: 'good', createdAt: 1 }],
+          updatedAt: 1
+        }
+      };
+      expect(findUnreviewedPastWeek(plans, '2026-W37')).toBe('2026-W36');
+    });
+
+    it('returns the latest unreviewed past week when multiple unreviewed past weeks exist', () => {
+      const plans: Record<string, WeekPlan> = {
+        '2026-W34': {
+          id: '2026-W34',
+          year: 2026,
+          weekNumber: 34,
+          startDate: '',
+          endDate: '',
+          goals: [{ id: '1', category: 'body', description: 'Old goal', status: 'good', createdAt: 1 }],
+          updatedAt: 1
+        },
+        '2026-W35': {
+          id: '2026-W35',
+          year: 2026,
+          weekNumber: 35,
+          startDate: '',
+          endDate: '',
+          goals: [{ id: '2', category: 'mind', description: 'Read book', status: 'pending', createdAt: 1 }],
+          updatedAt: 1
+        }
+      };
+      expect(findUnreviewedPastWeek(plans, '2026-W37')).toBe('2026-W35');
+    });
+
+    it('ignores ongoing or future weeks relative to reference week', () => {
+      const plans: Record<string, WeekPlan> = {
+        '2026-W37': {
+          id: '2026-W37',
+          year: 2026,
+          weekNumber: 37,
+          startDate: '',
+          endDate: '',
+          goals: [{ id: '1', category: 'soul', description: 'Meditate', status: 'pending', createdAt: 1 }],
+          updatedAt: 1
+        }
+      };
+      expect(findUnreviewedPastWeek(plans, '2026-W37')).toBeNull();
+    });
+  });
+
+  describe('isWeekAccessible', () => {
+    it('allows access to past weeks when previous week is unreviewed', () => {
+      const plans: Record<string, WeekPlan> = {
+        '2026-W36': {
+          id: '2026-W36',
+          year: 2026,
+          weekNumber: 36,
+          startDate: '',
+          endDate: '',
+          goals: [{ id: '1', category: 'body', description: 'Workout', status: 'pending', createdAt: 1 }],
+          updatedAt: 1
+        }
+      };
+      // Can view the unreviewed week itself and earlier history
+      expect(isWeekAccessible('2026-W36', plans, '2026-W37')).toBe(true);
+      expect(isWeekAccessible('2026-W35', plans, '2026-W37')).toBe(true);
+      // Cannot view the new week until W36 is reviewed
+      expect(isWeekAccessible('2026-W37', plans, '2026-W37')).toBe(false);
+      expect(isWeekAccessible('2026-W38', plans, '2026-W37')).toBe(false);
+    });
+
+    it('allows access to new week once previous week is reviewed', () => {
+      const plans: Record<string, WeekPlan> = {
+        '2026-W36': {
+          id: '2026-W36',
+          year: 2026,
+          weekNumber: 36,
+          startDate: '',
+          endDate: '',
+          goals: [{ id: '1', category: 'body', description: 'Workout', status: 'good', createdAt: 1 }],
+          reviewedAt: Date.now(),
+          updatedAt: 1
+        }
+      };
+      expect(isWeekAccessible('2026-W37', plans, '2026-W37')).toBe(true);
     });
   });
 });

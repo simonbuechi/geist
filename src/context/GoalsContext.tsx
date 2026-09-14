@@ -3,7 +3,9 @@ import type { Category, Goal, GoalStatus, WeekPlan } from '../types';
 import { 
   getWeekId, 
   parseWeekId, 
-  getNextWeekId 
+  getNextWeekId,
+  findUnreviewedPastWeek,
+  isWeekAccessible
 } from '../utils/dateUtils';
 import { useAuth } from './AuthContext';
 import { 
@@ -14,12 +16,15 @@ import {
   getStorageKey,
   GUEST_STORAGE_KEY,
   LEGACY_STORAGE_KEY,
-  mergeAllWeekPlans
+  mergeAllWeekPlans,
+  hasUserStartedUsingApp,
+  markUserHasStarted
 } from '../utils/planSyncUtils';
 
 interface GoalsContextType {
   currentWeekId: string; // The currently selected/viewed week ID (e.g. 2026-W35)
   realCurrentWeekId: string; // The actual calendar current week ID
+  unreviewedPastWeekId: string | null; // Earliest unreviewed past week that gates new weeks
   currentWeekPlan: WeekPlan;
   allWeekPlans: Record<string, WeekPlan>;
   loading: boolean;
@@ -27,6 +32,7 @@ interface GoalsContextType {
   // Navigation
   selectWeek: (weekId: string) => void;
   goToCurrentWeek: () => void;
+  isWeekAccessible: (weekId: string) => boolean;
   
   // Goal CRUD
   addGoal: (category: Category, description: string) => void;
@@ -117,17 +123,36 @@ const GoalsContext = createContext<GoalsContextType | undefined>(undefined);
 export const GoalsProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { user } = useAuth();
   const realCurrentWeekId = getWeekId(new Date());
-  const [selectedWeekId, setSelectedWeekId] = useState<string>(realCurrentWeekId);
+
   const [weekPlans, setWeekPlans] = useState<Record<string, WeekPlan>>(() => {
     const saved = loadPlansFromStorage(user?.uid);
+    const hasStarted = hasUserStartedUsingApp(saved);
     if (saved && Object.keys(saved).length > 0) {
       return saved;
     }
     
-    // First time setup with starter sample goals for current week
+    // First time setup with starter sample goals for current week ONLY if user has never started using the app
     const initialPlan = createDefaultWeekPlan(realCurrentWeekId);
-    initialPlan.goals = INITIAL_STARTER_GOALS;
+    if (!hasStarted) {
+      initialPlan.goals = INITIAL_STARTER_GOALS;
+    }
     return { [realCurrentWeekId]: initialPlan };
+  });
+
+  const unreviewedPastWeekId = findUnreviewedPastWeek(weekPlans, realCurrentWeekId);
+
+  // If a user has been using the app: do not automatically show the new week,
+  // as long as the previous week is not finished (i.e. been reviewed).
+  const [selectedWeekId, setSelectedWeekId] = useState<string>(() => {
+    const saved = loadPlansFromStorage(user?.uid);
+    const hasStarted = hasUserStartedUsingApp(saved);
+    if (hasStarted && saved) {
+      const unreviewed = findUnreviewedPastWeek(saved, realCurrentWeekId);
+      if (unreviewed) {
+        return unreviewed;
+      }
+    }
+    return realCurrentWeekId;
   });
   
   const [loading, setLoading] = useState(false);
@@ -154,11 +179,18 @@ export const GoalsProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       if (prevUid) {
         // Switched from authenticated to guest -> reset to clean guest data
         const guestData = loadPlansFromStorage(null);
+        const hasStarted = hasUserStartedUsingApp(guestData);
         if (guestData && Object.keys(guestData).length > 0) {
           setWeekPlans(guestData);
+          const unreviewed = findUnreviewedPastWeek(guestData, realCurrentWeekId);
+          if (unreviewed) {
+            setSelectedWeekId(unreviewed);
+          }
         } else {
           const initialPlan = createDefaultWeekPlan(realCurrentWeekId);
-          initialPlan.goals = INITIAL_STARTER_GOALS;
+          if (!hasStarted) {
+            initialPlan.goals = INITIAL_STARTER_GOALS;
+          }
           setWeekPlans({ [realCurrentWeekId]: initialPlan });
         }
       }
@@ -185,10 +217,13 @@ export const GoalsProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         // C. Deep merge offline/guest/cached plans with cloud plans
         const { mergedPlans, plansToUpload } = mergeAllWeekPlans(localCombined, cloudPlans);
 
-        // If completely empty, initialize current week
+        // If completely empty, initialize current week (no sample goals if user has started)
         if (Object.keys(mergedPlans).length === 0) {
           const initialPlan = createDefaultWeekPlan(realCurrentWeekId);
-          initialPlan.goals = INITIAL_STARTER_GOALS;
+          const hasStarted = hasUserStartedUsingApp(localCombined);
+          if (!hasStarted) {
+            initialPlan.goals = INITIAL_STARTER_GOALS;
+          }
           mergedPlans[realCurrentWeekId] = initialPlan;
         }
 
@@ -221,6 +256,10 @@ export const GoalsProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
         if (isMounted) {
           setWeekPlans(mergedPlans);
+          const unreviewed = findUnreviewedPastWeek(mergedPlans, realCurrentWeekId);
+          if (unreviewed) {
+            setSelectedWeekId(unreviewed);
+          }
         }
       } catch (e) {
         console.error('Failed to handle cloud sync on login', e);
@@ -266,7 +305,19 @@ export const GoalsProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   // Ensure current week plan exists
   const currentWeekPlan: WeekPlan = weekPlans[selectedWeekId] || createDefaultWeekPlan(selectedWeekId);
 
+  // Check if a target week is accessible
+  const checkWeekAccessible = useCallback((weekId: string) => {
+    return isWeekAccessible(weekId, weekPlans, realCurrentWeekId);
+  }, [weekPlans, realCurrentWeekId]);
+
   const selectWeek = (weekId: string) => {
+    if (!checkWeekAccessible(weekId)) {
+      if (unreviewedPastWeekId) {
+        setSelectedWeekId(unreviewedPastWeekId);
+      }
+      return;
+    }
+
     setSelectedWeekId(weekId);
     if (!weekPlans[weekId]) {
       const newPlan = createDefaultWeekPlan(weekId);
@@ -275,10 +326,15 @@ export const GoalsProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   };
 
   const goToCurrentWeek = () => {
-    selectWeek(realCurrentWeekId);
+    if (unreviewedPastWeekId) {
+      selectWeek(unreviewedPastWeekId);
+    } else {
+      selectWeek(realCurrentWeekId);
+    }
   };
 
   const addGoal = (category: Category, description: string) => {
+    markUserHasStarted();
     const trimmed = description.trim();
     if (!trimmed) return;
 
@@ -301,6 +357,7 @@ export const GoalsProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   };
 
   const updateGoal = (goalId: string, description: string) => {
+    markUserHasStarted();
     const trimmed = description.trim();
     if (!trimmed) return;
 
@@ -319,6 +376,7 @@ export const GoalsProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   };
 
   const deleteGoal = (goalId: string) => {
+    markUserHasStarted();
     const plan = weekPlans[selectedWeekId] || createDefaultWeekPlan(selectedWeekId);
     const updatedGoals = plan.goals.filter(g => g.id !== goalId);
 
@@ -332,6 +390,7 @@ export const GoalsProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   };
 
   const setGoalStatus = (goalId: string, status: GoalStatus) => {
+    markUserHasStarted();
     const plan = weekPlans[selectedWeekId] || createDefaultWeekPlan(selectedWeekId);
     const updatedGoals = plan.goals.map(g => 
       g.id === goalId ? { ...g, status, updatedAt: Date.now() } : g
@@ -347,6 +406,7 @@ export const GoalsProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   };
 
   const setGoalComment = (goalId: string, comment: string) => {
+    markUserHasStarted();
     const plan = weekPlans[selectedWeekId] || createDefaultWeekPlan(selectedWeekId);
     const updatedGoals = plan.goals.map(g => 
       g.id === goalId ? { ...g, comment, updatedAt: Date.now() } : g
@@ -367,6 +427,7 @@ export const GoalsProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     carryOverGoalIds: string[],
     generalReflection?: string
   ) => {
+    markUserHasStarted();
     const currentPlan = weekPlans[weekId] || createDefaultWeekPlan(weekId);
     
     // 1. Update goals with review evaluation
@@ -449,11 +510,13 @@ export const GoalsProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       value={{
         currentWeekId: selectedWeekId,
         realCurrentWeekId,
+        unreviewedPastWeekId,
         currentWeekPlan,
         allWeekPlans: weekPlans,
         loading,
         selectWeek,
         goToCurrentWeek,
+        isWeekAccessible: checkWeekAccessible,
         addGoal,
         updateGoal,
         deleteGoal,

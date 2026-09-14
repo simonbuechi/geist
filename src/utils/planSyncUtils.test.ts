@@ -6,7 +6,10 @@ import {
   mergeGoals,
   mergeWeekPlans,
   mergeAllWeekPlans,
-  GUEST_STORAGE_KEY
+  GUEST_STORAGE_KEY,
+  USER_HAS_STARTED_KEY,
+  hasUserStartedUsingApp,
+  markUserHasStarted
 } from './planSyncUtils';
 import type { Goal, WeekPlan } from '../types';
 
@@ -235,6 +238,93 @@ describe('planSyncUtils', () => {
       const result = mergeAllWeekPlans(guestPlans, cloudPlans);
       expect(result.plansToUpload).toHaveLength(1);
       expect(result.mergedPlans['2026-W35'].goals).toHaveLength(2);
+    });
+  });
+
+  describe('hasUserStartedUsingApp & markUserHasStarted', () => {
+    it('returns false when no plans exist and flag is not set', () => {
+      localStorage.removeItem(USER_HAS_STARTED_KEY);
+      expect(hasUserStartedUsingApp({})).toBe(false);
+      expect(hasUserStartedUsingApp(null)).toBe(false);
+    });
+
+    it('returns false for default starter plan with only untouched sample goals', () => {
+      localStorage.removeItem(USER_HAS_STARTED_KEY);
+      const defaultPlans: Record<string, WeekPlan> = {
+        '2026-W37': {
+          id: '2026-W37',
+          year: 2026,
+          weekNumber: 37,
+          startDate: '',
+          endDate: '',
+          goals: [
+            { id: 'sample-body-1', category: 'body', description: 'Sample', status: 'pending', createdAt: 100 }
+          ],
+          updatedAt: 100
+        }
+      };
+      expect(hasUserStartedUsingApp(defaultPlans)).toBe(false);
+    });
+
+    it('returns true when plan contains real user-created goals', () => {
+      localStorage.removeItem(USER_HAS_STARTED_KEY);
+      const plans: Record<string, WeekPlan> = {
+        '2026-W37': {
+          id: '2026-W37',
+          year: 2026,
+          weekNumber: 37,
+          startDate: '',
+          endDate: '',
+          goals: [
+            { id: 'goal-custom-1', category: 'body', description: 'My Goal', status: 'pending', createdAt: 100 }
+          ],
+          updatedAt: 100
+        }
+      };
+      expect(hasUserStartedUsingApp(plans)).toBe(true);
+    });
+
+    it('returns true when a plan was reviewed or has reflection', () => {
+      localStorage.removeItem(USER_HAS_STARTED_KEY);
+      const plans: Record<string, WeekPlan> = {
+        '2026-W37': {
+          id: '2026-W37',
+          year: 2026,
+          weekNumber: 37,
+          startDate: '',
+          endDate: '',
+          goals: [],
+          reviewedAt: Date.now(),
+          updatedAt: 100
+        }
+      };
+      expect(hasUserStartedUsingApp(plans)).toBe(true);
+    });
+
+    it('returns true when sample goals have been evaluated', () => {
+      localStorage.removeItem(USER_HAS_STARTED_KEY);
+      const plans: Record<string, WeekPlan> = {
+        '2026-W37': {
+          id: '2026-W37',
+          year: 2026,
+          weekNumber: 37,
+          startDate: '',
+          endDate: '',
+          goals: [
+            { id: 'sample-body-1', category: 'body', description: 'Sample', status: 'good', createdAt: 100 }
+          ],
+          updatedAt: 100
+        }
+      };
+      expect(hasUserStartedUsingApp(plans)).toBe(true);
+    });
+
+    it('returns true and persists flag after markUserHasStarted is called', () => {
+      localStorage.removeItem(USER_HAS_STARTED_KEY);
+      expect(hasUserStartedUsingApp(null)).toBe(false);
+      markUserHasStarted();
+      expect(hasUserStartedUsingApp(null)).toBe(true);
+      expect(localStorage.getItem(USER_HAS_STARTED_KEY)).toBe('true');
     });
   });
 });

@@ -21,7 +21,7 @@ type CategoryFilter = 'all' | Category;
 
 const MainDashboard: React.FC = () => {
   const { t } = useLanguage();
-  const { currentWeekPlan } = useGoals();
+  const { currentWeekPlan, currentWeekId, realCurrentWeekId } = useGoals();
   const [isReviewOpen, setIsReviewOpen] = useState(() => {
     if (typeof window !== 'undefined') {
       const params = new URLSearchParams(window.location.search);
@@ -114,6 +114,31 @@ const MainDashboard: React.FC = () => {
           <HistoryView onClose={() => setIsHistoryView(false)} />
         ) : (
           <>
+            {/* Unreviewed Past Week Highlight Banner */}
+            {currentWeekId < realCurrentWeekId && !currentWeekPlan.reviewedAt && (
+              <div className="p-3.5 sm:p-4 rounded-2xl bg-gradient-to-r from-amber-500/15 via-pink-500/10 to-rose-500/15 dark:from-amber-950/40 dark:via-pink-950/30 dark:to-rose-950/40 border border-amber-300/80 dark:border-amber-800/70 shadow-2xs flex flex-col sm:flex-row sm:items-center justify-between gap-3 animate-fade-in">
+                <div className="flex items-start sm:items-center gap-2.5">
+                  <div className="p-1.5 rounded-xl bg-gradient-to-br from-amber-500 to-[#D7195F] text-white shadow-2xs shrink-0">
+                    <Sparkles className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <h3 className="text-xs sm:text-sm font-semibold text-stone-900 dark:text-stone-100">
+                      {t.pendingReviewBannerTitle}
+                    </h3>
+                    <p className="text-2xs sm:text-xs text-stone-600 dark:text-stone-300">
+                      {t.pendingReviewBannerDesc}
+                    </p>
+                  </div>
+                </div>
+                <button
+                  onClick={() => setIsReviewOpen(true)}
+                  className="self-end sm:self-center text-xs px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-[#9123A6] to-[#D7195F] hover:from-[#7e1c91] hover:to-[#c21453] text-white font-medium active:scale-95 transition-all shadow-xs whitespace-nowrap"
+                >
+                  {t.actions.completeReview}
+                </button>
+              </div>
+            )}
+
             {/* Reviewed Week Highlight Banner */}
             {currentWeekPlan.reviewedAt && (
               <div className="p-3.5 sm:p-4 rounded-2xl bg-gradient-to-r from-purple-500/10 via-pink-500/10 to-rose-500/10 dark:from-purple-950/40 dark:via-pink-950/30 dark:to-rose-950/40 border border-purple-200/70 dark:border-purple-800/60 shadow-2xs flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 animate-fade-in">
