@@ -1,236 +1,217 @@
 # Design System & Style Guide: Körper Geist Seele (KGS)
 
-This document specifies the design principles, color palettes, typography, iconography, component anatomy, and layout patterns for the **Körper Geist Seele (KGS)** application.
+This document specifies the design philosophy, color palettes, typography, iconography, component anatomy, and sketch physics for the **Körper Geist Seele (KGS)** application — crafted in a **light, elegant hand-drawn pencil sketchbook aesthetic with warm earthy colors and dynamic Rough.js pencil hatching**.
 
 ---
 
 ## 1. Design Philosophy
 
-KGS is designed to provide a **calm, focused, and mindful atmosphere** for weekly alignment and personal growth. The interface balances warmth and timeless editorial elegance with modern digital polish:
+KGS provides a **mindful, tactile journaling atmosphere** for weekly alignment, personal reflection, and deliberate growth. The interface rejects cold, sterile digital surfaces in favor of warm, human artisanal craft:
 
-- **Unified Harmony**: Rather than dividing the three dimensions (Body, Mind, Soul) into competing colors, they share a cohesive primary palette symbolizing wholeness.
-- **Atmospheric Clarity**: Ample whitespace, soft borders, and subtle glassmorphic blurs reduce visual clutter so users can focus on their intentions.
-- **Tactile & Responsive**: High-touch ergonomics, interactive micro-animations (`active:scale-95`), and smooth state transitions give the PWA a native application feel.
-- **Dual-Mode Harmony**: Meticulously crafted light and dark themes tailored to natural diurnal rhythms.
+- **Light & Elegant Pencil Craft**: Delicate 1px / 1.2px graphite pencil lines (`#574A40` with 25–40% transparency) replace heavy digital borders. Subtle soft-graphite offset shadows (`rgba(87, 74, 64, 0.28)`) provide depth without visual clutter or darkness.
+- **Sketchy Background Color Shading (Rough.js Engine)**: Color fills on cards, headers, sticky notes, and notification banners are not flat solid rectangles; they are rendered as dynamic, hand-sketched **colored pencil hachure & cross-hatch shading** using `rough.js`.
+- **Warm Earthy Harmonies**: Natural artist pigments — warm terracotta (`#C2593F`), golden ochre (`#C97A1E`), burnt sienna (`#A8432A`), warm olive sage (`#4D7A4A`), and vintage rosewood (`#B84D68`).
+- **Edgy Hand-Drawn Contour**: Cards, buttons, and boxes use clean, edgy rectangular hand-drawn pencil borders with crisp 90° intersections and no round corners.
+- **Dual Diurnal Paper Modes**:
+  - **Light Mode**: Warm natural cream parchment (`#FAF6F0`), crisp paper cards (`#FFFEFB`), with warm charcoal pencil outlines (`#574A40/30`).
+  - **Dark Mode**: Warm slate sketchbook (`#1C1917`), dark warm obsidian cards (`#241F1C`), with chalk ivory strokes (`#EDE5DD/25`).
 
 ---
 
-## 2. Color Palette
+## 2. Warm Tinted Backgrounds & Edgy Box Borders
 
-### 2.1 Primary Brand Colors
+Following the evolution of the sketchbook design, background areas use **warm paper-tinted watercolor/pigment washes** instead of busy hatching lines, with **Rough.js edgy hand-sketched box borders**:
 
-The signature visual identity uses a vibrant, uplifting purple-to-magenta gradient inspired by energy, introspection, and vitality:
+### 2.1 Background Palette & Wash Values
 
-| Token / Usage | Hex Code | Tailwind Equivalent / Usage | Preview / Description |
+| Component / Area | Light Mode Wash | Dark Mode Wash | Border Divider / Accent |
 | :--- | :--- | :--- | :--- |
-| **Brand Primary Start** | `#9123A6` | `brand-500` / `from-[#9123A6]` | Deep amethyst purple; main accent, focus rings, brand start |
-| **Brand Primary End** | `#D7195F` | `to-[#D7195F]` | Vibrant magenta rose; CTA gradient end, secondary glow |
-| **Primary Gradient** | `#9123A6` → `#D7195F` | `bg-gradient-to-r from-[#9123A6] to-[#D7195F]` | Main action buttons (e.g. "Rückblick & Planen", "Speichern") |
-| **Hover Gradient** | `#7e1c91` → `#c21453` | `hover:from-[#7e1c91] hover:to-[#c21453]` | Button hover/active states |
-| **Dark Mode Accent** | `#f472b6` / `#f8d2e8` | `text-[#f472b6]` / `dark:text-pink-300` | Light pink accents on dark surfaces |
-| **Card Header Tint** | `#9123A6` (10%) / `#D7195F` (5%) | `from-[#9123A6]/10 via-[#D7195F]/5 to-transparent` | Subtle atmospheric tint in category headers |
-| **Card Border Accent** | `#9123A6` (20%–30%) | `border-[#9123A6]/20 dark:border-[#9123A6]/30` | Refined card borders |
-
-#### Full Brand Swatch Scale:
-```css
---brand-50:  #fdf4f9;
---brand-100: #fbe8f3;
---brand-200: #f8d2e8;
---brand-300: #f1add4;
---brand-400: #e578b6;
---brand-500: #9123A6; /* Primary */
---brand-600: #7e1c91;
---brand-700: #681678;
---brand-800: #551362;
---brand-900: #380c41;
-```
+| **Körper (Body) Header** | `#FAF2F5` (Soft Berry Wash) | `#2A1C22` | `border-b border-[#D7195F]/20` |
+| **Geist (Mind) Header** | `#FAF2F5` (Soft Berry Wash) | `#2A1C22` | `border-b border-[#D7195F]/20` |
+| **Seele (Soul) Header** | `#FAF2F5` (Soft Berry Wash) | `#2A1C22` | `border-b border-[#D7195F]/20` |
+| **Inline Add Note Form** | `#FDF7FA` (Paper Tint) | `#26171E` | Hand-drawn dashed border |
+| **Review Modal Header** | `#FAF3EE` (Berry Parchment) | `#2B1D17` | `border-b border-[#D7195F]/20` |
+| **Unreviewed Banner** | `#FFF9F0` (Amber Parchment) | `#2A231A` | `border border-[#D4A759]/50` |
+| **Reviewed Banner** | `#FFFDF9` (Sage Tint) | `#202720` | `border border-[#4D7A4A]/35` |
+| **Primary Action Button** | Gradient `#9123A6` to `#D7195F` | Gradient `#9123A6` to `#D7195F` | `shadow-pencil-sm` |
+| **Dimension Card Box Border** | Hand-sketched via `rough.js` | Hand-sketched via `rough.js` | Edgy sharp pencil stroke contour |
 
 ---
 
-### 2.2 Surface & Neutral Canvas
+## 3. Color Palette
 
-| Element | Light Mode | Dark Mode |
-| :--- | :--- | :--- |
-| **Page Canvas** | `bg-stone-50/50` (`#fafaf9`) | `bg-[#121614]` (Deep obsidian moss) |
-| **Card Surface** | `bg-white` (`#ffffff`) | `bg-[#161c19]` (Subtle warm slate) |
-| **Elevated Surfaces / Modals** | `bg-white` (`#ffffff`) | `bg-stone-900` (`#1c1917`) |
-| **Frosted Glass (Header)** | `bg-stone-50/90` with `backdrop-blur-md` | `bg-[#121614]/90` with `backdrop-blur-md` |
-| **Primary Text** | `text-stone-900` (`#1c1917`) | `text-stone-50` (`#fafaf9`) |
-| **Secondary Text** | `text-stone-600` (`#57534e`) | `text-stone-300` (`#d6d3d1`) |
-| **Muted Text / Metadata** | `text-stone-400` / `stone-500` | `text-stone-400` / `stone-500` |
-| **Borders & Dividers** | `border-stone-200/80` (`#e7e5e4`) | `border-stone-800/80` (`#292524`) |
-| **Interactive Well / Inset** | `bg-stone-100` (`#f5f5f4`) | `bg-stone-800` (`#292524`) |
+### 3.1 Primary Brand Colors (Vivid Berry & Violet Gradient)
 
----
+| Token / Usage | Hex Code | Tailwind / Class | Purpose |
+| :--- | :--- | :--- | :--- |
+| **Brand Primary (Vivid Berry)** | `#D7195F` | `bg-[#D7195F]` | Primary brand color, focus rings, active accents |
+| **Primary Button Gradient** | `#9123A6` → `#D7195F` | `bg-gradient-to-r from-[#9123A6] to-[#D7195F]` | Primary action buttons (Review, Save, Install) |
+| **Deep Violet Start** | `#9123A6` | `from-[#9123A6]` | Gradient start for primary buttons |
+| **Warm Graphite Lead (Light)** | `#2D2621` | `text-[#2D2621]` | Primary typography in light mode |
+| **Chalk Ivory (Dark)** | `#EDE5DD` | `dark:text-[#EDE5DD]` | Primary typography in dark mode |
+| **Delicate Pencil Border** | `#574A40` | `border-[#574A40]/20` | Fine soft pencil contours |
 
-### 2.3 Semantic Evaluation Colors (Goal Review Statuses)
+### 3.2 Unified Dimension Palette (Körper, Geist, Seele)
 
-Used during weekly reviews and in status chips to reflect self-evaluations:
+All three life dimensions share the unified primary brand palette:
 
-| Status | Meaning | Text / Icon Color | Background (Light) | Background (Dark) |
+| Dimension | Accent Color | Rough.js Color | Card Border Tint | Badge & Icon Box | Meaning |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **Körper** (Body) | Vivid Berry (`#D7195F`) | `#D7195F` | `border-[#D7195F]/35` | `#FAF0F4` / `#3E1C27` | Physical vitality, embodiment, posture, movement |
+| **Geist** (Mind) | Vivid Berry (`#D7195F`) | `#D7195F` | `border-[#D7195F]/35` | `#FAF0F4` / `#3E1C27` | Deliberate intellect, focus, reading, clarity |
+| **Seele** (Soul) | Vivid Berry (`#D7195F`) | `#D7195F` | `border-[#D7195F]/35` | `#FAF0F4` / `#3E1C27` | Inner stillness, presence, heartfulness, gratitude |
+
+### 3.3 Semantic Evaluation Statuses (Pencil Stamp Seals)
+
+| Status | Meaning | Text Color | Light Tone & Border | Dark Tone & Border |
 | :--- | :--- | :--- | :--- | :--- |
-| **Erreicht** (`good`) | Goal accomplished | `text-emerald-600 dark:text-emerald-400` | `bg-emerald-50 border-emerald-200` | `bg-emerald-950/60 border-emerald-800/60` |
-| **Teilweise** (`partly`) | In progress / Partially met | `text-amber-600 dark:text-amber-400` | `bg-amber-50 border-amber-200` | `bg-amber-950/60 border-amber-800/60` |
-| **Nicht erreicht** (`poor`) | Postponed or unachieved | `text-rose-600 dark:text-rose-400` | `bg-rose-50 border-rose-200` | `bg-rose-950/60 border-rose-800/60` |
-| **Offen** (`pending`) | Active during current week | `text-stone-500 dark:text-stone-400` | `bg-stone-100 border-stone-200` | `bg-stone-800 border-stone-700` |
+| **Erreicht** (`good`) | Goal achieved | `#2F612C` (Warm Olive) | `bg-[#EEF5ED] border-[#7CA379]/60` | `bg-[#203322] border-[#537A50]/60` |
+| **Teilweise** (`partly`) | In progress / partial | `#8C5212` (Golden Ochre) | `bg-[#FDF7EA] border-[#D4A759]/60` | `bg-[#342714] border-[#7A5B22]/60` |
+| **Nicht erreicht** (`poor`) | Postponed / unmet | `#9E352B` (Terracotta Coral) | `bg-[#FDF0EE] border-[#DFA098]/60` | `bg-[#361914] border-[#7A3329]/60` |
+| **Offen** (`pending`) | Active current week | `#8A796D` (Soft Graphite) | `bg-[#FAF6F0] border-[#574A40]/18` | `bg-[#2D2420] border-[#EDE5DD]/15` |
 
 ---
 
-## 3. Typography
+## 4. Typography
 
-The typographic hierarchy pairs an elegant serif for key headers with a crisp, geometric sans-serif for UI clarity.
-
-### 3.1 Font Families
+The typographic hierarchy pairs expressive, warm handwriting with a clean modern geometric sans-serif:
 
 ```javascript
 fontFamily: {
-  serif: ['"Playfair Display"', 'Georgia', 'serif'],
-  sans: ['"Plus Jakarta Sans"', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+  hand: ['"LiebeHeide"', '"Caveat"', '"Marck Script"', 'cursive'],
+  serif: ['"Caveat"', 'Georgia', 'serif'],
+  sans: ['"Nunito"', 'system-ui', 'sans-serif'],
 }
 ```
 
-1. **Playfair Display (Serif)**:
-   - **Role**: Headings, modal titles, dimension titles, week indicators, and celebratory copy.
-   - **Weights**: `font-semibold` (600), `font-bold` (700).
-   - **Character**: Expressive, humanistic, and dignified.
-
-2. **Plus Jakarta Sans (Sans-Serif)**:
-   - **Role**: Body text, goal descriptions, badges, button labels, dates, navigation, and settings forms.
-   - **Weights**: `font-normal` (400), `font-medium` (500), `font-semibold` (600), `font-bold` (700).
-   - **Character**: Clean geometry, high x-height, and exceptional readability on screens.
-
-### 3.2 Typographic Hierarchy (Refined & Mobile-Optimized)
-
-| Role | Class | Font & Weight | Size / Line Height | Usage Example |
-| :--- | :--- | :--- | :--- | :--- |
-| **App Title** | `text-sm sm:text-base` | Playfair Display, Bold | 14px–16px, tight | Header App Title |
-| **Modal & Screen Heading** | `text-base sm:text-lg` | Playfair Display, Bold | 16px–18px, tight | Modal Titles, History Screen Title |
-| **Category Card Heading** | `text-sm sm:text-base` | Playfair Display, SemiBold | 14px–16px, tight | Category Titles (Körper, Geist, Seele) |
-| **Subsection / Week Title** | `text-xs sm:text-sm` | Plus Jakarta Sans, SemiBold | 12px–14px, snug | Week List Item, Review Summary Title |
-| **Goal Item Description** | `text-xs sm:text-sm` | Plus Jakarta Sans, Regular | 12px–14px, relaxed | Goal descriptions in dashboard cards |
-| **Form Inputs & Textareas** | `text-xs sm:text-sm` | Plus Jakarta Sans, Regular | 12px–14px | Reflection textareas, Quick-add input |
-| **Buttons & Primary CTAs** | `text-xs sm:text-sm` | Plus Jakarta Sans, Medium | 12px–14px | "Wochenrückblick ansehen", "Exportieren" |
-| **Badges, Tags & Counters** | `text-2xs font-medium` | Plus Jakarta Sans, Medium | 11px (0.6875rem) | "2 Ziele", "✓ Reflektiert", "4 Erreicht" |
-| **Dates, Hints & Captions** | `text-2xs sm:text-xs` | Plus Jakarta Sans, Medium | 11px–12px | Week date ranges ("31. Aug. – 6. Sep."), quotes |
+1. **LiebeHeide (Signature Handwritten Font)**:
+   - **File**: `src/assets/fonts/liebeheide-finelinerbold.otf` and `src/assets/fonts/liebeheide-finelinermedium.otf`
+   - **Role**: Brand heading, category names, review titles, action buttons, handwritten reflections, and week numbers.
+   - **Feel**: Exquisite, authentic hand-drawn fineliner handwriting with natural stroke variations, organic ligatures, and native German umlaut support (`ä, ö, ü, ß`). Gives the application an artisanal, personal sketchbook character.
+2. **Nunito (Warm Humanist Sans-Serif)**:
+   - **Role**: Goal descriptions, time indicators, form placeholders, badges, and status counts.
+   - **Feel**: Soft, rounded stroke endings that mirror the organic warmth of pencil and ink on paper, while maintaining crystal-clear reading legibility at small sizes.
 
 ---
 
-## 4. Iconography
+## 5. Hand-Drawn Physics, Borders & Shadows
 
-### 4.1 Dimension Icons
+### 5.1 Unified Rough.js Edgy Borders (`RoughBorder.tsx`)
 
-Each of the three core life dimensions is represented by an identifiable icon, styled in the unified primary brand color (`text-[#9123A6] dark:text-[#f472b6]`):
+To eliminate clashing digital CSS borders and achieve uniform artisanal craft across all UI components, all boxes, cards, and buttons use the dedicated [`RoughBorder.tsx`](file:///d:/dev/antigravity/geist/src/components/RoughBorder.tsx) SVG renderer:
 
-| Dimension | Icon Description | Source / Implementation | Meaning |
-| :--- | :--- | :--- | :--- |
-| **Körper** (Body) | Meditating figure / Energy posture | Custom SVG (`public/icons/body.svg`), inline with `fill="currentColor"` | Physical vitality, movement, rest, and embodiment |
-| **Geist** (Mind) | Head profile with mind silhouette | Custom SVG (`public/icons/mind.svg`), inline with `fill="currentColor"` | Intellect, learning, clarity, deliberate focus |
-| **Seele** (Soul) | Faceted origami heart symbol | Custom SVG (`public/icons/soul.svg`), inline with `fill="currentColor"` | Inner peace, mindfulness, gratitude, soul connection |
+- **Clean Single-Stroke Outline**: Digital CSS borders (`border`, `border-2`) are replaced by hand-sketched single strokes, eliminating awkward border doubling or clipping.
+- **Edgy Rectangular Drafting**: Renders sharp 90-degree corners with straight sketch strokes (`bowing: 0`, `roughness: 0.8`) and natural architectural corner intersections.
+- **Pencil Tone Harmony**: Renders warm graphite lead (`#574A40`) in light mode and chalk ivory (`#EDE5DD`) in dark mode, or dimension-matched color accents (terracotta, amber, rosewood).
+- **Pointer-Transparent**: Uses `pointer-events-none` with `z-10` overlay so all click, hover, and tap interactions remain instantaneous.
 
-### 4.2 Application Logo / Emblem
-
-- **File**: `/logo.webp` / `/logo.svg` / `/favicon.svg`
-- **Symbol**: Sacred triquetra / 3-lobe knot uniting Body, Mind, and Soul in continuous harmony.
-- **Palette**: Multi-stop gradient along the primary spectrum with subtle luminosity.
-
-### 4.3 UI & Action Icons
-
-All interface icons are sourced from `lucide-react` with standard `16px`–`20px` bounds and `1.75`–`2` stroke width:
-- **Navigation**: `Calendar`, `ChevronLeft`, `ChevronRight`, `ArrowLeft`
-- **Actions**: `Plus` (Add goal), `Check` (Save/Complete), `X` (Cancel/Close), `Edit3` (Edit description), `Trash2` (Delete goal), `Sparkles` (Weekly review CTA)
-- **Settings & Controls**: `Settings` (Preferences), `Sun` (Light mode), `Moon` (Dark mode), `Globe` (Language), `Bell` (Push alerts), `Smartphone` (Device push), `Mail` (Email reminder)
-- **Feedback**: `CheckCircle2` (Good), `MinusCircle` (Partly), `XCircle` (Poor)
-
----
-
-## 5. Component Anatomy & Layout
-
-### 5.1 Category Card Anatomy
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│ ┌───┐                                                       │
-│ │ 🫀 │  Seele   [ 3 Ziele ]                           [ + ] │  ← Gradient Header
-│ └───┘                                                       │
-├─────────────────────────────────────────────────────────────┤
-│ ┌─────────────────────────────────────────────────────────┐ │
-│ │ • 10 Min Meditation jeden Morgen                      ✎ │ │  ← Goal Item
-│ └─────────────────────────────────────────────────────────┘ │
-│ ┌─────────────────────────────────────────────────────────┐ │
-│ │ • Dankbarkeitstagebuch führen                         ✎ │ │
-│ └─────────────────────────────────────────────────────────┘ │
-├─────────────────────────────────────────────────────────────┤
-│  + Ziel hinzufügen                                2/3 Erreicht  ← Footer Bar
-└─────────────────────────────────────────────────────────────┘
-```
-
-1. **Card Container**:
-   - `rounded-3xl border border-[#9123A6]/20 dark:border-[#9123A6]/30`
-   - `bg-white dark:bg-[#161c19] shadow-sm hover:border-[#9123A6]/50`
-2. **Header Bar**:
-   - Background: `bg-gradient-to-b from-[#9123A6]/10 via-[#D7195F]/5 to-transparent`
-   - Icon Pill: `p-2 sm:p-2.5 rounded-2xl bg-white dark:bg-stone-800 shadow-2xs`
-   - Title: `text-lg sm:text-xl font-serif font-bold text-stone-900 dark:text-stone-50`
-   - Badge: `bg-[#9123A6]/10 dark:bg-[#9123A6]/25 text-[#9123A6] dark:text-pink-300 font-medium`
-3. **Goal Items**:
-   - `rounded-2xl bg-white/80 dark:bg-stone-900/80 border border-stone-200/80 dark:border-stone-800/80`
-   - Action controls appear on hover/tap with smooth opacity transitions.
-4. **Footer**:
-   - Quick-add link button with counter badge (`goodCount / totalGoals`).
-
----
-
-### 5.2 Header & Navigation Bar
-
-- **Sticky Frosted Header**: `sticky top-0 z-30 backdrop-blur-md bg-stone-50/90 dark:bg-[#121614]/90 border-b`
-- **Week Navigator Component**:
-  - Centered navigation pill: `Woche {number} • {startDate} – {endDate}`
-  - Prev/Next arrows: `p-2 rounded-xl text-stone-600 dark:text-stone-300 hover:bg-stone-200/70`
-  - "Zur aktuellen Woche" jump button when viewing historical or future weeks.
-- **Top Actions**:
-  - `[ Verlauf ]` (History toggle)
-  - `[ User / Settings ]` (Avatar with live online/offline indicator dot)
-
----
-
-### 5.3 Modals & Bottom Sheets
-
-The application uses an adaptive sheet pattern:
-- **Desktop (`sm:` and above)**: Centered floating card (`max-w-md` or `max-w-2xl`, `rounded-3xl`, `shadow-2xl`).
-- **Mobile Phones**: Bottom sheet docked to bottom edge (`rounded-t-[28px]`, max height `92vh`), thumb drag handle, and safe-area padding (`pb-safe`).
-
----
-
-## 6. Mobile Touch & PWA Ergonomics
-
-1. **44px Minimum Touch Targets**: Interactive controls maintain touch-friendly padding and min-heights.
-2. **Safe-Area Insets**:
-   - Top: `pt-safe` (`env(safe-area-inset-top)`)
-   - Bottom: `pb-safe` (`env(safe-area-inset-bottom)`)
-3. **Bottom Sticky Action Bar**:
-   - On phone screens, a prominent full-width CTA button (*"Rückblick & Planen"*) stays pinned to the bottom thumb zone with backdrop blur.
-4. **Input Zoom Prevention**:
-   - Mobile inputs and textareas use a base `16px` font size to prevent iOS Safari auto-zoom behavior on focus.
-5. **Active Scale Micro-Interaction**:
-   - Tapping buttons triggers `active:scale-95` or `active:scale-98` for tactile spring feedback.
-
----
-
-## 7. Design Tokens Quick Reference
+### 5.2 Edgy Border CSS Utilities
 
 ```css
-/* Radius */
---radius-card:    1.5rem;   /* 24px / 28px (rounded-3xl) */
---radius-control: 0.75rem;  /* 12px (rounded-xl) */
---radius-pill:    9999px;   /* rounded-full */
+/* Edgy Hand-Drawn Pencil Borders (Crisp 90-degree corners) */
+.sketch-border {
+  border-radius: 0px;
+}
+
+.sketch-border-sm {
+  border-radius: 0px;
+}
+
+.sketch-pill {
+  border-radius: 0px;
+}
+```
+
+### 5.2 Light & Elegant Pencil Drop Shadows
+
+Unlike harsh, high-contrast comic book shadows, KGS uses delicate, warm graphite drop shadows that give cards an authentic notebook lift:
+
+```css
+/* Card Pencil Lift */
+.shadow-pencil {
+  box-shadow: 2.0px 2.5px 0px 0px rgba(87, 74, 64, 0.28);
+}
+.dark .shadow-pencil {
+  box-shadow: 2.0px 2.5px 0px 0px rgba(237, 229, 221, 0.16);
+}
+
+/* Small Button / Badge Pencil Shadow */
+.shadow-pencil-sm {
+  box-shadow: 1.2px 1.5px 0px 0px rgba(87, 74, 64, 0.22);
+}
+.dark .shadow-pencil-sm {
+  box-shadow: 1.2px 1.5px 0px 0px rgba(237, 229, 221, 0.12);
+}
+
+/* Mechanical Button Press */
+.sketch-btn-press:active {
+  transform: translate(1px, 1.5px);
+  box-shadow: 0.5px 0.5px 0px 0px rgba(87, 74, 64, 0.25);
+}
+```
+
+---
+
+## 6. Iconography & Hand-Drawn Motifs
+
+1. **Sacred Triquetra Logo ([`KgsLogo.tsx`](file:///d:/dev/antigravity/geist/src/components/KgsLogo.tsx))**:
+   Hand-sketched interlocking arcs uniting Body, Mind, and Soul with warm terracotta, ochre, and rosewood pencil strokes inside an imperfect circular sketch ring.
+2. **Dimension Pencil Vectors ([`CategoryIcon.tsx`](file:///d:/dev/antigravity/geist/src/components/CategoryIcon.tsx))**:
+   - **Körper**: Postural meditative silhouette with spinal alignment guideline.
+   - **Geist**: Thinking profile enclosing an illuminated insight spark.
+   - **Seele**: Organic sketched heart with warm radiating inner glow strokes.
+3. **Pencil Bullets ([`GoalItem.tsx`](file:///d:/dev/antigravity/geist/src/components/GoalItem.tsx))**:
+   Delicate pencil dots (`w-1.5 h-1.5 rounded-full bg-[#C2593F]`) and hand-stamped status seals.
+
+---
+
+## 7. Component Layout & Aesthetics
+
+### 7.1 Category Card ([`CategoryCard.tsx`](file:///d:/dev/antigravity/geist/src/components/CategoryCard.tsx))
+- **Container**: `paper-card shadow-pencil-sm border border-[#574A40]/25 dark:border-[#EDE5DD]/20`
+- **Header**: Backed by dynamic `RoughBackground` colored pencil hachure at a dimension-specific angle (`-35°`, `42°`, `-40°`), fine 1px pencil border separator, and icon pill in white paper with `shadow-pencil-sm`.
+- **Inline Add Form**: Sketchbook sticky note with soft cross-hatching (`opacity: 0.06`, `hachureGap: 12px`), dashed pencil border, and smooth autofocus textarea.
+- **Empty State**: Airy dashed border (`border border-dashed border-[#574A40]/30`) with pencil plus icon encouraging new entries.
+
+### 7.2 Header & Week Navigation ([`Header.tsx`](file:///d:/dev/antigravity/geist/src/components/Header.tsx))
+- Fine pencil bottom border (`border-b border-[#574A40]/20 dark:border-[#EDE5DD]/15`).
+- Week indicator card styled as a pressed paper label with `shadow-pencil-sm`.
+- Primary CTA *"Rückblick & Planen"* in warm terracotta with gentle pencil shadow and hover micro-animations.
+
+### 7.3 Weekly Review Modal ([`ReviewModal.tsx`](file:///d:/dev/antigravity/geist/src/components/ReviewModal.tsx))
+- Notebook cover styled with dynamic terracotta `RoughBackground` hachure (`opacity: 0.14`).
+- Evaluation status radio buttons styled with delicate pastel tones and pencil stamp borders.
+- Safe-area aware mobile sheet layout with thumb-accessible submit button.
+
+### 7.4 Archival History View ([`HistoryView.tsx`](file:///d:/dev/antigravity/geist/src/components/HistoryView.tsx))
+- Chronological journal entries styled as archival sketchbook pages with expandable dimension summaries and pencil status counters.
+
+---
+
+## 8. Summary of Design Tokens
+
+```css
+/* Borders */
+--border-pencil-card:    255px 15px 225px 15px / 15px 225px 15px 255px;
+--border-pencil-item:    120px 10px 110px 12px / 10px 115px 12px 110px;
+--border-pencil-pill:    999px 980px 995px 985px / 985px 995px 982px 998px;
 
 /* Shadows */
---shadow-card:   0 1px 3px 0 rgb(0 0 0 / 0.05);
---shadow-button: 0 4px 14px 0 rgba(145, 35, 166, 0.25);
---shadow-modal:  0 25px 50px -12px rgb(0 0 0 / 0.25);
+--shadow-pencil:         2.0px 2.5px 0px 0px rgba(87, 74, 64, 0.28);
+--shadow-pencil-sm:      1.2px 1.5px 0px 0px rgba(87, 74, 64, 0.22);
+--shadow-pencil-dark:    2.0px 2.5px 0px 0px rgba(237, 229, 221, 0.16);
 
-/* Transitions */
---ease-standard: cubic-bezier(0.16, 1, 0.3, 1);
---duration-fast: 150ms;
---duration-base: 250ms;
+/* Typography */
+--font-hand:             'LiebeHeide', 'Caveat', 'Marck Script', cursive;
+--font-sans:             'Plus Jakarta Sans', system-ui, sans-serif;
+
+/* Canvas & Ink */
+--paper-canvas:          #FAF6F0;
+--paper-card:            #FFFEFB;
+--paper-dark:            #1C1917;
+--paper-card-dark:       #25201C;
+--lead-graphite:         #2D2621;
+--lead-border:           rgba(87, 74, 64, 0.30);
+--lead-chalk:            #EDE5DD;
+--ink-terracotta:        #C2593F;
 ```
