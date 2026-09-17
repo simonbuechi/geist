@@ -15,6 +15,7 @@ import { Sparkles, CheckCircle2 } from 'lucide-react';
 import { useLanguage } from './context/LanguageContext';
 import { useGoals } from './context/GoalsContext';
 import { CategoryIcon } from './components/CategoryIcon';
+import { RoughBorder } from './components/RoughBorder';
 import type { Category } from './types';
 
 type CategoryFilter = 'all' | Category;
@@ -76,31 +77,31 @@ const MainDashboard: React.FC = () => {
     { 
       id: 'body', 
       label: t.categories.body.title, 
-      icon: <CategoryIcon category="body" size={14} className="w-3.5 h-3.5 text-[#9123A6] dark:text-[#f472b6]" />,
+      icon: <CategoryIcon category="body" variant="base" size={16} className="w-4 h-4" />,
       count: bodyGoals.length,
       completed: bodyGoals.filter(g => g.status === 'good').length,
-      accentColor: 'text-[#9123A6] dark:text-[#f472b6]'
+      accentColor: 'text-[#D7195F] dark:text-[#F472B6]'
     },
     { 
       id: 'mind', 
       label: t.categories.mind.title, 
-      icon: <CategoryIcon category="mind" size={14} className="w-3.5 h-3.5 text-[#9123A6] dark:text-[#f472b6]" />,
+      icon: <CategoryIcon category="mind" variant="base" size={16} className="w-4 h-4" />,
       count: mindGoals.length,
       completed: mindGoals.filter(g => g.status === 'good').length,
-      accentColor: 'text-[#9123A6] dark:text-[#f472b6]'
+      accentColor: 'text-[#D7195F] dark:text-[#F472B6]'
     },
     { 
       id: 'soul', 
       label: t.categories.soul.title, 
-      icon: <CategoryIcon category="soul" size={14} className="w-3.5 h-3.5 text-[#9123A6] dark:text-[#f472b6]" />,
+      icon: <CategoryIcon category="soul" variant="base" size={16} className="w-4 h-4" />,
       count: soulGoals.length,
       completed: soulGoals.filter(g => g.status === 'good').length,
-      accentColor: 'text-[#9123A6] dark:text-[#f472b6]'
+      accentColor: 'text-[#D7195F] dark:text-[#F472B6]'
     },
   ];
 
   return (
-    <div className="min-h-screen flex flex-col bg-stone-50/50 dark:bg-[#121614] transition-colors selection:bg-brand-500 selection:text-white relative">
+    <div className="min-h-screen flex flex-col bg-[#FAF6F0] dark:bg-[#1C1917] text-[#2D2621] dark:text-[#EDE5DD] transition-colors selection:bg-[#D7195F] selection:text-white relative">
       <div className="flex-1 flex flex-col">
         <Header
           onOpenReview={() => setIsReviewOpen(true)}
@@ -116,59 +117,64 @@ const MainDashboard: React.FC = () => {
           <>
             {/* Unreviewed Past Week Highlight Banner */}
             {currentWeekId < realCurrentWeekId && !currentWeekPlan.reviewedAt && (
-              <div className="p-3.5 sm:p-4 rounded-2xl bg-gradient-to-r from-amber-500/15 via-pink-500/10 to-rose-500/15 dark:from-amber-950/40 dark:via-pink-950/30 dark:to-rose-950/40 border border-amber-300/80 dark:border-amber-800/70 shadow-2xs flex flex-col sm:flex-row sm:items-center justify-between gap-3 animate-fade-in">
-                <div className="flex items-start sm:items-center gap-2.5">
-                  <div className="p-1.5 rounded-xl bg-gradient-to-br from-amber-500 to-[#D7195F] text-white shadow-2xs shrink-0">
-                    <Sparkles className="w-4 h-4" />
+              <div className="relative p-3.5 sm:p-4 rounded-none bg-[#FFF9F0] dark:bg-[#2A231A] shadow-pencil-sm flex flex-col sm:flex-row sm:items-center justify-between gap-3 animate-fade-in overflow-hidden">
+                <RoughBorder borderRadius={0} color="#D4A759" opacity={0.5} />
+                <div className="relative z-10 flex items-start sm:items-center gap-2.5">
+                  <div className="p-2 rounded-none bg-[#D7195F] text-white shadow-pencil-sm shrink-0 relative">
+                    <RoughBorder borderRadius={0} width={0.9} color="#574A40" darkColor="#EDE5DD" opacity={0.3} />
+                    <Sparkles className="w-4 h-4 stroke-[2.2] relative z-10" />
                   </div>
                   <div>
-                    <h3 className="text-xs sm:text-sm font-semibold text-stone-900 dark:text-stone-100">
+                    <h3 className="text-xs sm:text-sm font-hand font-bold text-[#2D2621] dark:text-[#EDE5DD]">
                       {t.pendingReviewBannerTitle}
                     </h3>
-                    <p className="text-2xs sm:text-xs text-stone-600 dark:text-stone-300">
+                    <p className="text-2xs sm:text-xs text-[#6A5C52] dark:text-[#BA9F83] font-sans">
                       {t.pendingReviewBannerDesc}
                     </p>
                   </div>
                 </div>
                 <button
                   onClick={() => setIsReviewOpen(true)}
-                  className="self-end sm:self-center text-xs px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-[#9123A6] to-[#D7195F] hover:from-[#7e1c91] hover:to-[#c21453] text-white font-medium active:scale-95 transition-all shadow-xs whitespace-nowrap"
+                  className="relative z-10 self-end sm:self-center text-xs px-3.5 py-1.5 rounded-none bg-gradient-to-r from-[#9123A6] to-[#D7195F] hover:opacity-95 text-white font-hand font-bold shadow-pencil-sm sketch-btn-press transition-all whitespace-nowrap"
                 >
-                  {t.actions.completeReview}
+                  <RoughBorder borderRadius={0} color="#574A40" darkColor="#EDE5DD" opacity={0.4} />
+                  <span className="relative z-10">{t.actions.completeReview}</span>
                 </button>
               </div>
             )}
 
             {/* Reviewed Week Highlight Banner */}
             {currentWeekPlan.reviewedAt && (
-              <div className="p-3.5 sm:p-4 rounded-2xl bg-gradient-to-r from-purple-500/10 via-pink-500/10 to-rose-500/10 dark:from-purple-950/40 dark:via-pink-950/30 dark:to-rose-950/40 border border-purple-200/70 dark:border-purple-800/60 shadow-2xs flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 animate-fade-in">
-                <div className="flex items-start sm:items-center gap-2.5">
-                  <div className="p-1.5 rounded-xl bg-gradient-to-br from-[#9123A6] to-[#D7195F] text-white shadow-2xs shrink-0">
-                    <CheckCircle2 className="w-4 h-4" />
+              <div className="relative p-3.5 sm:p-4 rounded-none bg-[#FFFDF9] dark:bg-[#202720] shadow-pencil-sm flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 animate-fade-in overflow-hidden">
+                <RoughBorder borderRadius={0} color="#4D7A4A" opacity={0.5} />
+                <div className="relative z-10 flex items-start sm:items-center gap-2.5">
+                  <div className="p-2 rounded-none bg-[#4D7A4A] text-white shadow-pencil-sm shrink-0 relative">
+                    <RoughBorder borderRadius={0} width={0.9} color="#574A40" darkColor="#EDE5DD" opacity={0.3} />
+                    <CheckCircle2 className="w-4 h-4 stroke-[2.2] relative z-10" />
                   </div>
                   <div>
                     <div className="flex flex-wrap items-center gap-2">
-                      <h3 className="text-xs sm:text-sm font-semibold text-stone-900 dark:text-stone-100">
+                      <h3 className="text-xs sm:text-sm font-hand font-bold text-[#2D2621] dark:text-[#EDE5DD]">
                         {t.reviewCompletedTitle}
                       </h3>
-                      <div className="flex items-center gap-1 text-2xs font-medium">
-                        <span className="px-1.5 py-0.2 rounded-full bg-emerald-50 dark:bg-emerald-950/80 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
+                      <div className="flex items-center gap-1.5 text-2xs font-medium">
+                        <span className="px-2 py-0.2 rounded-none bg-[#EEF5ED] dark:bg-[#203322] text-[#2F612C] dark:text-[#A6D6A2] border border-[#7CA379]/60 font-sans font-semibold">
                           {goals.filter(g => g.status === 'good').length} {t.status.good}
                         </span>
                         {goals.filter(g => g.status === 'partly').length > 0 && (
-                          <span className="px-1.5 py-0.2 rounded-full bg-amber-50 dark:bg-amber-950/80 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-800">
+                          <span className="px-2 py-0.2 rounded-none bg-[#FDF7EA] dark:bg-[#342714] text-[#8C5212] dark:text-[#F3D190] border border-[#D4A759]/60 font-sans font-semibold">
                             {goals.filter(g => g.status === 'partly').length} {t.status.partly}
                           </span>
                         )}
                         {goals.filter(g => g.status === 'poor').length > 0 && (
-                          <span className="px-1.5 py-0.2 rounded-full bg-rose-50 dark:bg-rose-950/80 text-rose-700 dark:text-rose-300 border border-rose-200 dark:border-rose-800">
+                          <span className="px-2 py-0.2 rounded-none bg-[#FDF0EE] dark:bg-[#361914] text-[#9E352B] dark:text-[#F3A59C] border border-[#DFA098]/60 font-sans font-semibold">
                             {goals.filter(g => g.status === 'poor').length} {t.status.poor}
                           </span>
                         )}
                       </div>
                     </div>
                     {currentWeekPlan.generalReflection && (
-                      <p className="text-2xs sm:text-xs text-stone-600 dark:text-stone-300 italic font-serif mt-0.5">
+                      <p className="text-xs text-[#6A5C52] dark:text-[#BA9F83] italic font-hand mt-0.5">
                         "{currentWeekPlan.generalReflection}"
                       </p>
                     )}
@@ -176,36 +182,37 @@ const MainDashboard: React.FC = () => {
                 </div>
                 <button
                   onClick={() => setIsReviewOpen(true)}
-                  className="self-end sm:self-center text-2xs px-2.5 py-1 rounded-lg bg-white dark:bg-stone-800 text-stone-700 dark:text-stone-200 hover:bg-stone-100 dark:hover:bg-stone-700 border border-stone-200 dark:border-stone-700 font-medium active:scale-95 transition-all shadow-2xs whitespace-nowrap"
+                  className="relative z-10 self-end sm:self-center text-xs px-3 py-1 rounded-none bg-white dark:bg-[#2D2621] text-[#2D2621] dark:text-[#EDE5DD] hover:bg-[#FAF6F0] dark:hover:bg-[#382E28] font-hand font-bold shadow-pencil-sm sketch-btn-press transition-all whitespace-nowrap"
                 >
-                  {t.editReview}
+                  <RoughBorder borderRadius={0} opacity={0.4} />
+                  <span className="relative z-10">{t.editReview}</span>
                 </button>
               </div>
             )}
 
             {/* Mobile Category Segmented Switcher */}
             <div className="md:hidden">
-              <div className="grid grid-cols-4 gap-1 p-1 bg-stone-200/60 dark:bg-stone-800/80 rounded-2xl border border-stone-200/60 dark:border-stone-700/60 shadow-2xs">
+              <div className="grid grid-cols-4 gap-1 p-1 bg-[#EFE6DA]/90 dark:bg-[#2D2420] rounded-none border border-[#574A40]/20 dark:border-[#EDE5DD]/15 shadow-pencil-sm">
                 {categoryTabs.map(tab => {
                   const isActive = selectedCategory === tab.id;
                   return (
                     <button
                       key={tab.id}
                       onClick={() => setSelectedCategory(tab.id)}
-                      className={`flex flex-col sm:flex-row items-center justify-center gap-1 py-2 px-1.5 rounded-xl text-xs font-medium transition-all active:scale-95 min-h-[44px] ${
+                      className={`flex flex-col sm:flex-row items-center justify-center gap-1 py-2 px-1.5 rounded-none text-xs font-hand transition-all min-h-[44px] ${
                         isActive
-                          ? 'bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-50 shadow-xs font-semibold'
-                          : 'text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-200'
+                          ? 'bg-white dark:bg-[#1E1B18] text-[#2D2621] dark:text-[#EDE5DD] font-bold border border-[#574A40]/25 dark:border-[#EDE5DD]/20 shadow-pencil-sm'
+                          : 'text-[#6A5C52] dark:text-[#BA9F83] hover:text-[#2D2621] dark:hover:text-[#EDE5DD]'
                       }`}
                     >
                       <div className="flex items-center gap-1">
                         {tab.icon}
-                        <span className="truncate">{tab.label}</span>
+                        <span className="truncate text-xs">{tab.label}</span>
                       </div>
-                      <span className={`text-2xs px-1.5 py-0.2 rounded-full font-sans ${
+                      <span className={`text-2xs px-1.5 py-0.2 rounded-none font-sans font-semibold ${
                         isActive
-                          ? 'bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-300'
-                          : 'text-stone-400 dark:text-stone-500'
+                          ? 'bg-[#FAF6F0] dark:bg-[#2D2621] text-[#2D2621] dark:text-[#EDE5DD]'
+                          : 'text-[#8A796D] dark:text-[#6A5C52]'
                       }`}>
                         {tab.count}
                       </span>
@@ -239,16 +246,35 @@ const MainDashboard: React.FC = () => {
         )}
       </main>
 
+      {/* Footer in Body Font (Nunito) */}
+      <footer className="w-full py-6 px-4 text-center text-xs sm:text-sm text-[#8A796D] dark:text-[#BA9F83] font-sans font-normal transition-colors pb-24 md:pb-8">
+        <div className="max-w-6xl mx-auto flex items-center justify-center gap-2 flex-wrap">
+          <span>Copyright 2026 Simon B&uuml;chi</span>
+          <span className="opacity-40">&bull;</span>
+          <a
+            href="https://github.com/simonbuechi/geist"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 hover:text-[#D7195F] dark:hover:text-[#F472B6] transition-colors underline decoration-[#574A40]/30 hover:decoration-[#D7195F] underline-offset-4"
+          >
+            <svg className="w-3.5 h-3.5 fill-current shrink-0" viewBox="0 0 24 24" aria-hidden="true">
+              <path fillRule="evenodd" clipRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
+            </svg>
+            <span>https://github.com/simonbuechi/geist</span>
+          </a>
+        </div>
+      </footer>
+
       {/* Mobile Sticky Bottom Action Bar (Thumb-Friendly CTA) */}
       {!isHistoryView && (
-        <div className="md:hidden fixed bottom-0 left-0 right-0 z-20 bg-stone-50/95 dark:bg-[#121614]/95 backdrop-blur-lg border-t border-stone-200/80 dark:border-stone-800/80 px-4 py-2 pb-[max(0.6rem,env(safe-area-inset-bottom,0px))] shadow-lg transition-colors">
+        <div className="md:hidden fixed bottom-0 left-0 right-0 z-20 bg-[#FAF6F0]/95 dark:bg-[#1C1917]/95 backdrop-blur-md border-t border-[#574A40]/20 dark:border-[#EDE5DD]/15 px-4 py-2.5 pb-[max(0.75rem,env(safe-area-inset-bottom,0px))] shadow-lg transition-colors">
           <div className="max-w-md mx-auto">
             <button
               onClick={() => setIsReviewOpen(true)}
-              className="w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-[#9123A6] to-[#D7195F] hover:from-[#7e1c91] hover:to-[#c21453] text-white font-medium text-xs sm:text-sm shadow-sm active:scale-98 transition-all flex items-center justify-center gap-2"
+              className="relative w-full py-2.5 px-4 rounded-none bg-gradient-to-r from-[#9123A6] to-[#D7195F] hover:opacity-95 text-white font-hand font-bold text-base shadow-pencil active:translate-x-[1px] active:translate-y-[1px] transition-all flex items-center justify-center"
             >
-              <Sparkles className="w-3.5 h-3.5 text-amber-300" />
-              <span>{currentWeekPlan.reviewedAt ? t.viewReview : (t.reviewAndPlanShort || t.reviewAndPlan)}</span>
+              <RoughBorder borderRadius={0} color="#574A40" darkColor="#EDE5DD" opacity={0.45} />
+              <span className="relative z-10">{currentWeekPlan.reviewedAt ? t.viewReview : (t.reviewAndPlanShort || t.reviewAndPlan)}</span>
             </button>
           </div>
         </div>

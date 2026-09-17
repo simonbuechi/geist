@@ -1,9 +1,7 @@
 import React from 'react';
 import { 
-  Calendar, 
   ChevronLeft, 
   ChevronRight, 
-  Sparkles,
   User as UserIcon,
   Check,
   Lock
@@ -18,7 +16,8 @@ import {
   getNextWeekId 
 } from '../utils/dateUtils';
 
-import { KgsLogo } from './KgsLogo';
+import { RoughBorder } from './RoughBorder';
+import { RoughNotationHighlight } from './RoughNotationHighlight';
 
 interface HeaderProps {
   onOpenReview: () => void;
@@ -60,7 +59,7 @@ export const Header: React.FC<HeaderProps> = ({
   };
 
   return (
-    <header className="sticky top-0 z-30 w-full backdrop-blur-md bg-stone-50/90 dark:bg-[#121614]/90 border-b border-stone-200/80 dark:border-stone-800/80 transition-colors pt-safe">
+    <header className="sticky top-0 z-30 w-full backdrop-blur-md bg-[#FAF6F0]/95 dark:bg-[#1C1917]/95 transition-colors pt-safe">
       <div className="max-w-6xl mx-auto px-3.5 sm:px-6 py-2.5 sm:py-3.5 flex flex-col gap-2.5 sm:gap-3">
         {/* Top bar: Brand & Controls */}
         <div className="flex items-center justify-between gap-2">
@@ -73,27 +72,34 @@ export const Header: React.FC<HeaderProps> = ({
               className="text-left group flex items-center gap-2 sm:gap-2.5 focus:outline-none min-w-0"
               aria-label="Home"
             >
-              <KgsLogo size={30} className="sm:w-8 sm:h-8 transition-transform group-hover:scale-105" />
-              <h1 className="text-sm sm:text-base font-serif font-bold tracking-tight text-stone-900 dark:text-stone-50 truncate">
-                {t.appTitle}
-              </h1>
+              <RoughNotationHighlight
+                trigger="both"
+                animationDuration={500}
+                padding={[2, 6, 2, 6]}
+                className="cursor-pointer"
+              >
+                <h1 className="text-2xl sm:text-3xl font-hand font-bold tracking-wide text-[#2D2621] dark:text-[#EDE5DD] truncate leading-tight">
+                  {t.appTitle}
+                </h1>
+              </RoughNotationHighlight>
             </button>
           </div>
 
           {/* Right Action Icons */}
-          <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+          <div className="flex items-center gap-2 shrink-0">
             {/* History Toggle */}
             <button
               onClick={onToggleHistory}
               title={t.history}
               aria-label={t.history}
-              className={`px-3 py-1.5 rounded-xl text-xs font-medium transition-all active:scale-95 min-h-[34px] flex items-center justify-center ${
+              className={`relative px-3 py-1.5 rounded-none text-sm font-hand font-bold transition-all sketch-btn-press min-h-[34px] flex items-center justify-center ${
                 isHistoryView
-                  ? 'bg-gradient-to-r from-[#9123A6] to-[#D7195F] text-white shadow-xs'
-                  : 'bg-stone-200/60 dark:bg-stone-800 text-stone-700 dark:text-stone-200 hover:bg-stone-300/60 dark:hover:bg-stone-700'
+                  ? 'bg-gradient-to-r from-[#9123A6] to-[#D7195F] text-white shadow-pencil'
+                  : 'bg-white dark:bg-[#25201C] text-[#2D2621] dark:text-[#EDE5DD] hover:bg-[#FAF6F0] dark:hover:bg-[#2F2925] shadow-pencil-sm'
               }`}
             >
-              <span>{t.history}</span>
+              <RoughBorder borderRadius={0} />
+              <span className="relative z-10">{t.history}</span>
             </button>
 
             {/* User / Settings Profile */}
@@ -101,17 +107,18 @@ export const Header: React.FC<HeaderProps> = ({
               onClick={onOpenAuth}
               title={user ? `${user.displayName || user.email || 'Konto'} (Angemeldet)` : `${t.auth.guestMode} (Lokal)`}
               aria-label="Settings and Profile"
-              className="relative w-9 h-9 sm:w-auto sm:h-auto p-2 rounded-xl bg-stone-200/60 dark:bg-stone-800 text-stone-700 dark:text-stone-300 hover:bg-stone-300/60 dark:hover:bg-stone-700 active:scale-95 transition-all flex items-center justify-center min-h-[36px]"
+              className="relative w-9 h-9 p-2 rounded-full bg-white dark:bg-[#25201C] text-[#2D2621] dark:text-[#EDE5DD] hover:bg-[#FAF6F0] dark:hover:bg-[#2F2925] shadow-pencil-sm sketch-btn-press transition-all flex items-center justify-center min-h-[36px]"
             >
+              <RoughBorder shape="circle" />
               {user?.photoURL ? (
-                <img src={user.photoURL} alt="Avatar" className="w-5 h-5 rounded-full object-cover" />
+                <img src={user.photoURL} alt="Avatar" className="w-5 h-5 rounded-full object-cover border border-[#574A40]/20 relative z-10" />
               ) : (
-                <UserIcon className="w-4 h-4" />
+                <UserIcon className="w-4 h-4 stroke-[2] relative z-10" />
               )}
               {/* Status Dot */}
               <span 
-                className={`absolute top-1.5 right-1.5 w-2 h-2 rounded-full ring-2 ring-stone-100 dark:ring-stone-800 ${
-                  user ? 'bg-emerald-500' : 'bg-stone-400 dark:bg-stone-500'
+                className={`absolute top-0.5 right-0.5 w-2.5 h-2.5 rounded-full border border-white dark:border-[#1C1917] z-20 ${
+                  user ? 'bg-[#4D7A4A]' : 'bg-[#BA9F83]'
                 }`} 
               />
             </button>
@@ -120,58 +127,60 @@ export const Header: React.FC<HeaderProps> = ({
 
         {/* Bottom bar: Week Navigator & Main Action */}
         {!isHistoryView && (
-          <div className="flex items-center justify-between gap-2 pt-1.5 border-t border-stone-200/50 dark:border-stone-800/50">
+          <div className="flex items-center justify-between gap-2 pt-1 sm:pt-2">
             {/* Week Switcher */}
-            <div className="flex items-center gap-1 sm:gap-2 flex-1 sm:flex-initial min-w-0">
+            <div className="flex items-center gap-1.5 sm:gap-2 flex-1 sm:flex-initial min-w-0">
               <button
                 onClick={() => selectWeek(getPreviousWeekId(currentWeekId))}
-                className="p-2 rounded-xl text-stone-600 dark:text-stone-300 hover:bg-stone-200/70 dark:hover:bg-stone-800 active:scale-90 transition-all shrink-0 min-h-[36px] min-w-[36px] flex items-center justify-center"
+                className="relative p-1.5 rounded-full bg-white dark:bg-[#25201C] text-[#2D2621] dark:text-[#EDE5DD] hover:bg-[#FAF6F0] dark:hover:bg-[#2F2925] shadow-pencil-sm sketch-btn-press transition-all shrink-0 min-h-[34px] min-w-[34px] flex items-center justify-center"
                 title="Vorherige Woche"
                 aria-label="Vorherige Woche"
               >
-                <ChevronLeft className="w-4 h-4 sm:w-4 sm:h-4" />
+                <RoughBorder shape="circle" />
+                <ChevronLeft className="w-4 h-4 stroke-[2.2] relative z-10" />
               </button>
 
-              <div className="flex items-center justify-center gap-1.5 sm:gap-2 px-2.5 py-1.5 rounded-xl bg-white/70 dark:bg-stone-900/70 border border-stone-200/60 dark:border-stone-800/60 shadow-2xs flex-1 sm:flex-initial min-w-0">
-                <Calendar className="w-3.5 h-3.5 text-[#9123A6] dark:text-[#f1add4] shrink-0" />
-                <span className="text-xs font-semibold text-stone-900 dark:text-stone-100 whitespace-nowrap">
+              <div className="flex items-center justify-center gap-2 px-2 py-1 flex-1 sm:flex-initial min-w-0">
+                <span className="text-base sm:text-lg font-hand font-bold text-[#2D2621] dark:text-[#EDE5DD] whitespace-nowrap">
                   {t.week} {weekNumber}
                 </span>
                 {currentWeekPlan.reviewedAt && (
-                  <span className="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-md bg-emerald-50 dark:bg-emerald-950/80 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800/80 text-2xs font-semibold shrink-0">
+                  <span className="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-none bg-[#EEF5ED] dark:bg-[#203322] text-[#2F612C] dark:text-[#A6D6A2] border border-[#7CA379]/60 text-2xs font-semibold shrink-0">
                     <Check className="w-2.5 h-2.5 stroke-[2.5]" />
                     <span className="hidden xs:inline">{t.reviewed}</span>
                   </span>
                 )}
-                <span className="text-stone-300 dark:text-stone-700 text-xs shrink-0">•</span>
-                <span className="text-2xs sm:text-xs text-stone-500 dark:text-stone-400 truncate font-medium">
+                <span className="text-[#BA9F83] dark:text-[#6A5C52] text-xs shrink-0">•</span>
+                <span className="text-2xs sm:text-xs text-[#6A5C52] dark:text-[#BA9F83] truncate font-sans font-medium">
                   {formatWeekRange(startDate, endDate, language)}
                 </span>
               </div>
 
               <button
                 onClick={handleNextWeek}
-                className={`p-1.5 rounded-xl transition-all shrink-0 min-h-[32px] min-w-[32px] flex items-center justify-center ${
+                className={`relative p-1.5 rounded-full transition-all shrink-0 min-h-[34px] min-w-[34px] flex items-center justify-center ${
                   !isNextAccessible
-                    ? 'text-stone-400 dark:text-stone-500 hover:bg-stone-200/50 dark:hover:bg-stone-800/50'
-                    : 'text-stone-600 dark:text-stone-300 hover:bg-stone-200/70 dark:hover:bg-stone-800 active:scale-90'
+                    ? 'bg-[#EFE6DA]/60 dark:bg-[#2D2420] text-[#8A796D] dark:text-[#6A5C52]'
+                    : 'bg-white dark:bg-[#25201C] text-[#2D2621] dark:text-[#EDE5DD] hover:bg-[#FAF6F0] dark:hover:bg-[#2F2925] shadow-pencil-sm sketch-btn-press'
                 }`}
                 title={!isNextAccessible ? t.unlockNextWeek : "Nächste Woche"}
                 aria-label={!isNextAccessible ? t.unlockNextWeek : "Nächste Woche"}
               >
+                <RoughBorder shape="circle" />
                 {!isNextAccessible ? (
-                  <Lock className="w-3.5 h-3.5 text-stone-400 dark:text-stone-500" />
+                  <Lock className="w-3.5 h-3.5 stroke-[2.2] text-[#8A796D] relative z-10" />
                 ) : (
-                  <ChevronRight className="w-3.5 h-3.5" />
+                  <ChevronRight className="w-4 h-4 stroke-[2.2] relative z-10" />
                 )}
               </button>
 
               {!isCurrent && (
                 <button
                   onClick={goToCurrentWeek}
-                  className="text-2xs px-2 py-1 rounded-xl bg-pink-50 dark:bg-pink-950/70 text-[#9123A6] dark:text-[#f8d2e8] border border-pink-200/60 dark:border-pink-900/60 hover:bg-pink-100 dark:hover:bg-pink-900/70 active:scale-95 transition-all font-medium shrink-0"
+                  className="relative text-xs px-2.5 py-1 rounded-none bg-[#FDF7EA] dark:bg-[#342714] text-[#8C5212] dark:text-[#F3D190] hover:bg-[#FCE6B8] dark:hover:bg-[#473418] sketch-btn-press transition-all font-sans font-semibold shrink-0"
                 >
-                  {t.backToCurrentWeek}
+                  <RoughBorder borderRadius={0} color="#D4A759" />
+                  <span className="relative z-10">{t.backToCurrentWeek}</span>
                 </button>
               )}
             </div>
@@ -180,10 +189,10 @@ export const Header: React.FC<HeaderProps> = ({
             <div className="hidden md:flex items-center gap-2 ml-auto">
               <button
                 onClick={onOpenReview}
-                className="px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-[#9123A6] to-[#D7195F] hover:from-[#7e1c91] hover:to-[#c21453] text-white font-medium text-xs shadow-xs hover:shadow-sm transition-all flex items-center gap-1.5 group active:scale-95"
+                className="relative px-5 py-2 rounded-none bg-gradient-to-r from-[#9123A6] to-[#D7195F] hover:opacity-95 text-white font-hand font-bold text-base sm:text-lg shadow-pencil-sm sketch-btn-press transition-all flex items-center justify-center group"
               >
-                <Sparkles className="w-3.5 h-3.5 group-hover:rotate-12 transition-transform" />
-                <span>{currentWeekPlan.reviewedAt ? t.viewReview : t.reviewAndPlan}</span>
+                <RoughBorder borderRadius={0} color="#574A40" darkColor="#EDE5DD" opacity={0.45} />
+                <span className="relative z-10">{currentWeekPlan.reviewedAt ? t.viewReview : t.reviewAndPlan}</span>
               </button>
             </div>
           </div>

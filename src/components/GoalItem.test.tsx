@@ -142,4 +142,18 @@ describe('GoalItem', () => {
     // Should display good status label (e.g. Erreicht in German default)
     expect(screen.getByText(/erreicht|achieved/i)).toBeInTheDocument();
   });
+
+  it('hides edit and delete buttons when isReadOnly is true', () => {
+    render(
+      <GoalItem
+        goal={mockGoal}
+        isReadOnly={true}
+        onUpdate={vi.fn()}
+        onDelete={vi.fn()}
+      />
+    );
+
+    expect(screen.queryByRole('button', { name: /bearbeiten|edit/i })).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: /löschen|delete/i })).not.toBeInTheDocument();
+  });
 });

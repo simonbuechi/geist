@@ -41,39 +41,39 @@ export const PwaInstallBanner: React.FC = () => {
   if (!showBanner) return null;
 
   return (
-    <div className="fixed bottom-20 md:bottom-4 left-3.5 right-3.5 sm:left-auto sm:right-6 sm:max-w-sm z-40 p-4 rounded-3xl bg-stone-900/95 dark:bg-stone-800/95 text-white shadow-2xl backdrop-blur-md border border-stone-700/80 animate-slide-up flex flex-col gap-3">
+    <div className="fixed bottom-20 md:bottom-4 left-3.5 right-3.5 sm:left-auto sm:right-6 sm:max-w-sm z-40 p-4 rounded-none bg-[#FFFDF9] dark:bg-[#25201C] text-[#2D2621] dark:text-[#EDE5DD] shadow-2xl border-2 border-[#2D2621] dark:border-[#EDE5DD]/40 sketch-shadow animate-slide-up flex flex-col gap-3">
       <div className="flex items-start justify-between gap-3">
         <div className="flex items-start gap-2.5">
-          <KgsLogo size={24} />
+          <KgsLogo size={28} />
           <div>
-            <h4 className="text-xs font-semibold text-white">
+            <h4 className="text-sm font-hand font-bold text-[#2D2621] dark:text-[#EDE5DD]">
               {t.pwa.installTitle}
             </h4>
-            <p className="text-2xs text-stone-300 mt-0.5 leading-snug">
+            <p className="text-2xs text-[#6A5C52] dark:text-[#BA9F83] mt-0.5 leading-snug font-sans">
               {t.pwa.installDesc}
             </p>
           </div>
         </div>
         <button
           onClick={handleDismiss}
-          className="text-stone-400 hover:text-white p-1"
+          className="text-[#8A796D] hover:text-[#2D2621] dark:hover:text-[#EDE5DD] p-1 rounded-full hover:bg-black/5 dark:hover:bg-white/5 transition-all"
         >
-          <X className="w-4 h-4" />
+          <X className="w-4 h-4 stroke-[2.2]" />
         </button>
       </div>
 
       <div className="flex items-center justify-end gap-2 pt-1">
         <button
           onClick={handleDismiss}
-          className="px-3 py-1 text-2xs text-stone-400 hover:text-white transition-colors"
+          className="px-3 py-1 text-xs font-hand font-bold text-[#8A796D] hover:text-[#2D2621] dark:hover:text-[#EDE5DD] transition-colors"
         >
           {t.pwa.dismissButton}
         </button>
         <button
           onClick={handleInstall}
-          className="px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-[#9123A6] to-[#D7195F] hover:from-[#7e1c91] hover:to-[#c21453] text-white text-xs font-medium shadow-md shadow-[#9123A6]/20 transition-all flex items-center gap-1.5 active:scale-95"
+          className="px-4 py-1.5 rounded-none bg-gradient-to-r from-[#9123A6] to-[#D7195F] hover:opacity-95 text-white border border-[#2D2621] font-hand font-bold text-xs shadow-pencil-sm transition-all flex items-center gap-1.5 sketch-btn-press"
         >
-          <Download className="w-3.5 h-3.5" />
+          <Download className="w-3.5 h-3.5 stroke-[2.2]" />
           <span>{t.pwa.installButton}</span>
         </button>
       </div>

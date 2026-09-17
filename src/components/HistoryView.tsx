@@ -30,35 +30,37 @@ export const HistoryView: React.FC<HistoryViewProps> = ({ onClose }) => {
   });
 
   const getCategoryIcon = (category: Category) => {
-    return <CategoryIcon category={category} className="w-3.5 h-3.5 text-[#9123A6] dark:text-[#f472b6]" size={14} />;
+    return <CategoryIcon category={category} variant="base" size={18} className="w-4.5 h-4.5 object-contain" />;
   };
 
-  const getStatusIcon = (status: GoalStatus) => {
+  const getGoalStatusIcon = (category: Category, status: GoalStatus) => {
     switch (status) {
-      case 'good': return <CheckCircle2 className="w-4 h-4 text-emerald-500" />;
-      case 'partly': return <MinusCircle className="w-4 h-4 text-amber-500" />;
-      case 'poor': return <XCircle className="w-4 h-4 text-rose-500" />;
-      default: return <div className="w-3.5 h-3.5 rounded-full border border-stone-400" />;
+      case 'good':
+      case 'partly':
+      case 'poor':
+        return <CategoryIcon category={category} status={status} size={18} className="w-4.5 h-4.5 object-contain" />;
+      default:
+        return <div className="w-3.5 h-3.5 rounded-none border border-[#8A796D]/50" />;
     }
   };
 
   return (
     <div className="w-full max-w-5xl mx-auto px-3.5 sm:px-4 py-4 sm:py-6 space-y-4 sm:space-y-6 animate-fade-in pb-20 md:pb-6">
       {/* Header Bar */}
-      <div className="flex items-center justify-between gap-3 pb-3 sm:pb-4 border-b border-stone-200 dark:border-stone-800">
+      <div className="flex items-center justify-between gap-3 pb-3 sm:pb-4 border-b-2 border-dashed border-[#2D2621]/30 dark:border-[#EDE5DD]/20">
         <div className="flex items-center gap-3">
           <button
             onClick={onClose}
             aria-label="Back"
-            className="w-10 h-10 rounded-xl bg-stone-200/60 dark:bg-stone-800 text-stone-700 dark:text-stone-300 hover:bg-stone-300/60 dark:hover:bg-stone-700 active:scale-95 transition-all flex items-center justify-center shrink-0"
+            className="w-10 h-10 rounded-full bg-white dark:bg-[#25201C] border border-[#2D2621]/70 dark:border-[#EDE5DD]/30 text-[#2D2621] dark:text-[#EDE5DD] hover:bg-[#FAF6F0] dark:hover:bg-[#342C26] sketch-shadow-sm sketch-btn-press transition-all flex items-center justify-center shrink-0"
           >
-            <ArrowLeft className="w-4 h-4" />
+            <ArrowLeft className="w-4 h-4 stroke-[2.2]" />
           </button>
           <div>
-            <h2 className="text-base sm:text-lg font-serif font-bold text-stone-900 dark:text-stone-50">
+            <h2 className="text-lg sm:text-xl font-hand font-bold text-[#2D2621] dark:text-[#EDE5DD]">
               {t.historyTitle}
             </h2>
-            <p className="text-2xs sm:text-xs text-stone-500 dark:text-stone-400 font-sans">
+            <p className="text-2xs sm:text-xs text-[#6A5C52] dark:text-[#BA9F83] font-sans">
               Deine bisherigen Wochen und Erfolge im Rückblick
             </p>
           </div>
@@ -66,17 +68,17 @@ export const HistoryView: React.FC<HistoryViewProps> = ({ onClose }) => {
       </div>
 
       {sortedPlans.length === 0 ? (
-        <div className="p-8 sm:p-12 text-center rounded-3xl bg-white/60 dark:bg-stone-900/60 border border-stone-200 dark:border-stone-800 space-y-2.5">
-          <History className="w-8 h-8 sm:w-10 sm:h-10 mx-auto text-stone-400" />
-          <h3 className="text-sm sm:text-base font-serif font-semibold text-stone-800 dark:text-stone-200">
+        <div className="p-8 sm:p-12 text-center rounded-none bg-[#FFFDF9] dark:bg-[#25201C] border-2 border-dashed border-[#BA9F83] space-y-2.5">
+          <History className="w-8 h-8 sm:w-10 sm:h-10 mx-auto text-[#BA9F83] stroke-[1.8]" />
+          <h3 className="text-base sm:text-lg font-hand font-bold text-[#2D2621] dark:text-[#EDE5DD]">
             {t.historyView.noHistoryYet}
           </h3>
-          <p className="text-2xs sm:text-xs text-stone-500 dark:text-stone-400 max-w-sm mx-auto">
+          <p className="text-xs sm:text-sm text-[#6A5C52] dark:text-[#BA9F83] max-w-sm mx-auto font-sans">
             {t.historyView.noHistorySub}
           </p>
         </div>
       ) : (
-        <div className="space-y-2.5 sm:space-y-3">
+        <div className="space-y-3">
           {sortedPlans.map((plan) => {
             const { weekNumber, year, startDate, endDate } = parseWeekId(plan.id);
             const isExpanded = expandedWeekId === plan.id;
@@ -88,69 +90,69 @@ export const HistoryView: React.FC<HistoryViewProps> = ({ onClose }) => {
             return (
               <div
                 key={plan.id}
-                className="rounded-2xl bg-white dark:bg-[#161c19] border border-stone-200/80 dark:border-stone-800/80 shadow-2xs hover:shadow-xs transition-all overflow-hidden"
+                className="rounded-none bg-[#FFFDF9] dark:bg-[#25201C] border border-[#574A40]/25 dark:border-[#EDE5DD]/20 shadow-pencil-sm hover:shadow-pencil transition-all overflow-hidden"
               >
                 {/* Week summary header */}
                 <div
                   onClick={() => setExpandedWeekId(isExpanded ? null : plan.id)}
-                  className="p-3 sm:p-4 flex flex-wrap items-center justify-between gap-2 sm:gap-3 cursor-pointer hover:bg-stone-50/50 dark:hover:bg-stone-800/40 active:bg-stone-100/50 dark:active:bg-stone-800/60 transition-colors"
+                  className="p-3.5 sm:p-4 flex flex-wrap items-center justify-between gap-2 sm:gap-3 cursor-pointer hover:bg-[#FAF6F0]/80 dark:hover:bg-[#2F2722] transition-colors"
                 >
                   <div className="flex items-center gap-2.5 min-w-0">
-                    <div className="px-2.5 py-1 rounded-xl bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-300 font-serif font-semibold text-xs flex items-center justify-center shrink-0 whitespace-nowrap">
+                    <div className="px-3 py-1 rounded-none bg-[#EFE6DA] dark:bg-[#382E27] border border-[#574A40]/25 text-[#2D2621] dark:text-[#EDE5DD] font-hand font-bold text-xs flex items-center justify-center shrink-0 whitespace-nowrap">
                       {t.week} {weekNumber}
                     </div>
                     <div className="min-w-0">
-                      <h4 className="text-xs sm:text-sm font-semibold text-stone-900 dark:text-stone-100 flex items-center gap-1.5 flex-wrap">
+                      <h4 className="text-sm sm:text-base font-hand font-bold text-[#2D2621] dark:text-[#EDE5DD] flex items-center gap-1.5 flex-wrap">
                         <span>{t.week} {weekNumber} ({year})</span>
                         {plan.reviewedAt && (
-                          <span className="text-2xs px-1.5 py-0.2 rounded-full bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 font-medium whitespace-nowrap">
+                          <span className="text-2xs px-2 py-0.2 rounded-none bg-[#EEF5ED] dark:bg-[#203322] text-[#2F612C] dark:text-[#A6D6A2] border border-[#7CA379]/60 font-sans font-semibold whitespace-nowrap">
                             ✓ {t.reviewWeek}
                           </span>
                         )}
                       </h4>
-                      <p className="text-2xs sm:text-xs text-stone-500 dark:text-stone-400 truncate">
+                      <p className="text-2xs sm:text-xs text-[#6A5C52] dark:text-[#BA9F83] truncate font-sans">
                         {formatWeekRange(startDate, endDate, language)}
                       </p>
                     </div>
                   </div>
 
                   {/* Goal Outcome Pills */}
-                  <div className="flex items-center gap-2 sm:gap-3 ml-auto shrink-0">
-                    <div className="flex items-center gap-1.5 text-xs font-medium">
-                      <span className="flex items-center gap-0.5 text-emerald-600 dark:text-emerald-400">
-                        <CheckCircle2 className="w-3 h-3" />
+                  <div className="flex items-center gap-2.5 sm:gap-3.5 ml-auto shrink-0">
+                    <div className="flex items-center gap-1.5 text-xs font-semibold">
+                      <span className="flex items-center gap-0.5 text-[#2F612C] dark:text-[#A6D6A2]">
+                        <CheckCircle2 className="w-3.5 h-3.5 stroke-[2.2]" />
                         {goodCount}
                       </span>
-                      <span className="flex items-center gap-0.5 text-amber-600 dark:text-amber-400">
-                        <MinusCircle className="w-3 h-3" />
+                      <span className="flex items-center gap-0.5 text-[#8C5212] dark:text-[#F2CF87]">
+                        <MinusCircle className="w-3.5 h-3.5 stroke-[2.2]" />
                         {partlyCount}
                       </span>
-                      <span className="flex items-center gap-0.5 text-rose-600 dark:text-rose-400">
-                        <XCircle className="w-3 h-3" />
+                      <span className="flex items-center gap-0.5 text-[#9E352B] dark:text-[#F3A59C]">
+                        <XCircle className="w-3.5 h-3.5 stroke-[2.2]" />
                         {poorCount}
                       </span>
                     </div>
 
-                    <div className="px-2 py-0.5 rounded-lg bg-stone-100 dark:bg-stone-800 text-2xs font-medium text-stone-600 dark:text-stone-400">
+                    <div className="px-2 py-0.5 rounded-none bg-[#EFE6DA] dark:bg-[#382E27] text-2xs font-sans font-semibold text-[#6A5C52] dark:text-[#BA9F83]">
                       {goals.length} {t.historyView.totalGoals}
                     </div>
 
                     {isExpanded ? (
-                      <ChevronDown className="w-4 h-4 text-stone-400" />
+                      <ChevronDown className="w-4 h-4 text-[#8A796D] stroke-[2.2]" />
                     ) : (
-                      <ChevronRight className="w-4 h-4 text-stone-400" />
+                      <ChevronRight className="w-4 h-4 text-[#8A796D] stroke-[2.2]" />
                     )}
                   </div>
                 </div>
 
                 {/* Expanded Detailed Breakdown */}
                 {isExpanded && (
-                  <div className="px-5 pb-5 pt-2 border-t border-stone-100 dark:border-stone-800/80 space-y-4 animate-slide-up">
+                  <div className="px-4 pb-4 pt-2 border-t border-dashed border-[#574A40]/20 dark:border-[#EDE5DD]/15 space-y-3.5 animate-slide-up">
                     {/* General Reflection if available */}
                     {plan.generalReflection && (
-                      <div className="p-3.5 rounded-2xl bg-amber-50/50 dark:bg-amber-950/20 border border-amber-200/50 dark:border-amber-900/30 flex items-start gap-2.5">
-                        <Quote className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
-                        <p className="text-xs text-stone-700 dark:text-stone-300 italic font-serif leading-relaxed">
+                      <div className="p-3.5 rounded-none bg-[#FFF9F2] dark:bg-[#2C231D] border border-[#D4A759]/50 flex items-start gap-2.5 shadow-pencil-sm">
+                        <Quote className="w-4 h-4 text-[#C97A1E] shrink-0 mt-0.5" />
+                        <p className="text-xs sm:text-sm text-[#6A5C52] dark:text-[#BA9F83] italic font-hand leading-relaxed">
                           „{plan.generalReflection}“
                         </p>
                       </div>
@@ -161,25 +163,25 @@ export const HistoryView: React.FC<HistoryViewProps> = ({ onClose }) => {
                       {(['body', 'mind', 'soul'] as Category[]).map(cat => {
                         const catGoals = goals.filter(g => g.category === cat);
                         return (
-                          <div key={cat} className="p-3 rounded-2xl bg-stone-50 dark:bg-stone-900/60 border border-stone-200/60 dark:border-stone-800 space-y-2">
-                            <div className="flex items-center gap-1.5 font-medium text-xs text-stone-600 dark:text-stone-300">
+                          <div key={cat} className="p-3 rounded-none bg-[#FAF6F0] dark:bg-[#1E1B18] border border-[#574A40]/20 dark:border-[#EDE5DD]/20 space-y-2">
+                            <div className="flex items-center gap-1.5 font-hand font-bold text-xs text-[#2D2621] dark:text-[#EDE5DD]">
                               {getCategoryIcon(cat)}
                               <span className="capitalize">{t.categories[cat].title}</span>
-                              <span className="text-stone-400">({catGoals.length})</span>
+                              <span className="text-[#8A796D] font-sans font-normal">({catGoals.length})</span>
                             </div>
                             {catGoals.length === 0 ? (
-                              <p className="text-2xs text-stone-400 italic">Keine Ziele</p>
+                              <p className="text-2xs text-[#8A796D] italic font-hand">Keine Ziele</p>
                             ) : (
                               <div className="space-y-1.5">
                                 {catGoals.map(g => (
-                                  <div key={g.id} className="p-2 rounded-xl bg-white dark:bg-stone-800 border border-stone-200/50 dark:border-stone-700 text-xs flex items-start gap-2">
-                                    <span className="mt-0.5 shrink-0">{getStatusIcon(g.status)}</span>
-                                    <div className="flex-1 min-w-0">
-                                      <p className="text-stone-800 dark:text-stone-200 leading-snug break-words">
+                                  <div key={g.id} className="p-2 rounded-none bg-white dark:bg-[#25201C] border border-[#574A40]/20 dark:border-[#EDE5DD]/15 text-xs flex items-start gap-2">
+                                    <span className="shrink-0">{getGoalStatusIcon(g.category, g.status)}</span>
+                                    <div className="flex-1 min-w-0 font-sans">
+                                      <p className="text-[#2D2621] dark:text-[#EDE5DD] leading-snug break-words">
                                         {g.description}
                                       </p>
                                       {g.comment && (
-                                        <p className="text-2xs text-stone-500 italic mt-0.5">
+                                        <p className="text-2xs text-[#6A5C52] dark:text-[#BA9F83] font-hand italic mt-0.5">
                                           „{g.comment}“
                                         </p>
                                       )}
@@ -194,13 +196,13 @@ export const HistoryView: React.FC<HistoryViewProps> = ({ onClose }) => {
                     </div>
 
                     {/* Switch to this week button */}
-                    <div className="flex justify-end pt-2">
+                    <div className="flex justify-end pt-1">
                       <button
                         onClick={() => {
                           selectWeek(plan.id);
                           onClose();
                         }}
-                        className="w-full sm:w-auto px-4 py-2.5 sm:py-1.5 rounded-xl bg-stone-200/70 dark:bg-stone-800 hover:bg-emerald-600 hover:text-white dark:hover:bg-emerald-600 text-stone-700 dark:text-stone-300 text-xs font-medium active:scale-95 transition-all flex items-center justify-center"
+                        className="w-full sm:w-auto px-4 py-2 sm:py-1.5 rounded-none bg-gradient-to-r from-[#9123A6] to-[#D7195F] hover:opacity-95 text-white border border-[#574A40]/30 font-hand font-bold text-xs shadow-pencil-sm sketch-btn-press transition-all flex items-center justify-center gap-1"
                       >
                         Diese Woche öffnen & bearbeiten →
                       </button>
