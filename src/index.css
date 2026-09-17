@@ -1,3 +1,51 @@
+@font-face {
+  font-family: 'LiebeHeide';
+  src: url('./assets/fonts/liebeheide-finelinerbold.otf') format('opentype');
+  font-weight: 600 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'LiebeHeide';
+  src: url('./assets/fonts/liebeheide-finelinerbold.otf') format('opentype');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'LiebeHeide';
+  src: url('./assets/fonts/liebeheide-finelinerbold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'LiebeHeide';
+  src: url('./assets/fonts/liebeheide-finelinermedium.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'LiebeHeide';
+  src: url('./assets/fonts/liebeheide-finelinermedium.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'LiebeHeide';
+  src: url('./assets/fonts/liebeheide-finelinermedium.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -9,7 +57,7 @@
     -webkit-tap-highlight-color: transparent;
   }
   
-  /* Mindful subtle custom scrollbars */
+  /* Hand-drawn sketchbook custom scrollbars */
   ::-webkit-scrollbar {
     width: 6px;
     height: 6px;
@@ -20,11 +68,11 @@
   }
   
   ::-webkit-scrollbar-thumb {
-    @apply bg-stone-300 dark:bg-stone-700 rounded-full;
+    @apply bg-[#BA9F83]/60 dark:bg-[#6A5C52]/60 rounded-full;
   }
   
   ::-webkit-scrollbar-thumb:hover {
-    @apply bg-stone-400 dark:bg-stone-600;
+    @apply bg-[#A88C70] dark:bg-[#8A796D];
   }
 }
 
@@ -52,14 +100,87 @@
     font-size: 0.625rem !important; /* 10px */
     line-height: 0.75rem !important; /* 12px */
   }
+
+  /* Edgy Hand-Drawn Pencil Borders (Crisp 90-degree corners) */
+  .sketch-border {
+    border-radius: 0px;
+  }
+
+  .sketch-border-alt {
+    border-radius: 0px;
+  }
+
+  .sketch-border-sm {
+    border-radius: 0px;
+  }
+
+  .sketch-pill {
+    border-radius: 0px;
+  }
+
+  /* Tactile Pencil Sketch Shadows - Light & Elegant */
+  .sketch-shadow {
+    box-shadow: 1.5px 2.5px 0px 0px rgba(87, 74, 64, 0.28);
+  }
+  .dark .sketch-shadow {
+    box-shadow: 1.5px 2.5px 0px 0px rgba(237, 229, 221, 0.16);
+  }
+
+  .sketch-shadow-sm {
+    box-shadow: 1px 1.5px 0px 0px rgba(87, 74, 64, 0.22);
+  }
+  .dark .sketch-shadow-sm {
+    box-shadow: 1px 1.5px 0px 0px rgba(237, 229, 221, 0.14);
+  }
+
+  .sketch-shadow-hover:hover {
+    transform: translate(-0.5px, -0.5px);
+    box-shadow: 2px 3px 0px 0px rgba(87, 74, 64, 0.35);
+  }
+  .dark .sketch-shadow-hover:hover {
+    box-shadow: 2px 3px 0px 0px rgba(237, 229, 221, 0.22);
+  }
+
+  .sketch-btn-press:active {
+    transform: translate(1px, 1.5px);
+    box-shadow: 0.5px 0.5px 0px 0px rgba(87, 74, 64, 0.2);
+  }
+  .dark .sketch-btn-press:active {
+    box-shadow: 0.5px 0.5px 0px 0px rgba(237, 229, 221, 0.1);
+  }
+
+  /* Lined paper note motif */
+  .lined-paper {
+    background-image: repeating-linear-gradient(
+      transparent,
+      transparent 23px,
+      rgba(200, 180, 160, 0.18) 23px,
+      rgba(200, 180, 160, 0.18) 24px
+    );
+  }
+  .dark .lined-paper {
+    background-image: repeating-linear-gradient(
+      transparent,
+      transparent 23px,
+      rgba(80, 70, 60, 0.25) 23px,
+      rgba(80, 70, 60, 0.25) 24px
+    );
+  }
 }
 
-/* Glassmorphism helpers */
-.glass-panel {
-  @apply bg-white/80 dark:bg-stone-900/80 backdrop-blur-md border border-stone-200/80 dark:border-stone-800/80 shadow-sm;
+/* Warm Paper Card Styles - Light & Elegant */
+.paper-card {
+  @apply bg-[#FFFEFB] dark:bg-[#221E1B] border border-[#574A40]/30 dark:border-[#EDE5DD]/25 sketch-border sketch-shadow;
 }
 
-.glass-card {
-  @apply bg-white/90 dark:bg-stone-900/90 backdrop-blur-sm border border-stone-200/70 dark:border-stone-800/70 shadow-sm transition-all duration-200;
+.paper-card-sm {
+  @apply bg-[#FFFEFB] dark:bg-[#221E1B] border border-[#574A40]/30 dark:border-[#EDE5DD]/25 sketch-border-sm sketch-shadow-sm;
+}
+
+/* Rough Notation Animation */
+@keyframes rough-notation-dash {
+  to {
+    stroke-dashoffset: 0;
+  }
 }
 
