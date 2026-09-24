@@ -24,7 +24,7 @@ export const RoughNotationHighlight: React.FC<RoughNotationHighlightProps> = ({
   color = 'rgba(215, 25, 95, 0.22)',
   darkColor = 'rgba(244, 114, 182, 0.32)',
   animationDuration = 450,
-  iterations = 2,
+  iterations = 1,
   strokeWidth,
   padding = [2, 6, 2, 6],
   trigger = 'both',

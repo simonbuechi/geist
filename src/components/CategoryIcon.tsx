@@ -76,13 +76,15 @@ export const CategoryIcon: React.FC<CategoryIconProps> = ({
   const src = categoryIcons[category]?.[resolvedVariant] ?? categoryIcons[category]?.base;
   const defaultAlt = `${category} ${resolvedVariant}`;
 
+  const hasCustomSizeClass = /(?:^|\s)(?:w-|h-)/.test(className);
+
   return (
     <img
       src={src}
       alt={alt || defaultAlt}
       width={size}
       height={size}
-      style={{ width: size, height: size }}
+      style={hasCustomSizeClass ? undefined : { width: size, height: size }}
       className={`inline-block select-none object-contain shrink-0 ${className}`}
       loading="lazy"
       draggable={false}
