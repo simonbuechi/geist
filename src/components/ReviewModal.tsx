@@ -104,26 +104,26 @@ export const ReviewModal: React.FC<ReviewModalProps> = ({ isOpen, onClose }) => 
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center sm:p-4 bg-[#2D2621]/50 backdrop-blur-xs animate-fade-in">
-      <div className="relative w-full max-w-2xl bg-[#FFFDF9] dark:bg-[#25201C] rounded-none shadow-xl h-[92vh] sm:h-auto sm:max-h-[88vh] flex flex-col overflow-hidden animate-slide-up sm:animate-scale-in shadow-pencil">
-        <RoughBorder borderRadius={0} width={1.2} opacity={0.5} />
+    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center sm:p-4 bg-[#4A3E36]/50 backdrop-blur-xs animate-fade-in">
+      <div className="relative w-full max-w-2xl bg-[#FDFBF7] dark:bg-[#25201C] rounded-none shadow-xl h-[92vh] sm:h-auto sm:max-h-[88vh] flex flex-col overflow-hidden animate-slide-up sm:animate-scale-in shadow-pencil">
+        <RoughBorder borderRadius={0} width={1.2} opacity={0.4} color="#6E5F54" />
         
         {/* Mobile Drag / Sheet Handle Indicator */}
-        <div className="sm:hidden pt-2.5 pb-1 bg-[#FAF6F0] dark:bg-[#25201C] flex justify-center shrink-0">
-          <div className="w-10 h-1 bg-[#574A40]/30 rounded-none" />
+        <div className="sm:hidden pt-2.5 pb-1 bg-[#F5F2EB] dark:bg-[#25201C] flex justify-center shrink-0">
+          <div className="w-10 h-1 bg-[#7A6A5E]/30 rounded-none" />
         </div>
 
         {/* Header - Delicate Notebook Header with Warm Tinted Background */}
-        <div className="relative px-4 py-3 sm:px-6 sm:py-4 border-b border-[#D7195F]/20 dark:border-[#EDE5DD]/15 flex items-center justify-between shrink-0 overflow-hidden bg-[#FAF3EE] dark:bg-[#2B1D17]">
+        <div className="relative px-4 py-3 sm:px-6 sm:py-4 border-b border-[#7A6A5E]/20 dark:border-[#EDE5DD]/15 flex items-center justify-between shrink-0 overflow-hidden bg-[#F2EAE0]/90 dark:bg-[#2B231C]">
           <div className="relative z-10 flex items-center gap-2.5">
-            <div className="p-1.5 sm:p-2 rounded-none bg-white/95 dark:bg-[#2D2621] border border-[#574A40]/30 dark:border-[#EDE5DD]/20 shadow-pencil-sm shrink-0">
+            <div className="p-1.5 sm:p-2 rounded-none bg-white/95 dark:bg-[#28221D] border border-[#7A6A5E]/25 dark:border-[#EDE5DD]/20 shadow-pencil-sm shrink-0">
               <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-[#D7195F] stroke-[2.2]" />
             </div>
             <div>
-              <h3 className="text-xl sm:text-2xl font-hand font-bold tracking-wide text-[#2D2621] dark:text-[#EDE5DD]">
+              <h3 className="text-xl sm:text-2xl font-hand font-bold tracking-wide text-[#4A3E36] dark:text-[#EDE5DD]">
                 {t.reviewModal.title}
               </h3>
-              <p className="text-2xs sm:text-xs text-[#8A796D] dark:text-[#BA9F83] font-sans">
+              <p className="text-2xs sm:text-xs text-[#7D6E63] dark:text-[#BA9F83] font-sans">
                 {t.week} {weekNumber} • {formatWeekRange(startDate, endDate, language)}
               </p>
             </div>
@@ -131,9 +131,9 @@ export const ReviewModal: React.FC<ReviewModalProps> = ({ isOpen, onClose }) => 
           <button
             onClick={onClose}
             aria-label="Close"
-            className="relative z-10 p-1.5 rounded-full text-[#6A5C52] dark:text-[#BA9F83] hover:text-[#2D2621] dark:hover:text-[#EDE5DD] hover:bg-white/80 dark:hover:bg-[#382E28] transition-all shadow-pencil-sm"
+            className="relative z-10 p-1.5 rounded-full text-[#7D6E63] dark:text-[#BA9F83] hover:text-[#4A3E36] dark:hover:text-[#EDE5DD] hover:bg-[#EAE0D2]/80 dark:hover:bg-[#382E28] transition-all shadow-pencil-sm"
           >
-            <RoughBorder shape="circle" width={0.9} />
+            <RoughBorder shape="circle" width={0.9} color="#6E5F54" />
             <X className="w-4 h-4 stroke-[2] relative z-10" />
           </button>
         </div>
@@ -154,31 +154,31 @@ export const ReviewModal: React.FC<ReviewModalProps> = ({ isOpen, onClose }) => 
                       : 'partial';
 
                 return (
-                  <div key={cat} className="p-2.5 rounded-none bg-white dark:bg-[#1E1B18] border border-[#574A40]/25 dark:border-[#EDE5DD]/20 shadow-pencil-sm flex flex-col items-center gap-1.5 min-w-[76px]">
-                    <CategoryIcon category={cat} variant={variant} size={36} className="w-9 h-9" />
-                    <span className="text-xs font-hand font-bold text-[#2D2621] dark:text-[#EDE5DD] capitalize">
+                  <div key={cat} className="p-2.5 rounded-none bg-[#FDFBF7] dark:bg-[#28221D] border border-[#7A6A5E]/20 dark:border-[#EDE5DD]/20 shadow-pencil-sm flex flex-col items-center gap-1.5 min-w-[80px]">
+                    <CategoryIcon category={cat} variant={variant} size={44} className="w-11 h-11" />
+                    <span className="text-xs font-hand font-bold text-[#4A3E36] dark:text-[#EDE5DD] capitalize">
                       {t.categories[cat].title}
                     </span>
                   </div>
                 );
               })}
             </div>
-            <h4 className="text-xl sm:text-2xl font-hand font-bold text-[#2D2621] dark:text-[#EDE5DD]">
+            <h4 className="text-xl sm:text-2xl font-hand font-bold text-[#4A3E36] dark:text-[#EDE5DD]">
               {t.reviewModal.successMessage}
             </h4>
-            <p className="text-xs sm:text-sm text-[#6A5C52] dark:text-[#BA9F83] max-w-md font-sans">
+            <p className="text-xs sm:text-sm text-[#7D6E63] dark:text-[#BA9F83] max-w-md font-sans">
               Deine Reflexion für {t.week} {weekNumber} wurde erfolgreich im Skizzenbuch gespeichert.
             </p>
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 mt-3 w-full sm:w-auto">
               <button
                 onClick={onClose}
-                className="px-4 py-2 rounded-none border-1.5 border-[#2D2621]/60 dark:border-[#EDE5DD]/40 text-[#2D2621] dark:text-[#EDE5DD] bg-white dark:bg-[#1E1B18] hover:bg-[#FAF6F0] dark:hover:bg-[#2D2621] font-hand font-bold text-sm sm:text-base sketch-btn-press transition-all"
+                className="px-4 py-2 rounded-none border-1.5 border-[#7A6A5E]/40 dark:border-[#EDE5DD]/40 text-[#4A3E36] dark:text-[#EDE5DD] bg-[#FDFBF7] dark:bg-[#28221D] hover:bg-[#F2EAE0] dark:hover:bg-[#322A23] font-hand font-bold text-sm sm:text-base sketch-btn-press transition-all"
               >
                 {t.viewReview}
               </button>
               <button
                 onClick={handleFinishAndOpenNextWeek}
-                className="px-5 py-2 rounded-none bg-gradient-to-r from-[#9123A6] to-[#D7195F] hover:opacity-95 text-white border-2 border-[#2D2621] dark:border-[#EDE5DD]/40 font-hand font-bold text-sm sm:text-base sketch-shadow-sm sketch-btn-press transition-all flex items-center justify-center gap-1.5"
+                className="px-5 py-2 rounded-none bg-gradient-to-r from-[#9123A6] to-[#D7195F] hover:opacity-95 text-white border-2 border-[#7A6A5E]/50 dark:border-[#EDE5DD]/40 font-hand font-bold text-sm sm:text-base sketch-shadow-sm sketch-btn-press transition-all flex items-center justify-center gap-1.5"
               >
                 <span>{t.actions.startNextWeek} ({t.week} {nextWeekDetails.weekNumber})</span>
                 <ArrowRight className="w-4 h-4 stroke-[2.2]" />
@@ -188,18 +188,18 @@ export const ReviewModal: React.FC<ReviewModalProps> = ({ isOpen, onClose }) => 
         ) : (
           <form onSubmit={handleSubmit} className="flex-1 flex flex-col min-h-0 overflow-hidden">
             <div className="flex-1 overflow-y-auto p-4 sm:p-5 space-y-4 overscroll-contain">
-              <p className="text-sm sm:text-base text-[#6A5C52] dark:text-[#BA9F83] italic font-hand">
+              <p className="text-sm sm:text-base text-[#7D6E63] dark:text-[#BA9F83] italic font-hand">
                 {t.reviewModal.description}
               </p>
 
               {/* Section 1: Evaluate Goals */}
               <div className="space-y-3">
-                <h4 className="text-2xs sm:text-xs font-bold uppercase tracking-wider text-[#8A796D] dark:text-[#BA9F83] font-sans">
+                <h4 className="text-2xs sm:text-xs font-bold uppercase tracking-wider text-[#7D6E63] dark:text-[#BA9F83] font-sans">
                   {t.reviewModal.step1Title}
                 </h4>
 
                 {currentWeekPlan.goals.length === 0 ? (
-                  <div className="p-4 rounded-none bg-[#F7F2EB] dark:bg-[#1E1B18] border border-dashed border-[#BA9F83] text-[#6A5C52] text-xs text-center font-hand">
+                  <div className="p-4 rounded-none bg-[#F7F2EB] dark:bg-[#1E1B18] border border-dashed border-[#BA9F83] text-[#7D6E63] text-xs text-center font-hand">
                     Für diese Woche wurden keine Ziele hinterlegt.
                   </div>
                 ) : (
@@ -211,14 +211,14 @@ export const ReviewModal: React.FC<ReviewModalProps> = ({ isOpen, onClose }) => 
                       return (
                         <div
                           key={goal.id}
-                          className="p-3 sm:p-3.5 rounded-none bg-white dark:bg-[#1E1B18] border border-[#574A40]/25 dark:border-[#EDE5DD]/20 shadow-pencil-sm space-y-2.5"
+                          className="p-3 sm:p-3.5 rounded-none bg-[#FDFBF7] dark:bg-[#28221D] border border-[#7A6A5E]/20 dark:border-[#EDE5DD]/20 shadow-pencil-sm space-y-2.5"
                         >
                           {/* Goal Item Description */}
                           <div className="flex items-start gap-2.5">
-                            <span className="p-1.5 rounded-none bg-[#FAF6F0] dark:bg-[#2D2621] border border-[#574A40]/20 dark:border-[#EDE5DD]/20 mt-0.5 shrink-0 flex items-center justify-center shadow-pencil-sm">
+                            <span className="p-1.5 rounded-none bg-[#FAF5ED] dark:bg-[#241E19] border border-[#7A6A5E]/20 dark:border-[#EDE5DD]/20 mt-0.5 shrink-0 flex items-center justify-center shadow-pencil-sm">
                               {getCategoryIcon(goal.category, currentEval.status)}
                             </span>
-                            <span className="text-xs sm:text-sm font-sans font-medium text-[#2D2621] dark:text-[#EDE5DD] flex-1 leading-snug pt-1">
+                            <span className="text-xs sm:text-sm font-sans font-medium text-[#4A3E36] dark:text-[#EDE5DD] flex-1 leading-snug pt-1">
                               {goal.description}
                             </span>
                           </div>
@@ -231,7 +231,7 @@ export const ReviewModal: React.FC<ReviewModalProps> = ({ isOpen, onClose }) => 
                               className={`py-1.5 px-1 sm:px-2 rounded-none text-sm font-hand font-bold flex items-center justify-center gap-1.5 transition-all min-h-[38px] sketch-btn-press ${
                                 currentEval.status === 'good'
                                   ? 'bg-[#EEF5ED] dark:bg-[#203322] text-[#2F612C] dark:text-[#A6D6A2] border border-[#4D7A4A] shadow-pencil-sm'
-                                  : 'bg-[#FAF6F0]/80 dark:bg-[#25201C] text-[#6A5C52] dark:text-[#BA9F83] border border-[#574A40]/20 dark:border-[#EDE5DD]/20 hover:border-[#4D7A4A]/50'
+                                  : 'bg-[#FAF5ED]/80 dark:bg-[#25201C] text-[#7D6E63] dark:text-[#BA9F83] border border-[#7A6A5E]/20 dark:border-[#EDE5DD]/20 hover:border-[#4D7A4A]/50'
                               }`}
                             >
                               <CategoryIcon category={goal.category} variant="achieved" size={20} className="w-5 h-5 shrink-0" />
@@ -244,7 +244,7 @@ export const ReviewModal: React.FC<ReviewModalProps> = ({ isOpen, onClose }) => 
                               className={`py-1.5 px-1 sm:px-2 rounded-none text-sm font-hand font-bold flex items-center justify-center gap-1.5 transition-all min-h-[38px] sketch-btn-press ${
                                 currentEval.status === 'partly'
                                   ? 'bg-[#FDF7EA] dark:bg-[#342714] text-[#8C5212] dark:text-[#F3D190] border border-[#C97A1E] shadow-pencil-sm'
-                                  : 'bg-[#FAF6F0]/80 dark:bg-[#25201C] text-[#6A5C52] dark:text-[#BA9F83] border border-[#574A40]/20 dark:border-[#EDE5DD]/20 hover:border-[#C97A1E]/50'
+                                  : 'bg-[#FAF5ED]/80 dark:bg-[#25201C] text-[#7D6E63] dark:text-[#BA9F83] border border-[#7A6A5E]/20 dark:border-[#EDE5DD]/20 hover:border-[#C97A1E]/50'
                               }`}
                             >
                               <CategoryIcon category={goal.category} variant="partial" size={20} className="w-5 h-5 shrink-0" />
@@ -257,7 +257,7 @@ export const ReviewModal: React.FC<ReviewModalProps> = ({ isOpen, onClose }) => 
                               className={`py-1.5 px-1 sm:px-2 rounded-none text-sm font-hand font-bold flex items-center justify-center gap-1.5 transition-all min-h-[38px] sketch-btn-press ${
                                 currentEval.status === 'poor'
                                   ? 'bg-[#FDF0EE] dark:bg-[#361914] text-[#9E352B] dark:text-[#F3A59C] border border-[#C44B40] shadow-pencil-sm'
-                                  : 'bg-[#FAF6F0]/80 dark:bg-[#25201C] text-[#6A5C52] dark:text-[#BA9F83] border border-[#574A40]/20 dark:border-[#EDE5DD]/20 hover:border-[#C44B40]/50'
+                                  : 'bg-[#FAF5ED]/80 dark:bg-[#25201C] text-[#7D6E63] dark:text-[#BA9F83] border border-[#7A6A5E]/20 dark:border-[#EDE5DD]/20 hover:border-[#C44B40]/50'
                               }`}
                             >
                               <CategoryIcon category={goal.category} variant="not_achieved" size={20} className="w-5 h-5 shrink-0" />
@@ -272,18 +272,18 @@ export const ReviewModal: React.FC<ReviewModalProps> = ({ isOpen, onClose }) => 
                               value={currentEval.comment}
                               onChange={(e) => handleCommentChange(goal.id, e.target.value)}
                               placeholder="Kurze Reflexion notieren..."
-                              className="w-full text-xs p-2.5 rounded-none border border-[#574A40]/25 dark:border-[#EDE5DD]/20 bg-white/95 dark:bg-[#25201C] text-[#2D2621] dark:text-[#EDE5DD] placeholder-[#8A796D] focus:outline-none focus:ring-1 focus:ring-[#D7195F] font-sans"
+                              className="w-full text-xs p-2.5 rounded-none border border-[#7A6A5E]/25 dark:border-[#EDE5DD]/20 bg-[#FAF6F0] dark:bg-[#201C18] text-[#4A3E36] dark:text-[#EDE5DD] placeholder-[#8C7D71] focus:outline-none focus:ring-1 focus:ring-[#D7195F] font-sans"
                             />
                           </div>
 
                           {/* Carry over toggle */}
                           <div className="flex items-center justify-between pt-0.5 text-2xs sm:text-xs">
-                            <label className="flex items-center gap-2 cursor-pointer select-none text-[#6A5C52] dark:text-[#BA9F83] py-0.5 font-sans">
+                            <label className="flex items-center gap-2 cursor-pointer select-none text-[#7D6E63] dark:text-[#BA9F83] py-0.5 font-sans">
                               <input
                                 type="checkbox"
                                 checked={isCarried}
                                 onChange={() => toggleCarryOver(goal.id)}
-                                className="w-3.5 h-3.5 rounded-none border-[#574A40]/40 text-[#D7195F] focus:ring-[#D7195F]"
+                                className="w-3.5 h-3.5 rounded-none border-[#7A6A5E]/40 text-[#D7195F] focus:ring-[#D7195F]"
                               />
                               <span>{t.actions.carryOver} (KW {nextWeekDetails.weekNumber})</span>
                             </label>
@@ -296,8 +296,8 @@ export const ReviewModal: React.FC<ReviewModalProps> = ({ isOpen, onClose }) => 
               </div>
 
               {/* Section 2: General Weekly Reflection */}
-              <div className="space-y-2 pt-2 border-t border-dashed border-[#574A40]/20 dark:border-[#EDE5DD]/15">
-                <h4 className="text-2xs sm:text-xs font-bold uppercase tracking-wider text-[#8A796D] dark:text-[#BA9F83] font-sans">
+              <div className="space-y-2 pt-2 border-t border-dashed border-[#7A6A5E]/20 dark:border-[#EDE5DD]/15">
+                <h4 className="text-2xs sm:text-xs font-bold uppercase tracking-wider text-[#7D6E63] dark:text-[#BA9F83] font-sans">
                   {t.actions.addReflection}
                 </h4>
                 <textarea
@@ -305,26 +305,26 @@ export const ReviewModal: React.FC<ReviewModalProps> = ({ isOpen, onClose }) => 
                   onChange={(e) => setGeneralReflection(e.target.value)}
                   placeholder={t.reviewModal.generalReflectionPlaceholder}
                   rows={3}
-                  className="w-full text-xs sm:text-sm p-3 rounded-none border border-[#574A40]/30 dark:border-[#EDE5DD]/25 bg-white dark:bg-[#1E1B18] text-[#2D2621] dark:text-[#EDE5DD] placeholder-[#8A796D] focus:outline-none focus:ring-1 focus:ring-[#D7195F] font-sans"
+                  className="w-full text-xs sm:text-sm p-3 rounded-none border border-[#7A6A5E]/25 dark:border-[#EDE5DD]/20 bg-[#FAF6F0] dark:bg-[#201C18] text-[#4A3E36] dark:text-[#EDE5DD] placeholder-[#8C7D71] focus:outline-none focus:ring-1 focus:ring-[#D7195F] font-sans"
                 />
               </div>
             </div>
 
             {/* Sticky Submit Action Bar */}
-            <div className="p-3 sm:p-4 bg-[#FAF6F0]/90 dark:bg-[#1C1917]/90 border-t border-[#574A40]/20 dark:border-[#EDE5DD]/15 flex items-center justify-between gap-3 shrink-0 pb-safe">
+            <div className="p-3 sm:p-4 bg-[#F5F2EB]/95 dark:bg-[#201C18]/95 border-t border-[#7A6A5E]/20 dark:border-[#EDE5DD]/15 flex items-center justify-between gap-3 shrink-0 pb-safe">
               <button
                 type="button"
                 onClick={onClose}
-                className="relative px-3.5 py-2 rounded-none text-[#2D2621] dark:text-[#EDE5DD] hover:bg-[#EFE6DA] dark:hover:bg-[#2D2420] text-sm font-hand font-bold transition-all sketch-btn-press shadow-pencil-sm"
+                className="relative px-3.5 py-2 rounded-none text-[#4A3E36] dark:text-[#EDE5DD] hover:bg-[#EAE0D2] dark:hover:bg-[#28221C] text-sm font-hand font-bold transition-all sketch-btn-press shadow-pencil-sm"
               >
-                <RoughBorder borderRadius={0} width={1.0} opacity={0.4} />
+                <RoughBorder borderRadius={0} width={1.0} opacity={0.35} color="#6E5F54" />
                 <span className="relative z-10">{t.actions.cancel}</span>
               </button>
               <button
                 type="submit"
                 className="relative flex-1 sm:flex-initial px-5 py-2 rounded-none bg-gradient-to-r from-[#9123A6] to-[#D7195F] hover:opacity-95 text-white font-hand font-bold text-sm sm:text-base shadow-pencil-sm transition-all flex items-center justify-center gap-1.5 sketch-btn-press"
               >
-                <RoughBorder borderRadius={0} color="#574A40" darkColor="#EDE5DD" opacity={0.45} />
+                <RoughBorder borderRadius={0} color="#6E5F54" darkColor="#EDE5DD" opacity={0.45} />
                 <Sparkles className="w-4 h-4 stroke-[2.2] shrink-0 text-[#FFE2CD] relative z-10" />
                 <span className="truncate relative z-10">{t.reviewModal.finishButton}</span>
               </button>

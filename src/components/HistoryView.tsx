@@ -47,20 +47,20 @@ export const HistoryView: React.FC<HistoryViewProps> = ({ onClose }) => {
   return (
     <div className="w-full max-w-5xl mx-auto px-3.5 sm:px-4 py-4 sm:py-6 space-y-4 sm:space-y-6 animate-fade-in pb-20 md:pb-6">
       {/* Header Bar */}
-      <div className="flex items-center justify-between gap-3 pb-3 sm:pb-4 border-b-2 border-dashed border-[#2D2621]/30 dark:border-[#EDE5DD]/20">
+      <div className="flex items-center justify-between gap-3 pb-3 sm:pb-4 border-b-2 border-dashed border-[#7A6A5E]/20 dark:border-[#EDE5DD]/20">
         <div className="flex items-center gap-3">
           <button
             onClick={onClose}
             aria-label="Back"
-            className="w-10 h-10 rounded-full bg-white dark:bg-[#25201C] border border-[#2D2621]/70 dark:border-[#EDE5DD]/30 text-[#2D2621] dark:text-[#EDE5DD] hover:bg-[#FAF6F0] dark:hover:bg-[#342C26] sketch-shadow-sm sketch-btn-press transition-all flex items-center justify-center shrink-0"
+            className="w-10 h-10 rounded-full bg-[#FDFBF7] dark:bg-[#28221D] border border-[#7A6A5E]/40 dark:border-[#EDE5DD]/30 text-[#4A3E36] dark:text-[#EDE5DD] hover:bg-[#F2EAE0] dark:hover:bg-[#322A23] sketch-shadow-sm sketch-btn-press transition-all flex items-center justify-center shrink-0"
           >
             <ArrowLeft className="w-4 h-4 stroke-[2.2]" />
           </button>
           <div>
-            <h2 className="text-lg sm:text-xl font-hand font-bold text-[#2D2621] dark:text-[#EDE5DD]">
+            <h2 className="text-lg sm:text-xl font-hand font-bold text-[#4A3E36] dark:text-[#EDE5DD]">
               {t.historyTitle}
             </h2>
-            <p className="text-2xs sm:text-xs text-[#6A5C52] dark:text-[#BA9F83] font-sans">
+            <p className="text-2xs sm:text-xs text-[#7D6E63] dark:text-[#BA9F83] font-sans">
               Deine bisherigen Wochen und Erfolge im Rückblick
             </p>
           </div>
@@ -68,12 +68,12 @@ export const HistoryView: React.FC<HistoryViewProps> = ({ onClose }) => {
       </div>
 
       {sortedPlans.length === 0 ? (
-        <div className="p-8 sm:p-12 text-center rounded-none bg-[#FFFDF9] dark:bg-[#25201C] border-2 border-dashed border-[#BA9F83] space-y-2.5">
+        <div className="p-8 sm:p-12 text-center rounded-none bg-[#FDFBF7] dark:bg-[#28221D] border-2 border-dashed border-[#BA9F83] space-y-2.5">
           <History className="w-8 h-8 sm:w-10 sm:h-10 mx-auto text-[#BA9F83] stroke-[1.8]" />
-          <h3 className="text-base sm:text-lg font-hand font-bold text-[#2D2621] dark:text-[#EDE5DD]">
+          <h3 className="text-base sm:text-lg font-hand font-bold text-[#4A3E36] dark:text-[#EDE5DD]">
             {t.historyView.noHistoryYet}
           </h3>
-          <p className="text-xs sm:text-sm text-[#6A5C52] dark:text-[#BA9F83] max-w-sm mx-auto font-sans">
+          <p className="text-xs sm:text-sm text-[#7D6E63] dark:text-[#BA9F83] max-w-sm mx-auto font-sans">
             {t.historyView.noHistorySub}
           </p>
         </div>
@@ -90,19 +90,19 @@ export const HistoryView: React.FC<HistoryViewProps> = ({ onClose }) => {
             return (
               <div
                 key={plan.id}
-                className="rounded-none bg-[#FFFDF9] dark:bg-[#25201C] border border-[#574A40]/25 dark:border-[#EDE5DD]/20 shadow-pencil-sm hover:shadow-pencil transition-all overflow-hidden"
+                className="rounded-none bg-[#FDFBF7] dark:bg-[#28221D] border border-[#7A6A5E]/20 dark:border-[#EDE5DD]/20 shadow-pencil-sm hover:shadow-pencil transition-all overflow-hidden"
               >
                 {/* Week summary header */}
                 <div
                   onClick={() => setExpandedWeekId(isExpanded ? null : plan.id)}
-                  className="p-3.5 sm:p-4 flex flex-wrap items-center justify-between gap-2 sm:gap-3 cursor-pointer hover:bg-[#FAF6F0]/80 dark:hover:bg-[#2F2722] transition-colors"
+                  className="p-3.5 sm:p-4 flex flex-wrap items-center justify-between gap-2 sm:gap-3 cursor-pointer hover:bg-[#F5EDE1]/60 dark:hover:bg-[#2F2722] transition-colors"
                 >
                   <div className="flex items-center gap-2.5 min-w-0">
-                    <div className="px-3 py-1 rounded-none bg-[#EFE6DA] dark:bg-[#382E27] border border-[#574A40]/25 text-[#2D2621] dark:text-[#EDE5DD] font-hand font-bold text-xs flex items-center justify-center shrink-0 whitespace-nowrap">
+                    <div className="px-3 py-1 rounded-none bg-[#EAE0D2] dark:bg-[#342C24] border border-[#7A6A5E]/25 text-[#4A3E36] dark:text-[#EDE5DD] font-hand font-bold text-xs flex items-center justify-center shrink-0 whitespace-nowrap">
                       {t.week} {weekNumber}
                     </div>
                     <div className="min-w-0">
-                      <h4 className="text-sm sm:text-base font-hand font-bold text-[#2D2621] dark:text-[#EDE5DD] flex items-center gap-1.5 flex-wrap">
+                      <h4 className="text-sm sm:text-base font-hand font-bold text-[#4A3E36] dark:text-[#EDE5DD] flex items-center gap-1.5 flex-wrap">
                         <span>{t.week} {weekNumber} ({year})</span>
                         {plan.reviewedAt && (
                           <span className="text-2xs px-2 py-0.2 rounded-none bg-[#EEF5ED] dark:bg-[#203322] text-[#2F612C] dark:text-[#A6D6A2] border border-[#7CA379]/60 font-sans font-semibold whitespace-nowrap">
@@ -110,7 +110,7 @@ export const HistoryView: React.FC<HistoryViewProps> = ({ onClose }) => {
                           </span>
                         )}
                       </h4>
-                      <p className="text-2xs sm:text-xs text-[#6A5C52] dark:text-[#BA9F83] truncate font-sans">
+                      <p className="text-2xs sm:text-xs text-[#7D6E63] dark:text-[#BA9F83] truncate font-sans">
                         {formatWeekRange(startDate, endDate, language)}
                       </p>
                     </div>
@@ -133,26 +133,26 @@ export const HistoryView: React.FC<HistoryViewProps> = ({ onClose }) => {
                       </span>
                     </div>
 
-                    <div className="px-2 py-0.5 rounded-none bg-[#EFE6DA] dark:bg-[#382E27] text-2xs font-sans font-semibold text-[#6A5C52] dark:text-[#BA9F83]">
+                    <div className="px-2 py-0.5 rounded-none bg-[#EAE0D2] dark:bg-[#342C24] text-2xs font-sans font-semibold text-[#7D6E63] dark:text-[#BA9F83]">
                       {goals.length} {t.historyView.totalGoals}
                     </div>
 
                     {isExpanded ? (
-                      <ChevronDown className="w-4 h-4 text-[#8A796D] stroke-[2.2]" />
+                      <ChevronDown className="w-4 h-4 text-[#7D6E63] stroke-[2.2]" />
                     ) : (
-                      <ChevronRight className="w-4 h-4 text-[#8A796D] stroke-[2.2]" />
+                      <ChevronRight className="w-4 h-4 text-[#7D6E63] stroke-[2.2]" />
                     )}
                   </div>
                 </div>
 
                 {/* Expanded Detailed Breakdown */}
                 {isExpanded && (
-                  <div className="px-4 pb-4 pt-2 border-t border-dashed border-[#574A40]/20 dark:border-[#EDE5DD]/15 space-y-3.5 animate-slide-up">
+                  <div className="px-4 pb-4 pt-2 border-t border-dashed border-[#7A6A5E]/20 dark:border-[#EDE5DD]/15 space-y-3.5 animate-slide-up">
                     {/* General Reflection if available */}
                     {plan.generalReflection && (
-                      <div className="p-3.5 rounded-none bg-[#FFF9F2] dark:bg-[#2C231D] border border-[#D4A759]/50 flex items-start gap-2.5 shadow-pencil-sm">
+                      <div className="p-3.5 rounded-none bg-[#FAF5ED] dark:bg-[#2C231D] border border-[#D4A759]/40 flex items-start gap-2.5 shadow-pencil-sm">
                         <Quote className="w-4 h-4 text-[#C97A1E] shrink-0 mt-0.5" />
-                        <p className="text-xs sm:text-sm text-[#6A5C52] dark:text-[#BA9F83] italic font-hand leading-relaxed">
+                        <p className="text-xs sm:text-sm text-[#7D6E63] dark:text-[#BA9F83] italic font-hand leading-relaxed">
                           „{plan.generalReflection}“
                         </p>
                       </div>
@@ -163,25 +163,25 @@ export const HistoryView: React.FC<HistoryViewProps> = ({ onClose }) => {
                       {(['body', 'mind', 'soul'] as Category[]).map(cat => {
                         const catGoals = goals.filter(g => g.category === cat);
                         return (
-                          <div key={cat} className="p-3 rounded-none bg-[#FAF6F0] dark:bg-[#1E1B18] border border-[#574A40]/20 dark:border-[#EDE5DD]/20 space-y-2">
-                            <div className="flex items-center gap-1.5 font-hand font-bold text-xs text-[#2D2621] dark:text-[#EDE5DD]">
+                          <div key={cat} className="p-3 rounded-none bg-[#FAF5ED] dark:bg-[#201C18] border border-[#7A6A5E]/20 dark:border-[#EDE5DD]/20 space-y-2">
+                            <div className="flex items-center gap-1.5 font-hand font-bold text-xs text-[#4A3E36] dark:text-[#EDE5DD]">
                               {getCategoryIcon(cat)}
                               <span className="capitalize">{t.categories[cat].title}</span>
-                              <span className="text-[#8A796D] font-sans font-normal">({catGoals.length})</span>
+                              <span className="text-[#8C7D71] font-sans font-normal">({catGoals.length})</span>
                             </div>
                             {catGoals.length === 0 ? (
-                              <p className="text-2xs text-[#8A796D] italic font-hand">Keine Ziele</p>
+                              <p className="text-2xs text-[#8C7D71] italic font-hand">Keine Ziele</p>
                             ) : (
                               <div className="space-y-1.5">
                                 {catGoals.map(g => (
-                                  <div key={g.id} className="p-2 rounded-none bg-white dark:bg-[#25201C] border border-[#574A40]/20 dark:border-[#EDE5DD]/15 text-xs flex items-start gap-2">
+                                  <div key={g.id} className="p-2 rounded-none bg-[#FDFBF7] dark:bg-[#28221D] border border-[#7A6A5E]/15 dark:border-[#EDE5DD]/15 text-xs flex items-start gap-2">
                                     <span className="shrink-0">{getGoalStatusIcon(g.category, g.status)}</span>
                                     <div className="flex-1 min-w-0 font-sans">
-                                      <p className="text-[#2D2621] dark:text-[#EDE5DD] leading-snug break-words">
+                                      <p className="text-[#4A3E36] dark:text-[#EDE5DD] leading-snug break-words">
                                         {g.description}
                                       </p>
                                       {g.comment && (
-                                        <p className="text-2xs text-[#6A5C52] dark:text-[#BA9F83] font-hand italic mt-0.5">
+                                        <p className="text-2xs text-[#7D6E63] dark:text-[#BA9F83] font-hand italic mt-0.5">
                                           „{g.comment}“
                                         </p>
                                       )}
@@ -202,7 +202,7 @@ export const HistoryView: React.FC<HistoryViewProps> = ({ onClose }) => {
                           selectWeek(plan.id);
                           onClose();
                         }}
-                        className="w-full sm:w-auto px-4 py-2 sm:py-1.5 rounded-none bg-gradient-to-r from-[#9123A6] to-[#D7195F] hover:opacity-95 text-white border border-[#574A40]/30 font-hand font-bold text-xs shadow-pencil-sm sketch-btn-press transition-all flex items-center justify-center gap-1"
+                        className="w-full sm:w-auto px-4 py-2 sm:py-1.5 rounded-none bg-gradient-to-r from-[#9123A6] to-[#D7195F] hover:opacity-95 text-white border border-[#7A6A5E]/30 font-hand font-bold text-xs shadow-pencil-sm sketch-btn-press transition-all flex items-center justify-center gap-1"
                       >
                         Diese Woche öffnen & bearbeiten →
                       </button>

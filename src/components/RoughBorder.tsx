@@ -71,7 +71,7 @@ export const RoughBorder: React.FC<RoughBorderProps> = ({
 
       const strokeColor = theme === 'dark' 
         ? (darkColor || color || '#EDE5DD') 
-        : (color || '#574A40');
+        : (color || '#6E5F54');
 
       const isCircle = shape === 'circle' || (borderRadius !== undefined && borderRadius >= 16);
 

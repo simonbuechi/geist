@@ -201,8 +201,8 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center sm:p-4 bg-[#2D2621]/65 backdrop-blur-sm animate-fade-in">
-      <div className="relative w-full max-w-lg bg-[#FFFDF9] dark:bg-[#25201C] rounded-none shadow-2xl max-h-[92vh] flex flex-col overflow-hidden animate-slide-up sm:animate-scale-in sketch-shadow">
+    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center sm:p-4 bg-[#4A3E36]/65 backdrop-blur-sm animate-fade-in">
+      <div className="relative w-full max-w-lg bg-[#FDFBF7] dark:bg-[#25201C] rounded-none shadow-2xl max-h-[92vh] flex flex-col overflow-hidden animate-slide-up sm:animate-scale-in sketch-shadow">
         <RoughBorder borderRadius={0} width={1.2} opacity={0.5} />
         
         {/* Mobile Drag Indicator */}
@@ -211,14 +211,14 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
         </div>
 
         {/* Modal Header */}
-        <div className="px-5 py-4 sm:px-6 sm:py-4.5 border-b-2 border-dashed border-[#2D2621]/30 dark:border-[#EDE5DD]/20 flex items-center justify-between shrink-0">
-          <h3 className="text-lg sm:text-xl font-hand font-bold text-[#2D2621] dark:text-[#EDE5DD]">
+        <div className="px-5 py-4 sm:px-6 sm:py-4.5 border-b-2 border-dashed border-[#7A6A5E]/25 dark:border-[#EDE5DD]/20 flex items-center justify-between shrink-0">
+          <h3 className="text-lg sm:text-xl font-hand font-bold text-[#4A3E36] dark:text-[#EDE5DD]">
             {t.settings.title}
           </h3>
           <button 
             onClick={onClose} 
             aria-label="Schließen"
-            className="relative p-1.5 -mr-1.5 rounded-full text-[#8A796D] hover:text-[#2D2621] dark:hover:text-[#EDE5DD] hover:bg-[#FAF6F0] dark:hover:bg-[#342C26] sketch-btn-press transition-all"
+            className="relative p-1.5 -mr-1.5 rounded-full text-[#7D6E63] hover:text-[#4A3E36] dark:hover:text-[#EDE5DD] hover:bg-[#FAF5ED] dark:hover:bg-[#342C26] sketch-btn-press transition-all"
           >
             <RoughBorder shape="circle" width={0.9} />
             <X className="w-4 h-4 stroke-[2.2] relative z-10" />
@@ -230,26 +230,26 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
 
           {/* 1. Account & Sync Section */}
           <div>
-            <div className="text-xs font-hand font-bold uppercase tracking-wider text-[#8A796D] dark:text-[#BA9F83] px-1 mb-2">
+            <div className="text-xs font-hand font-bold uppercase tracking-wider text-[#7D6E63] dark:text-[#BA9F83] px-1 mb-2">
               {t.settings.account}
             </div>
 
-            <div className="rounded-none bg-[#FAF6F0] dark:bg-[#1E1B18] border-1.5 border-[#2D2621]/60 dark:border-[#EDE5DD]/30 divide-y divide-[#2D2621]/20 dark:divide-[#EDE5DD]/15 overflow-hidden sketch-border-sm">
+            <div className="rounded-none bg-[#FAF5ED] dark:bg-[#1E1B18] border-1.5 border-[#7A6A5E]/30 dark:border-[#EDE5DD]/30 divide-y divide-[#7A6A5E]/15 dark:divide-[#EDE5DD]/15 overflow-hidden sketch-border-sm">
               {user ? (
                 <div className="p-3.5 sm:p-4 flex items-center justify-between gap-3">
                   <div className="flex items-center gap-3 min-w-0">
                     {user.photoURL ? (
-                      <img src={user.photoURL} alt="Avatar" className="w-10 h-10 rounded-none object-cover shrink-0 border-2 border-[#2D2621]/40" />
+                      <img src={user.photoURL} alt="Avatar" className="w-10 h-10 rounded-none object-cover shrink-0 border-2 border-[#7A6A5E]/30" />
                     ) : (
-                      <div className="w-10 h-10 rounded-none bg-gradient-to-r from-[#9123A6] to-[#D7195F] text-white flex items-center justify-center font-hand font-bold text-base shrink-0 border border-[#2D2621]/40">
+                      <div className="w-10 h-10 rounded-none bg-gradient-to-r from-[#9123A6] to-[#D7195F] text-white flex items-center justify-center font-hand font-bold text-base shrink-0 border border-[#7A6A5E]/30">
                         {user.displayName?.[0] || 'U'}
                       </div>
                     )}
                     <div className="min-w-0">
-                      <h4 className="text-xs sm:text-sm font-hand font-bold text-[#2D2621] dark:text-[#EDE5DD] truncate">
+                      <h4 className="text-xs sm:text-sm font-hand font-bold text-[#4A3E36] dark:text-[#EDE5DD] truncate">
                         {user.displayName || 'Google Account'}
                       </h4>
-                      <p className="text-2xs sm:text-xs text-[#6A5C52] dark:text-[#BA9F83] truncate font-sans">
+                      <p className="text-2xs sm:text-xs text-[#7D6E63] dark:text-[#BA9F83] truncate font-sans">
                         {user.email}
                       </p>
                     </div>
@@ -257,7 +257,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
 
                   <button
                     onClick={signOut}
-                    className="px-3 py-1.5 rounded-none border border-[#2D2621]/60 dark:border-[#EDE5DD]/30 text-[#6A5C52] dark:text-[#BA9F83] hover:text-[#B83E32] dark:hover:text-[#F3A59C] hover:bg-[#FDF0EE] dark:hover:bg-[#361914] text-xs font-hand font-bold transition-colors flex items-center gap-1.5 shrink-0 sketch-btn-press"
+                    className="px-3 py-1.5 rounded-none border border-[#7A6A5E]/30 dark:border-[#EDE5DD]/30 text-[#7D6E63] dark:text-[#BA9F83] hover:text-[#B83E32] dark:hover:text-[#F3A59C] hover:bg-[#FDF0EE] dark:hover:bg-[#361914] text-xs font-hand font-bold transition-colors flex items-center gap-1.5 shrink-0 sketch-btn-press"
                   >
                     <LogOut className="w-3.5 h-3.5 stroke-[2.2]" />
                     <span>{t.actions.signOut}</span>
@@ -266,12 +266,12 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
               ) : (
                 <div className="p-3.5 sm:p-4 space-y-3">
                   <div className="flex items-start gap-2.5">
-                    <span className="w-2.5 h-2.5 rounded-none bg-[#4D7A4A] mt-1 shrink-0 border border-[#2D2621]/40" />
+                    <span className="w-2.5 h-2.5 rounded-none bg-[#4D7A4A] mt-1 shrink-0 border border-[#7A6A5E]/30" />
                     <div>
-                      <div className="text-xs sm:text-sm font-hand font-bold text-[#2D2621] dark:text-[#EDE5DD]">
+                      <div className="text-xs sm:text-sm font-hand font-bold text-[#4A3E36] dark:text-[#EDE5DD]">
                         {t.auth.guestMode}
                       </div>
-                      <p className="text-2xs sm:text-xs text-[#6A5C52] dark:text-[#BA9F83] mt-0.5 leading-relaxed font-sans">
+                      <p className="text-2xs sm:text-xs text-[#7D6E63] dark:text-[#BA9F83] mt-0.5 leading-relaxed font-sans">
                         {t.auth.cloudSyncDesc}
                       </p>
                     </div>
@@ -280,7 +280,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                   {isConfigured ? (
                     <button
                       onClick={signInWithGoogle}
-                      className="w-full py-2.5 px-4 rounded-none bg-[#2D2621] dark:bg-[#EDE5DD] text-white dark:text-[#2D2621] hover:bg-[#453A32] dark:hover:bg-white font-hand font-bold text-xs sm:text-sm transition-all shadow-pencil-sm flex items-center justify-center gap-2 sketch-btn-press"
+                      className="w-full py-2.5 px-4 rounded-none bg-[#5C4F45] dark:bg-[#EDE5DD] text-white dark:text-[#4A3E36] hover:bg-[#4A3E36] dark:hover:bg-white font-hand font-bold text-xs sm:text-sm transition-all shadow-pencil-sm flex items-center justify-center gap-2 sketch-btn-press"
                     >
                       <svg className="w-4 h-4" viewBox="0 0 24 24">
                         <path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
@@ -291,7 +291,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                       <span>{t.actions.signInWithGoogle}</span>
                     </button>
                   ) : (
-                    <p className="text-2xs text-[#8A796D] font-sans">
+                    <p className="text-2xs text-[#7D6E63] font-sans">
                       Firebase ist lokal aktiv. Zur Cloud-Synchronisierung können eigene Firebase-Zugangsdaten hinterlegt werden.
                     </p>
                   )}
@@ -299,11 +299,11 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
               )}
 
               {/* Collapsible Firebase Credentials row */}
-              <div className="p-3 sm:p-3.5 bg-[#F4ECE1]/60 dark:bg-[#25201C]/60">
+              <div className="p-3 sm:p-3.5 bg-[#EAE0D2]/50 dark:bg-[#25201C]/60">
                 <button
                   type="button"
                   onClick={() => setShowConfig(!showConfig)}
-                  className="w-full flex items-center justify-between text-2xs text-[#6A5C52] dark:text-[#BA9F83] hover:text-[#2D2621] dark:hover:text-[#EDE5DD] transition-colors"
+                  className="w-full flex items-center justify-between text-2xs text-[#7D6E63] dark:text-[#BA9F83] hover:text-[#4A3E36] dark:hover:text-[#EDE5DD] transition-colors"
                 >
                   <span className="flex items-center gap-1.5 font-hand font-bold text-xs">
                     <Database className="w-3.5 h-3.5 stroke-[2.2]" />
@@ -313,34 +313,34 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                 </button>
 
                 {showConfig && (
-                  <form onSubmit={handleSaveConfig} className="mt-3 space-y-2.5 pt-2.5 border-t border-[#2D2621]/20 dark:border-[#EDE5DD]/15 animate-slide-up">
+                  <form onSubmit={handleSaveConfig} className="mt-3 space-y-2.5 pt-2.5 border-t border-[#7A6A5E]/15 dark:border-[#EDE5DD]/15 animate-slide-up">
                     <input
                       type="text"
                       placeholder="API Key"
                       value={apiKey}
                       onChange={(e) => setApiKey(e.target.value)}
-                      className="w-full text-xs p-2 rounded-none border border-[#2D2621]/50 dark:border-[#EDE5DD]/30 bg-white dark:bg-[#1E1B18] text-[#2D2621] dark:text-[#EDE5DD] font-sans"
+                      className="w-full text-xs p-2 rounded-none border border-[#7A6A5E]/30 dark:border-[#EDE5DD]/30 bg-[#FDFBF7] dark:bg-[#1E1B18] text-[#4A3E36] dark:text-[#EDE5DD] font-sans"
                     />
                     <input
                       type="text"
                       placeholder="Project ID"
                       value={projectId}
                       onChange={(e) => setProjectId(e.target.value)}
-                      className="w-full text-xs p-2 rounded-none border border-[#2D2621]/50 dark:border-[#EDE5DD]/30 bg-white dark:bg-[#1E1B18] text-[#2D2621] dark:text-[#EDE5DD] font-sans"
+                      className="w-full text-xs p-2 rounded-none border border-[#7A6A5E]/30 dark:border-[#EDE5DD]/30 bg-[#FDFBF7] dark:bg-[#1E1B18] text-[#4A3E36] dark:text-[#EDE5DD] font-sans"
                     />
                     <input
                       type="text"
                       placeholder="Auth Domain (optional)"
                       value={authDomain}
                       onChange={(e) => setAuthDomain(e.target.value)}
-                      className="w-full text-xs p-2 rounded-none border border-[#2D2621]/50 dark:border-[#EDE5DD]/30 bg-white dark:bg-[#1E1B18] text-[#2D2621] dark:text-[#EDE5DD] font-sans"
+                      className="w-full text-xs p-2 rounded-none border border-[#7A6A5E]/30 dark:border-[#EDE5DD]/30 bg-[#FDFBF7] dark:bg-[#1E1B18] text-[#4A3E36] dark:text-[#EDE5DD] font-sans"
                     />
                     <input
                       type="text"
                       placeholder="App ID (optional)"
                       value={appId}
                       onChange={(e) => setAppId(e.target.value)}
-                      className="w-full text-xs p-2 rounded-none border border-[#2D2621]/50 dark:border-[#EDE5DD]/30 bg-white dark:bg-[#1E1B18] text-[#2D2621] dark:text-[#EDE5DD] font-sans"
+                      className="w-full text-xs p-2 rounded-none border border-[#7A6A5E]/30 dark:border-[#EDE5DD]/30 bg-[#FDFBF7] dark:bg-[#1E1B18] text-[#4A3E36] dark:text-[#EDE5DD] font-sans"
                     />
                     <div className="flex items-center justify-between pt-1">
                       {saveSuccess ? (
@@ -363,11 +363,11 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
 
           {/* 2. Appearance & Language Section */}
           <div>
-            <div className="text-xs font-hand font-bold uppercase tracking-wider text-[#8A796D] dark:text-[#BA9F83] px-1 mb-2">
+            <div className="text-xs font-hand font-bold uppercase tracking-wider text-[#7D6E63] dark:text-[#BA9F83] px-1 mb-2">
               {t.settings.appearance}
             </div>
 
-            <div className="rounded-none bg-[#FAF6F0] dark:bg-[#1E1B18] border-1.5 border-[#2D2621]/60 dark:border-[#EDE5DD]/30 divide-y divide-[#2D2621]/20 dark:divide-[#EDE5DD]/15 overflow-hidden sketch-border-sm">
+            <div className="rounded-none bg-[#FAF5ED] dark:bg-[#1E1B18] border-1.5 border-[#7A6A5E]/30 dark:border-[#EDE5DD]/30 divide-y divide-[#7A6A5E]/15 dark:divide-[#EDE5DD]/15 overflow-hidden sketch-border-sm">
               
               {/* Theme Row */}
               <div className="p-3 sm:p-3.5 flex items-center justify-between gap-3">
@@ -377,19 +377,19 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                   ) : (
                     <Sun className="w-4 h-4 text-[#C97A1E] stroke-[2.2] shrink-0" />
                   )}
-                  <span className="text-xs sm:text-sm font-hand font-bold text-[#2D2621] dark:text-[#EDE5DD]">
+                  <span className="text-xs sm:text-sm font-hand font-bold text-[#4A3E36] dark:text-[#EDE5DD]">
                     {t.settings.theme}
                   </span>
                 </div>
 
-                <div className="inline-flex p-1 bg-[#EFE6DA] dark:bg-[#2D2420] border border-[#2D2621]/40 rounded-none sketch-shadow-sm">
+                <div className="inline-flex p-1 bg-[#EAE0D2] dark:bg-[#2D2420] border border-[#7A6A5E]/30 rounded-none sketch-shadow-sm">
                   <button
                     type="button"
                     onClick={() => setTheme('light')}
                     className={`px-2.5 py-1 rounded-none text-xs font-hand transition-all flex items-center gap-1 ${
                       theme === 'light'
-                        ? 'bg-white dark:bg-[#1E1B18] text-[#2D2621] dark:text-[#EDE5DD] shadow-2xs font-bold border border-[#2D2621]/30'
-                        : 'text-[#6A5C52] dark:text-[#BA9F83] hover:text-[#2D2621]'
+                        ? 'bg-[#FDFBF7] dark:bg-[#1E1B18] text-[#4A3E36] dark:text-[#EDE5DD] shadow-2xs font-bold border border-[#7A6A5E]/30'
+                        : 'text-[#7D6E63] dark:text-[#BA9F83] hover:text-[#4A3E36]'
                     }`}
                   >
                     <Sun className="w-3.5 h-3.5 text-[#C97A1E] stroke-[2.2]" />
@@ -400,8 +400,8 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                     onClick={() => setTheme('dark')}
                     className={`px-2.5 py-1 rounded-none text-xs font-hand transition-all flex items-center gap-1 ${
                       theme === 'dark'
-                        ? 'bg-white dark:bg-[#1E1B18] text-[#2D2621] dark:text-[#EDE5DD] shadow-2xs font-bold border border-[#2D2621]/30'
-                        : 'text-[#6A5C52] dark:text-[#BA9F83] hover:text-[#2D2621]'
+                        ? 'bg-[#FDFBF7] dark:bg-[#1E1B18] text-[#4A3E36] dark:text-[#EDE5DD] shadow-2xs font-bold border border-[#7A6A5E]/30'
+                        : 'text-[#7D6E63] dark:text-[#BA9F83] hover:text-[#4A3E36]'
                     }`}
                   >
                     <Moon className="w-3.5 h-3.5 text-[#D9822B] stroke-[2.2]" />
@@ -413,20 +413,20 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
               {/* Language Row */}
               <div className="p-3 sm:p-3.5 flex items-center justify-between gap-3">
                 <div className="flex items-center gap-2.5">
-                  <Globe className="w-4 h-4 text-[#8A796D] dark:text-[#BA9F83] stroke-[2.2] shrink-0" />
-                  <span className="text-xs sm:text-sm font-hand font-bold text-[#2D2621] dark:text-[#EDE5DD]">
+                  <Globe className="w-4 h-4 text-[#7D6E63] dark:text-[#BA9F83] stroke-[2.2] shrink-0" />
+                  <span className="text-xs sm:text-sm font-hand font-bold text-[#4A3E36] dark:text-[#EDE5DD]">
                     {t.settings.language}
                   </span>
                 </div>
 
-                <div className="inline-flex p-1 bg-[#EFE6DA] dark:bg-[#2D2420] border border-[#2D2621]/40 rounded-none sketch-shadow-sm">
+                <div className="inline-flex p-1 bg-[#EAE0D2] dark:bg-[#2D2420] border border-[#7A6A5E]/30 rounded-none sketch-shadow-sm">
                   <button
                     type="button"
                     onClick={() => setLanguage('de')}
                     className={`px-3 py-1 rounded-none text-xs font-hand transition-all ${
                       language === 'de'
-                        ? 'bg-white dark:bg-[#1E1B18] text-[#2D2621] dark:text-[#EDE5DD] shadow-2xs font-bold border border-[#2D2621]/30'
-                        : 'text-[#6A5C52] dark:text-[#BA9F83] hover:text-[#2D2621]'
+                        ? 'bg-[#FDFBF7] dark:bg-[#1E1B18] text-[#4A3E36] dark:text-[#EDE5DD] shadow-2xs font-bold border border-[#7A6A5E]/30'
+                        : 'text-[#7D6E63] dark:text-[#BA9F83] hover:text-[#4A3E36]'
                     }`}
                   >
                     DE
@@ -436,8 +436,8 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                     onClick={() => setLanguage('en')}
                     className={`px-3 py-1 rounded-none text-xs font-hand transition-all ${
                       language === 'en'
-                        ? 'bg-white dark:bg-[#1E1B18] text-[#2D2621] dark:text-[#EDE5DD] shadow-2xs font-bold border border-[#2D2621]/30'
-                        : 'text-[#6A5C52] dark:text-[#BA9F83] hover:text-[#2D2621]'
+                        ? 'bg-[#FDFBF7] dark:bg-[#1E1B18] text-[#4A3E36] dark:text-[#EDE5DD] shadow-2xs font-bold border border-[#7A6A5E]/30'
+                        : 'text-[#7D6E63] dark:text-[#BA9F83] hover:text-[#4A3E36]'
                     }`}
                   >
                     EN
@@ -450,26 +450,26 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
 
           {/* 3. Notifications Section */}
           <div>
-            <div className="text-xs font-hand font-bold uppercase tracking-wider text-[#8A796D] dark:text-[#BA9F83] px-1 mb-2 flex items-center justify-between">
+            <div className="text-xs font-hand font-bold uppercase tracking-wider text-[#7D6E63] dark:text-[#BA9F83] px-1 mb-2 flex items-center justify-between">
               <span>{t.settings.notifications}</span>
-              <span className="text-2xs font-normal normal-case text-[#8A796D] dark:text-[#BA9F83] font-sans">
+              <span className="text-2xs font-normal normal-case text-[#7D6E63] dark:text-[#BA9F83] font-sans">
                 So & Mo 17:00
               </span>
             </div>
 
-            <div className="rounded-none bg-[#FAF6F0] dark:bg-[#1E1B18] border-1.5 border-[#2D2621]/60 dark:border-[#EDE5DD]/30 divide-y divide-[#2D2621]/20 dark:divide-[#EDE5DD]/15 overflow-hidden sketch-border-sm">
+            <div className="rounded-none bg-[#FAF5ED] dark:bg-[#1E1B18] border-1.5 border-[#7A6A5E]/30 dark:border-[#EDE5DD]/30 divide-y divide-[#7A6A5E]/15 dark:divide-[#EDE5DD]/15 overflow-hidden sketch-border-sm">
               {user ? (
                 <>
                   {/* Push Notifications Row */}
                   <div className="p-3.5 sm:p-4 space-y-3">
                     <div className="flex items-center justify-between gap-3">
                       <div className="flex items-center gap-2.5">
-                        <Smartphone className="w-4 h-4 text-[#8A796D] dark:text-[#BA9F83] stroke-[2.2] shrink-0" />
+                        <Smartphone className="w-4 h-4 text-[#7D6E63] dark:text-[#BA9F83] stroke-[2.2] shrink-0" />
                         <div>
-                          <h6 className="text-xs sm:text-sm font-hand font-bold text-[#2D2621] dark:text-[#EDE5DD]">
+                          <h6 className="text-xs sm:text-sm font-hand font-bold text-[#4A3E36] dark:text-[#EDE5DD]">
                             {t.notifications.pushTitle}
                           </h6>
-                          <p className="text-2xs text-[#6A5C52] dark:text-[#BA9F83] font-sans">
+                          <p className="text-2xs text-[#7D6E63] dark:text-[#BA9F83] font-sans">
                             {t.notifications.pushDesc}
                           </p>
                         </div>
@@ -481,8 +481,8 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                         aria-checked={notificationPrefs.pushEnabled}
                         disabled={isRegisteringPush || (!isPushSupported && !isIos)}
                         onClick={handleTogglePush}
-                        className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-none border-2 border-[#2D2621] dark:border-[#EDE5DD]/50 transition-colors duration-200 ease-in-out focus:outline-none ${
-                          notificationPrefs.pushEnabled ? 'bg-[#D7195F]' : 'bg-[#D5C2AB] dark:bg-[#4A3E36]'
+                        className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-none border-2 border-[#7A6A5E] dark:border-[#EDE5DD]/50 transition-colors duration-200 ease-in-out focus:outline-none ${
+                          notificationPrefs.pushEnabled ? 'bg-[#D7195F]' : 'bg-[#D9CEBF] dark:bg-[#4A3E36]'
                         } ${isRegisteringPush ? 'opacity-50 cursor-wait' : ''}`}
                       >
                         <span
@@ -503,7 +503,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
 
                     {/* Push Status / Message */}
                     {pushStatusMessage && (
-                      <div className="text-2xs text-[#6A5C52] dark:text-[#BA9F83] flex items-center gap-1.5 pt-1 font-sans">
+                      <div className="text-2xs text-[#7D6E63] dark:text-[#BA9F83] flex items-center gap-1.5 pt-1 font-sans">
                         <AlertCircle className="w-3.5 h-3.5 text-[#D7195F] shrink-0 stroke-[2.2]" />
                         <span>{pushStatusMessage}</span>
                       </div>
@@ -512,7 +512,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                     {/* Unregistered Device Callout */}
                     {notificationPrefs.pushEnabled && !isDeviceRegistered && (
                       <div className="p-2.5 rounded-none bg-[#FDF0EE] dark:bg-[#361914] border border-[#DFA098] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
-                        <span className="text-2xs text-[#2D2621] dark:text-[#EDE5DD] font-sans">
+                        <span className="text-2xs text-[#4A3E36] dark:text-[#EDE5DD] font-sans">
                           {t.notifications.deviceNotRegistered}
                         </span>
                         <button
@@ -528,12 +528,12 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
 
                     {/* Device Status & Test Push */}
                     {notificationPrefs.pushEnabled && (
-                      <div className="pt-2 flex items-center justify-between border-t border-[#2D2621]/20 dark:border-[#EDE5DD]/15">
+                      <div className="pt-2 flex items-center justify-between border-t border-[#7A6A5E]/15 dark:border-[#EDE5DD]/15">
                         <span className="text-2xs text-[#3B6B38] dark:text-[#A6D6A2] font-semibold flex items-center gap-1 font-sans">
                           <Check className="w-3 h-3 stroke-[2.5]" />
                           <span>{isDeviceRegistered ? t.notifications.deviceActive : t.notifications.statusEnabled}</span>
                           {deviceCount > 1 && (
-                            <span className="text-[#8A796D] dark:text-[#BA9F83] font-normal">
+                            <span className="text-[#7D6E63] dark:text-[#BA9F83] font-normal">
                               ({deviceCount} {t.notifications.devicesRegistered})
                             </span>
                           )}
@@ -541,7 +541,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                         <button
                           type="button"
                           onClick={handleSendTestPush}
-                          className="px-2.5 py-1 rounded-none border border-[#2D2621]/60 dark:border-[#EDE5DD]/30 text-2xs text-[#2D2621] dark:text-[#EDE5DD] hover:bg-white dark:hover:bg-[#25201C] font-hand font-bold flex items-center gap-1 sketch-btn-press transition-all"
+                          className="px-2.5 py-1 rounded-none border border-[#7A6A5E]/30 dark:border-[#EDE5DD]/30 text-2xs text-[#4A3E36] dark:text-[#EDE5DD] hover:bg-white dark:hover:bg-[#25201C] font-hand font-bold flex items-center gap-1 sketch-btn-press transition-all"
                         >
                           <Send className="w-3 h-3 stroke-[2.2]" />
                           <span>{testSent ? t.notifications.testPushSent : t.notifications.sendTestPush}</span>
@@ -553,12 +553,12 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                   {/* Email Notifications Row */}
                   <div className="p-3.5 sm:p-4 flex items-center justify-between gap-3">
                     <div className="flex items-center gap-2.5">
-                      <Mail className="w-4 h-4 text-[#8A796D] dark:text-[#BA9F83] stroke-[2.2] shrink-0" />
+                      <Mail className="w-4 h-4 text-[#7D6E63] dark:text-[#BA9F83] stroke-[2.2] shrink-0" />
                       <div>
-                        <h6 className="text-xs sm:text-sm font-hand font-bold text-[#2D2621] dark:text-[#EDE5DD]">
+                        <h6 className="text-xs sm:text-sm font-hand font-bold text-[#4A3E36] dark:text-[#EDE5DD]">
                           {t.notifications.emailTitle}
                         </h6>
-                        <p className="text-2xs text-[#6A5C52] dark:text-[#BA9F83] font-sans">
+                        <p className="text-2xs text-[#7D6E63] dark:text-[#BA9F83] font-sans">
                           {user.email ? `${t.notifications.emailDesc} ${user.email}` : t.notifications.emailDesc}
                         </p>
                       </div>
@@ -569,8 +569,8 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                       role="switch"
                       aria-checked={notificationPrefs.emailEnabled}
                       onClick={handleToggleEmail}
-                      className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-none border-2 border-[#2D2621] dark:border-[#EDE5DD]/50 transition-colors duration-200 ease-in-out focus:outline-none ${
-                        notificationPrefs.emailEnabled ? 'bg-[#D7195F]' : 'bg-[#D5C2AB] dark:bg-[#4A3E36]'
+                      className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-none border-2 border-[#7A6A5E] dark:border-[#EDE5DD]/50 transition-colors duration-200 ease-in-out focus:outline-none ${
+                        notificationPrefs.emailEnabled ? 'bg-[#D7195F]' : 'bg-[#D9CEBF] dark:bg-[#4A3E36]'
                       }`}
                     >
                       <span
@@ -582,8 +582,8 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                   </div>
                 </>
               ) : (
-                <div className="p-3.5 sm:p-4 text-xs text-[#6A5C52] dark:text-[#BA9F83] flex items-center gap-2 font-hand">
-                  <Bell className="w-4 h-4 stroke-[2.2] text-[#8A796D] shrink-0" />
+                <div className="p-3.5 sm:p-4 text-xs text-[#7D6E63] dark:text-[#BA9F83] flex items-center gap-2 font-hand">
+                  <Bell className="w-4 h-4 stroke-[2.2] text-[#7D6E63] shrink-0" />
                   <span>{t.notifications.loginRequired}</span>
                 </div>
               )}
@@ -592,21 +592,21 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
 
           {/* 4. Data & Backup Section */}
           <div>
-            <div className="text-xs font-hand font-bold uppercase tracking-wider text-[#8A796D] dark:text-[#BA9F83] px-1 mb-2">
+            <div className="text-xs font-hand font-bold uppercase tracking-wider text-[#7D6E63] dark:text-[#BA9F83] px-1 mb-2">
               {t.settings.data}
             </div>
 
-            <div className="rounded-none bg-[#FAF6F0] dark:bg-[#1E1B18] border-1.5 border-[#2D2621]/60 dark:border-[#EDE5DD]/30 divide-y divide-[#2D2621]/20 dark:divide-[#EDE5DD]/15 overflow-hidden sketch-border-sm">
+            <div className="rounded-none bg-[#FAF5ED] dark:bg-[#1E1B18] border-1.5 border-[#7A6A5E]/30 dark:border-[#EDE5DD]/30 divide-y divide-[#7A6A5E]/15 dark:divide-[#EDE5DD]/15 overflow-hidden sketch-border-sm">
               
               {/* Export Row */}
               <div className="p-3 sm:p-3.5 flex items-center justify-between gap-3">
                 <div className="flex items-center gap-2.5">
-                  <Download className="w-4 h-4 text-[#8A796D] dark:text-[#BA9F83] stroke-[2.2] shrink-0" />
+                  <Download className="w-4 h-4 text-[#7D6E63] dark:text-[#BA9F83] stroke-[2.2] shrink-0" />
                   <div>
-                    <span className="text-xs sm:text-sm font-hand font-bold text-[#2D2621] dark:text-[#EDE5DD]">
+                    <span className="text-xs sm:text-sm font-hand font-bold text-[#4A3E36] dark:text-[#EDE5DD]">
                       {t.actions.exportData}
                     </span>
-                    <p className="text-2xs text-[#8A796D] font-sans">
+                    <p className="text-2xs text-[#7D6E63] font-sans">
                       JSON-Backup Datei sichern
                     </p>
                   </div>
@@ -614,7 +614,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
 
                 <button
                   onClick={handleExport}
-                  className="px-3.5 py-1.5 rounded-none border border-[#2D2621]/60 dark:border-[#EDE5DD]/30 hover:bg-white dark:hover:bg-[#25201C] text-xs font-hand font-bold text-[#2D2621] dark:text-[#EDE5DD] sketch-btn-press transition-all shrink-0"
+                  className="px-3.5 py-1.5 rounded-none border border-[#7A6A5E]/30 dark:border-[#EDE5DD]/30 hover:bg-white dark:hover:bg-[#25201C] text-xs font-hand font-bold text-[#4A3E36] dark:text-[#EDE5DD] sketch-btn-press transition-all shrink-0"
                 >
                   Exportieren
                 </button>
@@ -623,18 +623,18 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
               {/* Import Row */}
               <div className="p-3 sm:p-3.5 flex items-center justify-between gap-3">
                 <div className="flex items-center gap-2.5">
-                  <Upload className="w-4 h-4 text-[#8A796D] dark:text-[#BA9F83] stroke-[2.2] shrink-0" />
+                  <Upload className="w-4 h-4 text-[#7D6E63] dark:text-[#BA9F83] stroke-[2.2] shrink-0" />
                   <div>
-                    <span className="text-xs sm:text-sm font-hand font-bold text-[#2D2621] dark:text-[#EDE5DD]">
+                    <span className="text-xs sm:text-sm font-hand font-bold text-[#4A3E36] dark:text-[#EDE5DD]">
                       {t.actions.importData}
                     </span>
-                    <p className="text-2xs text-[#8A796D] font-sans">
+                    <p className="text-2xs text-[#7D6E63] font-sans">
                       Pläne aus JSON wiederherstellen
                     </p>
                   </div>
                 </div>
 
-                <label className="px-3.5 py-1.5 rounded-none border border-[#2D2621]/60 dark:border-[#EDE5DD]/30 hover:bg-white dark:hover:bg-[#25201C] text-xs font-hand font-bold text-[#2D2621] dark:text-[#EDE5DD] cursor-pointer sketch-btn-press transition-all shrink-0">
+                <label className="px-3.5 py-1.5 rounded-none border border-[#7A6A5E]/30 dark:border-[#EDE5DD]/30 hover:bg-white dark:hover:bg-[#25201C] text-xs font-hand font-bold text-[#4A3E36] dark:text-[#EDE5DD] cursor-pointer sketch-btn-press transition-all shrink-0">
                   Importieren
                   <input
                     type="file"

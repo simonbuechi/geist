@@ -26,7 +26,7 @@ export const KgsLogo: React.FC<KgsLogoProps> = ({
         {/* Sketch background circle */}
         <path
           d="M32 6.5 C46.5 7, 57.2 17.5, 57.5 32 C57.8 46.5, 46.2 57.2, 32 57.5 C17.5 57.2, 6.5 46.2, 6.8 32 C7.1 17.5, 17.5 6.8, 32 6.5 Z"
-          className="stroke-[#2D2621]/30 dark:stroke-[#EDE5DD]/30 fill-[#FDF7F4] dark:fill-[#2B231F]"
+          className="stroke-[#7A6A5E]/30 dark:stroke-[#EDE5DD]/30 fill-[#FDFBF7] dark:fill-[#2B231F]"
           strokeWidth="1.8"
         />
         
@@ -57,7 +57,7 @@ export const KgsLogo: React.FC<KgsLogoProps> = ({
           cx="32"
           cy="32"
           r="9"
-          className="stroke-[#2D2621]/40 dark:stroke-[#EDE5DD]/40"
+          className="stroke-[#7A6A5E]/40 dark:stroke-[#EDE5DD]/40"
           strokeWidth="1.5"
           strokeDasharray="3 2"
         />
