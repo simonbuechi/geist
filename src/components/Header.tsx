@@ -59,7 +59,7 @@ export const Header: React.FC<HeaderProps> = ({
   };
 
   return (
-    <header className="sticky top-0 z-30 w-full backdrop-blur-md bg-[#FAF6F0]/95 dark:bg-[#1C1917]/95 transition-colors pt-safe">
+    <header className="sticky top-0 z-30 w-full bg-transparent transition-colors pt-safe">
       <div className="max-w-6xl mx-auto px-3.5 sm:px-6 py-2.5 sm:py-3.5 flex flex-col gap-2.5 sm:gap-3">
         {/* Top bar: Brand & Controls */}
         <div className="flex items-center justify-between gap-2">
@@ -78,7 +78,7 @@ export const Header: React.FC<HeaderProps> = ({
                 padding={[2, 6, 2, 6]}
                 className="cursor-pointer"
               >
-                <h1 className="text-2xl sm:text-3xl font-hand font-bold tracking-wide text-[#2D2621] dark:text-[#EDE5DD] truncate leading-tight">
+                <h1 className="text-2xl sm:text-3xl font-hand font-bold tracking-wide text-[#4A3E36] dark:text-[#EDE5DD] truncate leading-tight">
                   {t.appTitle}
                 </h1>
               </RoughNotationHighlight>
@@ -95,7 +95,7 @@ export const Header: React.FC<HeaderProps> = ({
               className={`relative px-3 py-1.5 rounded-none text-sm font-hand font-bold transition-all sketch-btn-press min-h-[34px] flex items-center justify-center ${
                 isHistoryView
                   ? 'bg-gradient-to-r from-[#9123A6] to-[#D7195F] text-white shadow-pencil'
-                  : 'bg-white dark:bg-[#25201C] text-[#2D2621] dark:text-[#EDE5DD] hover:bg-[#FAF6F0] dark:hover:bg-[#2F2925] shadow-pencil-sm'
+                  : 'bg-[#FDFBF7] dark:bg-[#28221D] text-[#4A3E36] dark:text-[#EDE5DD] hover:bg-[#F2EAE0] dark:hover:bg-[#322A23] shadow-pencil-sm'
               }`}
             >
               <RoughBorder borderRadius={0} />
@@ -107,17 +107,17 @@ export const Header: React.FC<HeaderProps> = ({
               onClick={onOpenAuth}
               title={user ? `${user.displayName || user.email || 'Konto'} (Angemeldet)` : `${t.auth.guestMode} (Lokal)`}
               aria-label="Settings and Profile"
-              className="relative w-9 h-9 p-2 rounded-full bg-white dark:bg-[#25201C] text-[#2D2621] dark:text-[#EDE5DD] hover:bg-[#FAF6F0] dark:hover:bg-[#2F2925] shadow-pencil-sm sketch-btn-press transition-all flex items-center justify-center min-h-[36px]"
+              className="relative w-9 h-9 p-2 rounded-full bg-[#FDFBF7] dark:bg-[#28221D] text-[#4A3E36] dark:text-[#EDE5DD] hover:bg-[#F2EAE0] dark:hover:bg-[#322A23] shadow-pencil-sm sketch-btn-press transition-all flex items-center justify-center min-h-[36px]"
             >
               <RoughBorder shape="circle" />
               {user?.photoURL ? (
-                <img src={user.photoURL} alt="Avatar" className="w-5 h-5 rounded-full object-cover border border-[#574A40]/20 relative z-10" />
+                <img src={user.photoURL} alt="Avatar" className="w-5 h-5 rounded-full object-cover border border-[#7A6A5E]/20 relative z-10" />
               ) : (
                 <UserIcon className="w-4 h-4 stroke-[2] relative z-10" />
               )}
               {/* Status Dot */}
               <span 
-                className={`absolute top-0.5 right-0.5 w-2.5 h-2.5 rounded-full border border-white dark:border-[#1C1917] z-20 ${
+                className={`absolute top-0.5 right-0.5 w-2.5 h-2.5 rounded-full border border-white dark:border-[#1F1B18] z-20 ${
                   user ? 'bg-[#4D7A4A]' : 'bg-[#BA9F83]'
                 }`} 
               />
@@ -132,7 +132,7 @@ export const Header: React.FC<HeaderProps> = ({
             <div className="flex items-center gap-1.5 sm:gap-2 flex-1 sm:flex-initial min-w-0">
               <button
                 onClick={() => selectWeek(getPreviousWeekId(currentWeekId))}
-                className="relative p-1.5 rounded-full bg-white dark:bg-[#25201C] text-[#2D2621] dark:text-[#EDE5DD] hover:bg-[#FAF6F0] dark:hover:bg-[#2F2925] shadow-pencil-sm sketch-btn-press transition-all shrink-0 min-h-[34px] min-w-[34px] flex items-center justify-center"
+                className="relative p-1.5 rounded-full bg-[#FDFBF7] dark:bg-[#28221D] text-[#4A3E36] dark:text-[#EDE5DD] hover:bg-[#F2EAE0] dark:hover:bg-[#322A23] shadow-pencil-sm sketch-btn-press transition-all shrink-0 min-h-[34px] min-w-[34px] flex items-center justify-center"
                 title="Vorherige Woche"
                 aria-label="Vorherige Woche"
               >
@@ -141,7 +141,7 @@ export const Header: React.FC<HeaderProps> = ({
               </button>
 
               <div className="flex items-center justify-center gap-2 px-2 py-1 flex-1 sm:flex-initial min-w-0">
-                <span className="text-base sm:text-lg font-hand font-bold text-[#2D2621] dark:text-[#EDE5DD] whitespace-nowrap">
+                <span className="text-base sm:text-lg font-hand font-bold text-[#4A3E36] dark:text-[#EDE5DD] whitespace-nowrap">
                   {t.week} {weekNumber}
                 </span>
                 {currentWeekPlan.reviewedAt && (
@@ -150,8 +150,8 @@ export const Header: React.FC<HeaderProps> = ({
                     <span className="hidden xs:inline">{t.reviewed}</span>
                   </span>
                 )}
-                <span className="text-[#BA9F83] dark:text-[#6A5C52] text-xs shrink-0">•</span>
-                <span className="text-2xs sm:text-xs text-[#6A5C52] dark:text-[#BA9F83] truncate font-sans font-medium">
+                <span className="text-[#C5B4A2] dark:text-[#6E5F54] text-xs shrink-0">•</span>
+                <span className="text-2xs sm:text-xs text-[#7D6E63] dark:text-[#BA9F83] truncate font-sans font-medium">
                   {formatWeekRange(startDate, endDate, language)}
                 </span>
               </div>
@@ -160,15 +160,15 @@ export const Header: React.FC<HeaderProps> = ({
                 onClick={handleNextWeek}
                 className={`relative p-1.5 rounded-full transition-all shrink-0 min-h-[34px] min-w-[34px] flex items-center justify-center ${
                   !isNextAccessible
-                    ? 'bg-[#EFE6DA]/60 dark:bg-[#2D2420] text-[#8A796D] dark:text-[#6A5C52]'
-                    : 'bg-white dark:bg-[#25201C] text-[#2D2621] dark:text-[#EDE5DD] hover:bg-[#FAF6F0] dark:hover:bg-[#2F2925] shadow-pencil-sm sketch-btn-press'
+                    ? 'bg-[#EAE0D2]/60 dark:bg-[#28221C] text-[#8C7D71] dark:text-[#7D6E63]'
+                    : 'bg-[#FDFBF7] dark:bg-[#28221D] text-[#4A3E36] dark:text-[#EDE5DD] hover:bg-[#F2EAE0] dark:hover:bg-[#322A23] shadow-pencil-sm sketch-btn-press'
                 }`}
                 title={!isNextAccessible ? t.unlockNextWeek : "Nächste Woche"}
                 aria-label={!isNextAccessible ? t.unlockNextWeek : "Nächste Woche"}
               >
                 <RoughBorder shape="circle" />
                 {!isNextAccessible ? (
-                  <Lock className="w-3.5 h-3.5 stroke-[2.2] text-[#8A796D] relative z-10" />
+                  <Lock className="w-3.5 h-3.5 stroke-[2.2] text-[#8C7D71] relative z-10" />
                 ) : (
                   <ChevronRight className="w-4 h-4 stroke-[2.2] relative z-10" />
                 )}
@@ -191,7 +191,7 @@ export const Header: React.FC<HeaderProps> = ({
                 onClick={onOpenReview}
                 className="relative px-5 py-2 rounded-none bg-gradient-to-r from-[#9123A6] to-[#D7195F] hover:opacity-95 text-white font-hand font-bold text-base sm:text-lg shadow-pencil-sm sketch-btn-press transition-all flex items-center justify-center group"
               >
-                <RoughBorder borderRadius={0} color="#574A40" darkColor="#EDE5DD" opacity={0.45} />
+                <RoughBorder borderRadius={0} color="#6E5F54" darkColor="#EDE5DD" opacity={0.45} />
                 <span className="relative z-10">{currentWeekPlan.reviewedAt ? t.viewReview : t.reviewAndPlan}</span>
               </button>
             </div>
