@@ -8,58 +8,62 @@ This document specifies the design philosophy, color palettes, typography, icono
 
 KGS provides a **mindful, tactile journaling atmosphere** for weekly alignment, personal reflection, and deliberate growth. The interface rejects cold, sterile digital surfaces in favor of warm, human artisanal craft:
 
-- **Light & Elegant Pencil Craft**: Delicate 1px / 1.2px graphite pencil lines (`#574A40` with 25–40% transparency) replace heavy digital borders. Subtle soft-graphite offset shadows (`rgba(87, 74, 64, 0.28)`) provide depth without visual clutter or darkness.
-- **Sketchy Background Color Shading (Rough.js Engine)**: Color fills on cards, headers, sticky notes, and notification banners are not flat solid rectangles; they are rendered as dynamic, hand-sketched **colored pencil hachure & cross-hatch shading** using `rough.js`.
-- **Warm Earthy Harmonies**: Natural artist pigments — warm terracotta (`#C2593F`), golden ochre (`#C97A1E`), burnt sienna (`#A8432A`), warm olive sage (`#4D7A4A`), and vintage rosewood (`#B84D68`).
+- **Light & Elegant Pencil Craft**: Delicate 1px / 1.2px graphite pencil lines (`#7A6A5E` / `#6E5F54` with 20–30% transparency) replace harsh black borders. Subtle soft-sepia offset shadows (`rgba(74, 62, 54, 0.22)`) provide depth without visual clutter or darkness.
+- **Sketchy Background Color Shading (Rough.js Engine)**: Color fills on cards, headers, sticky notes, and notification banners are rendered as dynamic, hand-sketched **pencil hachure & cross-hatch shading** using `rough.js`.
+- **Warm Earthy Harmonies**: Warm beige and light brown palette — warm parchment canvas (`#F5F2EB` radial gradient), biscuit card paper (`#FDFBF7`), soft oatmeal washes (`#FAF5ED`), warm sand (`#EAE0D2`), and light brown coffee accents (`#5C4F45`).
 - **Edgy Hand-Drawn Contour**: Cards, buttons, and boxes use clean, edgy rectangular hand-drawn pencil borders with crisp 90° intersections and no round corners.
 - **Dual Diurnal Paper Modes**:
-  - **Light Mode**: Warm natural cream parchment (`#FAF6F0`), crisp paper cards (`#FFFEFB`), with warm charcoal pencil outlines (`#574A40/30`).
-  - **Dark Mode**: Warm slate sketchbook (`#1C1917`), dark warm obsidian cards (`#241F1C`), with chalk ivory strokes (`#EDE5DD/25`).
+  - **Light Mode**: Warm beige radial canvas (`#F5F2EB` / `#FAF8F3` to `#EDE7DC`), crisp paper cards (`#FDFBF7`), with warm brownish-grey pencil outlines (`#7A6A5E/25`) and deep warm sepia-graphite text (`#4A3E36`).
+  - **Dark Mode**: Warm coffee sketchbook (`#1C1815`), dark warm roasted cards (`#25201C`), with chalk ivory strokes (`#EDE5DD/25`).
 
 ---
 
 ## 2. Warm Tinted Backgrounds & Edgy Box Borders
 
-Following the evolution of the sketchbook design, background areas use **warm paper-tinted watercolor/pigment washes** instead of busy hatching lines, with **Rough.js edgy hand-sketched box borders**:
+Following the evolution of the sketchbook design, background areas use **warm paper-tinted watercolor/pigment washes** in warm beige and light brown tones, with **Rough.js edgy hand-sketched box borders**:
 
 ### 2.1 Background Palette & Wash Values
 
 | Component / Area | Light Mode Wash | Dark Mode Wash | Border Divider / Accent |
 | :--- | :--- | :--- | :--- |
-| **Körper (Body) Header** | `#FAF2F5` (Soft Berry Wash) | `#2A1C22` | `border-b border-[#D7195F]/20` |
-| **Geist (Mind) Header** | `#FAF2F5` (Soft Berry Wash) | `#2A1C22` | `border-b border-[#D7195F]/20` |
-| **Seele (Soul) Header** | `#FAF2F5` (Soft Berry Wash) | `#2A1C22` | `border-b border-[#D7195F]/20` |
-| **Inline Add Note Form** | `#FDF7FA` (Paper Tint) | `#26171E` | Hand-drawn dashed border |
-| **Review Modal Header** | `#FAF3EE` (Berry Parchment) | `#2B1D17` | `border-b border-[#D7195F]/20` |
+| **Canvas Body** | `#F4EFE6` (Radial Gradient with SVG Noise overlay) | `#1C1815` (Dark Radial Gradient) | Edge-to-edge textured paper canvas |
+| **Körper (Body) Header** | `#F2EAE0` (Warm Biscuit Wash) | `#2A221C` | `border-b border-[#7A6A5E]/20` |
+| **Geist (Mind) Header** | `#F2EAE0` (Warm Biscuit Wash) | `#2A221C` | `border-b border-[#7A6A5E]/20` |
+| **Seele (Soul) Header** | `#F2EAE0` (Warm Biscuit Wash) | `#2A221C` | `border-b border-[#7A6A5E]/20` |
+| **Inline Add Note Form** | `#FAF5ED` (Soft Oatmeal Paper) | `#25201C` | Hand-drawn dashed border |
+| **Review Modal Header** | `#F2EAE0` (Warm Biscuit Header) | `#2A221C` | `border-b border-[#7A6A5E]/20` |
 | **Unreviewed Banner** | `#FFF9F0` (Amber Parchment) | `#2A231A` | `border border-[#D4A759]/50` |
-| **Reviewed Banner** | `#FFFDF9` (Sage Tint) | `#202720` | `border border-[#4D7A4A]/35` |
-| **Primary Action Button** | Gradient `#9123A6` to `#D7195F` | Gradient `#9123A6` to `#D7195F` | `shadow-pencil-sm` |
-| **Dimension Card Box Border** | Hand-sketched via `rough.js` | Hand-sketched via `rough.js` | Edgy sharp pencil stroke contour |
+| **Reviewed Banner** | `#F5FAF3` (Sage Tint) | `#202720` | `border border-[#4D7A4A]/35` |
+| **Primary Action Button** | Gradient `#9123A6` to `#D7195F` | Gradient `#9123A6` to `#D7195F` | `shadow-pencil-sm` (Retained vibrant berry/violet) |
+| **Dimension Card Box Border** | Hand-sketched via `rough.js` (`#6E5F54`) | Hand-sketched via `rough.js` (`#EDE5DD`) | Edgy sharp pencil stroke contour |
 
 ---
 
 ## 3. Color Palette
 
-### 3.1 Primary Brand Colors (Vivid Berry & Violet Gradient)
+### 3.1 Primary Brand & Warm Canvas Colors
 
 | Token / Usage | Hex Code | Tailwind / Class | Purpose |
 | :--- | :--- | :--- | :--- |
+| **Body Canvas Radial** | `#F4EFE6` (radial + SVG noise overlay) | `body` | Tactile textured sketchbook paper background |
+| **Paper Card Surface** | `#FDFBF7` | `bg-[#FDFBF7]` | Main card and modal background |
+| **Warm Sepia-Graphite (Light)** | `#4A3E36` | `text-[#4A3E36]` | Primary typography (brownish-greyish instead of black) |
+| **Muted Brownish-Grey** | `#7D6E63` | `text-[#7D6E63]` | Secondary descriptions, timestamps, subtle labels |
+| **Warm Pencil Border** | `#7A6A5E` | `border-[#7A6A5E]/25` | Soft brownish-grey borders |
+| **RoughBorder Stroke** | `#6E5F54` | stroke `#6E5F54` | Hand-drawn SVG card and modal outlines |
 | **Brand Primary (Vivid Berry)** | `#D7195F` | `bg-[#D7195F]` | Primary brand color, focus rings, active accents |
 | **Primary Button Gradient** | `#9123A6` → `#D7195F` | `bg-gradient-to-r from-[#9123A6] to-[#D7195F]` | Primary action buttons (Review, Save, Install) |
-| **Deep Violet Start** | `#9123A6` | `from-[#9123A6]` | Gradient start for primary buttons |
-| **Warm Graphite Lead (Light)** | `#2D2621` | `text-[#2D2621]` | Primary typography in light mode |
 | **Chalk Ivory (Dark)** | `#EDE5DD` | `dark:text-[#EDE5DD]` | Primary typography in dark mode |
-| **Delicate Pencil Border** | `#574A40` | `border-[#574A40]/20` | Fine soft pencil contours |
 
 ### 3.2 Unified Dimension Palette (Körper, Geist, Seele)
 
-All three life dimensions share the unified primary brand palette:
+All three life dimensions share the warm beige/light brown aesthetic with prominent enlarged icons and distinctive colored badges:
 
 | Dimension | Accent Color | Rough.js Color | Card Border Tint | Badge & Icon Box | Meaning |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| **Körper** (Body) | Vivid Berry (`#D7195F`) | `#D7195F` | `border-[#D7195F]/35` | `#FAF0F4` / `#3E1C27` | Physical vitality, embodiment, posture, movement |
-| **Geist** (Mind) | Vivid Berry (`#D7195F`) | `#D7195F` | `border-[#D7195F]/35` | `#FAF0F4` / `#3E1C27` | Deliberate intellect, focus, reading, clarity |
-| **Seele** (Soul) | Vivid Berry (`#D7195F`) | `#D7195F` | `border-[#D7195F]/35` | `#FAF0F4` / `#3E1C27` | Inner stillness, presence, heartfulness, gratitude |
+| **Körper** (Body) | Warm Bronze Brown (`#7A583A`) | `#7A6A5E` | `border-[#7A6A5E]/25` | `#EAE0D2` / `#362C24` | Physical vitality, embodiment, posture, movement |
+| **Geist** (Mind) | Golden Ochre (`#8C6328`) | `#7A6A5E` | `border-[#7A6A5E]/25` | `#EAE0D2` / `#362C24` | Deliberate intellect, focus, reading, clarity |
+| **Seele** (Soul) | Deep Sienna Brown (`#854D3D`) | `#7A6A5E` | `border-[#7A6A5E]/25` | `#EAE0D2` / `#362C24` | Inner stillness, presence, heartfulness, gratitude |
 
 ### 3.3 Semantic Evaluation Statuses (Pencil Stamp Seals)
 
@@ -94,18 +98,90 @@ fontFamily: {
 
 ---
 
-## 5. Hand-Drawn Physics, Borders & Shadows
+## 5. Hand-Drawn Physics, Rough.js & Shadows
 
-### 5.1 Unified Rough.js Edgy Borders (`RoughBorder.tsx`)
+### 5.1 Rough.js Architecture & Usage Across the Repo
 
-To eliminate clashing digital CSS borders and achieve uniform artisanal craft across all UI components, all boxes, cards, and buttons use the dedicated [`RoughBorder.tsx`](file:///d:/dev/antigravity/geist/src/components/RoughBorder.tsx) SVG renderer:
+Rough.js is used throughout the application to produce an authentic, hand-drawn sketchbook aesthetic without static raster assets or stiff CSS borders. It is integrated in three primary layers:
 
-- **Clean Single-Stroke Outline**: Digital CSS borders (`border`, `border-2`) are replaced by hand-sketched single strokes, eliminating awkward border doubling or clipping.
-- **Edgy Rectangular Drafting**: Renders sharp 90-degree corners with straight sketch strokes (`bowing: 0`, `roughness: 0.8`) and natural architectural corner intersections.
-- **Pencil Tone Harmony**: Renders warm graphite lead (`#574A40`) in light mode and chalk ivory (`#EDE5DD`) in dark mode, or dimension-matched color accents (terracotta, amber, rosewood).
-- **Pointer-Transparent**: Uses `pointer-events-none` with `z-10` overlay so all click, hover, and tap interactions remain instantaneous.
+1. **[`RoughBorder.tsx`](file:///d:/dev/antigravity/geist/src/components/RoughBorder.tsx)**:
+   - Dynamic, resolution-independent SVG border overlay mounted over cards, modals, buttons, badges, and icon pills.
+   - Replaces hard CSS borders with hand-sketched single strokes (`rc.rectangle()` or `rc.ellipse()`) using a `ResizeObserver` for dynamic dimension tracking.
+   - Uses `pointer-events-none` with `z-10` overlay so all click, hover, and tap interactions remain instantaneous.
 
-### 5.2 Edgy Border CSS Utilities
+2. **[`RoughBackground.tsx`](file:///d:/dev/antigravity/geist/src/components/RoughBackground.tsx)**:
+   - Dynamic SVG pencil hatching and shading layer (`rc.rectangle()` with fill styles).
+   - Generates authentic angled pencil hachures, cross-hatching, and subtle background textures for Category Card headers, Sticky Notes, and Modal covers.
+   - Includes optional hand-drawn pencil bottom divider lines (`rc.line()`).
+
+3. **[`RoughNotationHighlight.tsx`](file:///d:/dev/antigravity/geist/src/components/RoughNotationHighlight.tsx) & In-Repo Engine ([`src/lib/rough-notation/`](file:///d:/dev/antigravity/geist/src/lib/rough-notation/))**:
+   - A lightweight, zero-dependency in-repo Rough Notation implementation built directly on `roughjs`.
+   - Generates animated SVG highlighter marker paths behind words, brand titles, and active category names (`rc.generator()` and SVG stroke-dashoffset CSS keyframe animations).
+
+---
+
+### 5.2 Modifying the Intensity of Rough.js Effects
+
+You can fine-tune the intensity, jitter, weight, and sketchiness of any effect using dedicated component props or engine defaults:
+
+#### 1. Border & Stroke Sketchiness (`RoughBorder.tsx`)
+
+Control individual borders by passing props directly to `<RoughBorder />`:
+
+| Prop | Default | Description & Intensity Tuning |
+| :--- | :--- | :--- |
+| **`roughness`** | `1.5` | **Waviness / jitter**: Set lower (`0.3 – 0.8`) for clean architectural drafts; set higher (`2.0 – 3.5`) for loose, vibrating, sketchy strokes. |
+| **`bowing`** | `1.2` | **Line curvature**: Set to `0` for crisp, straight drafting lines; set higher (`1.8 – 2.5`) for organic curves and bent edges. |
+| **`width`** | `1.5` | **Stroke thickness**: Line weight in pixels (e.g. `0.9` for delicate button borders, `2.0+` for bold container lines). |
+| **`opacity`** | `0.75` | **Alpha transparency**: Override to `0.3 – 0.5` for soft graphite pencil, or `0.8 – 1.0` for solid ink strokes. |
+| **`color` / `darkColor`** | `#574A40` / `#EDE5DD` | Primary pencil tone for light and dark modes. |
+
+*Example — Subtle, crisp architectural border:*
+```tsx
+<RoughBorder roughness={0.6} bowing={0} width={1.0} opacity={0.35} />
+```
+
+*Example — Loose, expressive sketch border:*
+```tsx
+<RoughBorder roughness={2.5} bowing={1.8} width={2.0} opacity={0.8} />
+```
+
+#### 2. Background Shading & Hatching (`RoughBackground.tsx`)
+
+Control pencil fill density and texture by passing props to `<RoughBackground />`:
+
+| Prop | Default | Description & Intensity Tuning |
+| :--- | :--- | :--- |
+| **`hachureGap`** | `3.5` | **Hatching density**: Spacing between lines in pixels. Decrease (`2.0 – 2.5`) for dense, saturated shading; increase (`8.0 – 14.0`) for airy, faint sketchbook hatching. |
+| **`fillWeight`** | `1.1` | **Pencil lead thickness**: Thickness of individual hatch strokes. |
+| **`roughness`** | `1.2` | **Hatch jitter**: How shaky or straight each individual stroke line is. |
+| **`opacity`** | `0.25` | **Layer transparency**: Typically `0.06 – 0.15` for delicate card textures; `0.25 – 0.40` for prominent accent headers. |
+| **`fillStyle`** | `'hachure'` | Pattern algorithm: `'hachure'`, `'zigzag'`, `'cross-hatch'`, `'dots'`, or `'dashed'`. |
+| **`hachureAngle`** | `-41` | Directional angle of pencil lines in degrees. |
+
+*Example — Soft, wide-spaced cross-hatching sticky note:*
+```tsx
+<RoughBackground fillStyle="cross-hatch" hachureGap={10} fillWeight={0.8} opacity={0.08} />
+```
+
+#### 3. Highlighter & Marker Annotations (`RoughNotationHighlight.tsx`)
+
+Control the highlighter intensity on interactive text elements:
+
+| Prop / Setting | Default | Description & Intensity Tuning |
+| :--- | :--- | :--- |
+| **`iterations`** | `2` | **Marker passes**: Set to `1` for a single, transparent highlighter swipe; set to `3+` for heavily inked marker emphasis. |
+| **`strokeWidth`** | Auto (text-based) | Custom marker thickness in pixels. |
+| **`color` / `darkColor`** | `rgba(215, 25, 95, 0.22)` | Adjust the RGBA alpha channel (`0.15` for gentle pastel, `0.40+` for bold neon ink). |
+| **`animationDuration`** | `450` | Draw speed in milliseconds. |
+
+*Global Engine Defaults*:
+For global adjustments across all rough notation highlights in the app, inspect [`render.ts`](file:///d:/dev/antigravity/geist/src/lib/rough-notation/render.ts#L10-L31):
+- `getOptions()` sets default highlight `roughness: 3` and `bowing: 1.2`. Adjusting these values modifies the baseline waviness for all highlights across the application.
+
+---
+
+### 5.3 Edgy Border CSS Utilities
 
 ```css
 /* Edgy Hand-Drawn Pencil Borders (Crisp 90-degree corners) */
@@ -122,7 +198,7 @@ To eliminate clashing digital CSS borders and achieve uniform artisanal craft ac
 }
 ```
 
-### 5.2 Light & Elegant Pencil Drop Shadows
+### 5.4 Light & Elegant Pencil Drop Shadows
 
 Unlike harsh, high-contrast comic book shadows, KGS uses delicate, warm graphite drop shadows that give cards an authentic notebook lift:
 
@@ -174,9 +250,9 @@ Unlike harsh, high-contrast comic book shadows, KGS uses delicate, warm graphite
 - **Empty State**: Airy dashed border (`border border-dashed border-[#574A40]/30`) with pencil plus icon encouraging new entries.
 
 ### 7.2 Header & Week Navigation ([`Header.tsx`](file:///d:/dev/antigravity/geist/src/components/Header.tsx))
-- Fine pencil bottom border (`border-b border-[#574A40]/20 dark:border-[#EDE5DD]/15`).
+- Clean borderless, transparent header (`bg-transparent`) seamlessly blending into the canvas background.
 - Week indicator card styled as a pressed paper label with `shadow-pencil-sm`.
-- Primary CTA *"Rückblick & Planen"* in warm terracotta with gentle pencil shadow and hover micro-animations.
+- Primary CTA *"Rückblick & Planen"* in signature purple/berry gradient with gentle pencil shadow and hover micro-animations.
 
 ### 7.3 Weekly Review Modal ([`ReviewModal.tsx`](file:///d:/dev/antigravity/geist/src/components/ReviewModal.tsx))
 - Notebook cover styled with dynamic terracotta `RoughBackground` hachure (`opacity: 0.14`).
@@ -197,21 +273,25 @@ Unlike harsh, high-contrast comic book shadows, KGS uses delicate, warm graphite
 --border-pencil-pill:    999px 980px 995px 985px / 985px 995px 982px 998px;
 
 /* Shadows */
---shadow-pencil:         2.0px 2.5px 0px 0px rgba(87, 74, 64, 0.28);
---shadow-pencil-sm:      1.2px 1.5px 0px 0px rgba(87, 74, 64, 0.22);
+--shadow-pencil:         2.0px 2.5px 0px 0px rgba(74, 62, 54, 0.22);
+--shadow-pencil-sm:      1.2px 1.5px 0px 0px rgba(74, 62, 54, 0.18);
 --shadow-pencil-dark:    2.0px 2.5px 0px 0px rgba(237, 229, 221, 0.16);
 
 /* Typography */
 --font-hand:             'LiebeHeide', 'Caveat', 'Marck Script', cursive;
---font-sans:             'Plus Jakarta Sans', system-ui, sans-serif;
+--font-sans:             'Nunito', system-ui, sans-serif;
 
 /* Canvas & Ink */
---paper-canvas:          #FAF6F0;
---paper-card:            #FFFEFB;
---paper-dark:            #1C1917;
+--paper-canvas:          #F5F2EB (radial-gradient(#FAF8F3 0%, #EDE7DC 100%));
+--paper-card:            #FDFBF7;
+--paper-wash:            #FAF5ED;
+--paper-warm-sand:       #EAE0D2;
+--paper-dark:            #1C1815 (radial-gradient(#231D19 0%, #151210 100%));
 --paper-card-dark:       #25201C;
---lead-graphite:         #2D2621;
---lead-border:           rgba(87, 74, 64, 0.30);
+--lead-graphite:         #4A3E36;
+--lead-muted:            #7D6E63;
+--lead-border:           rgba(122, 106, 94, 0.25);
+--lead-stroke:           #6E5F54;
 --lead-chalk:            #EDE5DD;
---ink-terracotta:        #C2593F;
+--cta-gradient:          linear-gradient(to right, #9123A6, #D7195F);
 ```
