@@ -18,6 +18,7 @@ export interface RoughBackgroundProps {
   borderRadius?: number;
   shape?: 'rectangle' | 'circle' | 'rounded';
   opacity?: number;
+  hoverOpacity?: number;
   drawBottomLine?: boolean;
   bottomLineColor?: string;
   darkBottomLineColor?: string;
@@ -43,6 +44,7 @@ export const RoughBackground: React.FC<RoughBackgroundProps> = ({
   borderRadius,
   shape = 'rectangle',
   opacity = 0.25,
+  hoverOpacity,
   drawBottomLine = false,
   bottomLineColor = '#7A6A5E',
   darkBottomLineColor = '#EDE5DD',
@@ -163,8 +165,11 @@ export const RoughBackground: React.FC<RoughBackgroundProps> = ({
   return (
     <div 
       ref={containerRef} 
-      className={`absolute inset-0 pointer-events-none overflow-hidden ${className}`}
-      style={{ opacity }}
+      className={`absolute inset-0 pointer-events-none overflow-hidden transition-opacity duration-150 opacity-[var(--rb-opacity)] group-hover:opacity-[var(--rb-hover-opacity)] ${className}`}
+      style={{
+        '--rb-opacity': opacity,
+        '--rb-hover-opacity': hoverOpacity ?? opacity,
+      } as React.CSSProperties}
       aria-hidden="true"
     >
       <svg

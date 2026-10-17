@@ -23,6 +23,7 @@ import { useLanguage } from '../context/LanguageContext';
 import { useTheme } from '../context/ThemeContext';
 import { useGoals } from '../context/GoalsContext';
 import { RoughBorder } from './RoughBorder';
+import { RoughBackground } from './RoughBackground';
 import { IconButton } from './IconButton';
 import { 
   getDefaultFirebaseConfig, 
@@ -202,18 +203,18 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center sm:p-4 bg-[#4A3E36]/65 backdrop-blur-sm animate-fade-in">
-      <div className="relative w-full max-w-lg bg-[#FDFBF7] dark:bg-[#25201C] rounded-none shadow-2xl max-h-[92vh] flex flex-col overflow-hidden animate-slide-up sm:animate-scale-in sketch-shadow">
-        <RoughBorder borderRadius={0} width={1.2} opacity={0.5} />
+    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center sm:p-4 bg-[#332B25]/55 backdrop-blur-xs animate-fade-in">
+      <div className="relative w-full max-w-lg bg-[#FCF9F4] dark:bg-[#221F1D] shadow-notebook max-h-[92vh] flex flex-col overflow-hidden animate-slide-up sm:animate-scale-in">
+        <RoughBorder borderRadius={2} width={1.3} opacity={0.45} color="#8C7E72" darkColor="#7A6F66" />
         
         {/* Mobile Drag Indicator */}
         <div className="sm:hidden pt-2.5 pb-1 flex justify-center shrink-0">
-          <div className="w-10 h-1 bg-[#BA9F83] dark:bg-[#6A5C52] rounded-none" />
+          <div className="w-10 h-1 bg-[#8C7E72]/40 dark:bg-[#7A6F66]/40 rounded-none" />
         </div>
 
         {/* Modal Header */}
-        <div className="px-5 py-4 sm:px-6 sm:py-4.5 border-b-2 border-dashed border-[#7A6A5E]/25 dark:border-[#EDE5DD]/20 flex items-center justify-between shrink-0">
-          <h3 className="text-lg sm:text-xl font-hand font-bold text-[#4A3E36] dark:text-[#EDE5DD]">
+        <div className="relative px-5 py-4 sm:px-6 sm:py-4.5 border-b border-[#8C7E72]/25 dark:border-[#7A6F66]/25 flex items-center justify-between shrink-0 bg-[#F3EDE2]/60 dark:bg-[#191614]/60">
+          <h3 className="text-xl sm:text-2xl font-hand font-bold text-[#332B25] dark:text-[#EAE2D9] tracking-wide">
             {t.settings.title}
           </h3>
           <IconButton 
@@ -233,26 +234,27 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
 
           {/* 1. Account & Sync Section */}
           <div>
-            <div className="text-xs font-hand font-bold uppercase tracking-wider text-[#7D6E63] dark:text-[#BA9F83] px-1 mb-2">
+            <div className="text-xs font-sans font-bold uppercase tracking-wider text-[#7A6F66] dark:text-[#A3968B] px-1 mb-2">
               {t.settings.account}
             </div>
 
-            <div className="rounded-none bg-[#FAF5ED] dark:bg-[#1E1B18] border-1.5 border-[#7A6A5E]/30 dark:border-[#EDE5DD]/30 divide-y divide-[#7A6A5E]/15 dark:divide-[#EDE5DD]/15 overflow-hidden sketch-border-sm">
+            <div className="relative bg-[#F3EDE2]/55 dark:bg-[#191614]/80 divide-y divide-[#8C7E72]/20 dark:divide-[#7A6F66]/20 overflow-hidden">
+              <RoughBorder borderRadius={2} width={1.0} color="#8C7E72" darkColor="#7A6F66" opacity={0.35} />
               {user ? (
-                <div className="p-3.5 sm:p-4 flex items-center justify-between gap-3">
+                <div className="relative z-10 p-3.5 sm:p-4 flex items-center justify-between gap-3">
                   <div className="flex items-center gap-3 min-w-0">
                     {user.photoURL ? (
-                      <img src={user.photoURL} alt="Avatar" className="w-10 h-10 rounded-none object-cover shrink-0 border-2 border-[#7A6A5E]/30" />
+                      <img src={user.photoURL} alt="Avatar" className="w-10 h-10 rounded-full object-cover shrink-0 border border-[#8C7E72]/35" />
                     ) : (
-                      <div className="w-10 h-10 rounded-none bg-gradient-to-r from-[#9123A6] to-[#D7195F] text-white flex items-center justify-center font-hand font-bold text-base shrink-0 border border-[#7A6A5E]/30">
+                      <div className="w-10 h-10 rounded-full bg-[#C46345] text-[#FAF6F0] flex items-center justify-center font-sans font-bold text-lg shrink-0">
                         {user.displayName?.[0] || 'U'}
                       </div>
                     )}
                     <div className="min-w-0">
-                      <h4 className="text-xs sm:text-sm font-hand font-bold text-[#4A3E36] dark:text-[#EDE5DD] truncate">
+                      <h4 className="text-base font-sans font-bold text-[#332B25] dark:text-[#EAE2D9] truncate">
                         {user.displayName || 'Google Account'}
                       </h4>
-                      <p className="text-2xs sm:text-xs text-[#7D6E63] dark:text-[#BA9F83] truncate font-sans">
+                      <p className="text-xs text-[#7A6F66] dark:text-[#A3968B] truncate font-serif">
                         {user.email}
                       </p>
                     </div>
@@ -260,21 +262,21 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
 
                   <button
                     onClick={signOut}
-                    className="px-3 py-1.5 rounded-none border-0 text-[#7D6E63] dark:text-[#BA9F83] text-xs font-hand font-bold transition-colors flex items-center gap-1.5 shrink-0 sketch-btn-press"
+                    className="px-3 py-1.5 border-0 text-[#7A6F66] dark:text-[#A3968B] text-sm font-sans font-bold transition-colors flex items-center gap-1.5 shrink-0 sketch-btn-press"
                   >
                     <LogOut className="w-3.5 h-3.5 stroke-[2.2]" />
                     <span>{t.actions.signOut}</span>
                   </button>
                 </div>
               ) : (
-                <div className="p-3.5 sm:p-4 space-y-3">
+                <div className="relative z-10 p-4 space-y-3">
                   <div className="flex items-start gap-2.5">
-                    <span className="w-2.5 h-2.5 rounded-none bg-[#4D7A4A] mt-1 shrink-0 border border-[#7A6A5E]/30" />
+                    <span className="w-2.5 h-2.5 rounded-full bg-[#557659] mt-1.5 shrink-0" />
                     <div>
-                      <div className="text-xs sm:text-sm font-hand font-bold text-[#4A3E36] dark:text-[#EDE5DD]">
+                      <div className="text-base font-sans font-bold text-[#332B25] dark:text-[#EAE2D9]">
                         {t.auth.guestMode}
                       </div>
-                      <p className="text-2xs sm:text-xs text-[#7D6E63] dark:text-[#BA9F83] mt-0.5 leading-relaxed font-sans">
+                      <p className="text-xs text-[#7A6F66] dark:text-[#A3968B] mt-0.5 leading-relaxed font-serif">
                         {t.auth.cloudSyncDesc}
                       </p>
                     </div>
@@ -283,7 +285,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                   {isConfigured ? (
                     <button
                       onClick={signInWithGoogle}
-                      className="w-full py-2.5 px-4 rounded-none bg-[#5C4F45] dark:bg-[#EDE5DD] text-white dark:text-[#4A3E36] font-hand font-bold text-xs sm:text-sm transition-all shadow-pencil-sm flex items-center justify-center gap-2 sketch-btn-press"
+                      className="relative w-full py-2.5 px-4 bg-[#332B25] dark:bg-[#EAE2D9] text-[#FAF6F0] dark:text-[#191614] font-sans font-bold text-base transition-all flex items-center justify-center gap-2 sketch-btn-press"
                     >
                       <svg className="w-4 h-4" viewBox="0 0 24 24">
                         <path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
@@ -294,7 +296,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                       <span>{t.actions.signInWithGoogle}</span>
                     </button>
                   ) : (
-                    <p className="text-2xs text-[#7D6E63] font-sans">
+                    <p className="text-xs text-[#7A6F66] font-serif italic">
                       Firebase ist lokal aktiv. Zur Cloud-Synchronisierung können eigene Firebase-Zugangsdaten hinterlegt werden.
                     </p>
                   )}
@@ -302,13 +304,13 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
               )}
 
               {/* Collapsible Firebase Credentials row */}
-              <div className="p-3 sm:p-3.5 bg-[#EAE0D2]/50 dark:bg-[#25201C]/60">
+              <div className="relative z-10 p-3 sm:p-3.5 bg-[#EAE2D3]/45 dark:bg-[#221F1D]/60">
                 <button
                   type="button"
                   onClick={() => setShowConfig(!showConfig)}
-                  className="w-full flex items-center justify-between text-2xs text-[#7D6E63] dark:text-[#BA9F83] transition-colors"
+                  className="w-full flex items-center justify-between text-xs text-[#7A6F66] dark:text-[#A3968B] transition-colors"
                 >
-                  <span className="flex items-center gap-1.5 font-hand font-bold text-xs">
+                  <span className="flex items-center gap-1.5 font-sans font-bold text-sm">
                     <Database className="w-3.5 h-3.5 stroke-[2.2]" />
                     <span>Firebase Cloud Config (Optional)</span>
                   </span>
@@ -316,46 +318,47 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                 </button>
 
                 {showConfig && (
-                  <form onSubmit={handleSaveConfig} className="mt-3 space-y-2.5 pt-2.5 border-t border-[#7A6A5E]/15 dark:border-[#EDE5DD]/15 animate-slide-up">
+                  <form onSubmit={handleSaveConfig} className="mt-3 space-y-2.5 pt-2.5 border-t border-[#8C7E72]/20 animate-slide-up">
                     <input
                       type="text"
                       placeholder="API Key"
                       value={apiKey}
                       onChange={(e) => setApiKey(e.target.value)}
-                      className="w-full text-xs p-2 rounded-none border border-[#7A6A5E]/30 dark:border-[#EDE5DD]/30 bg-[#FDFBF7] dark:bg-[#1E1B18] text-[#4A3E36] dark:text-[#EDE5DD] font-sans"
+                      className="w-full text-xs p-2 border border-[#8C7E72]/30 bg-[#FCF9F4] dark:bg-[#191614] text-[#332B25] dark:text-[#EAE2D9] font-sans"
                     />
                     <input
                       type="text"
                       placeholder="Project ID"
                       value={projectId}
                       onChange={(e) => setProjectId(e.target.value)}
-                      className="w-full text-xs p-2 rounded-none border border-[#7A6A5E]/30 dark:border-[#EDE5DD]/30 bg-[#FDFBF7] dark:bg-[#1E1B18] text-[#4A3E36] dark:text-[#EDE5DD] font-sans"
+                      className="w-full text-xs p-2 border border-[#8C7E72]/30 bg-[#FCF9F4] dark:bg-[#191614] text-[#332B25] dark:text-[#EAE2D9] font-sans"
                     />
                     <input
                       type="text"
                       placeholder="Auth Domain (optional)"
                       value={authDomain}
                       onChange={(e) => setAuthDomain(e.target.value)}
-                      className="w-full text-xs p-2 rounded-none border border-[#7A6A5E]/30 dark:border-[#EDE5DD]/30 bg-[#FDFBF7] dark:bg-[#1E1B18] text-[#4A3E36] dark:text-[#EDE5DD] font-sans"
+                      className="w-full text-xs p-2 border border-[#8C7E72]/30 bg-[#FCF9F4] dark:bg-[#191614] text-[#332B25] dark:text-[#EAE2D9] font-sans"
                     />
                     <input
                       type="text"
                       placeholder="App ID (optional)"
                       value={appId}
                       onChange={(e) => setAppId(e.target.value)}
-                      className="w-full text-xs p-2 rounded-none border border-[#7A6A5E]/30 dark:border-[#EDE5DD]/30 bg-[#FDFBF7] dark:bg-[#1E1B18] text-[#4A3E36] dark:text-[#EDE5DD] font-sans"
+                      className="w-full text-xs p-2 border border-[#8C7E72]/30 bg-[#FCF9F4] dark:bg-[#191614] text-[#332B25] dark:text-[#EAE2D9] font-sans"
                     />
                     <div className="flex items-center justify-between pt-1">
                       {saveSuccess ? (
-                        <span className="text-xs font-hand font-bold text-[#3B6B38] flex items-center gap-1">
+                        <span className="text-sm font-sans font-bold text-[#4E7A52] flex items-center gap-1">
                           <Check className="w-3.5 h-3.5 stroke-[2.5]" /> Gespeichert!
                         </span>
                       ) : <span />}
                       <button
                         type="submit"
-                        className="px-3.5 py-1.5 bg-gradient-to-r from-[#9123A6] to-[#D7195F] text-white rounded-none text-xs font-hand font-bold sketch-shadow-sm sketch-btn-press transition-all"
+                        className="relative px-4 py-1.5 text-[#FAF6F0] text-sm font-sans font-bold sketch-btn-press transition-all overflow-hidden"
                       >
-                        Speichern
+                        <RoughBackground fill="#C46345" darkFill="#B05236" fillStyle="cross-hatch" hachureGap={2.8} opacity={0.94} seed={501} />
+                        <span className="relative z-10">Speichern</span>
                       </button>
                     </div>
                   </form>
@@ -366,70 +369,71 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
 
           {/* 2. Appearance & Language Section */}
           <div>
-            <div className="text-xs font-hand font-bold uppercase tracking-wider text-[#7D6E63] dark:text-[#BA9F83] px-1 mb-2">
+            <div className="text-xs font-sans font-bold uppercase tracking-wider text-[#7A6F66] dark:text-[#A3968B] px-1 mb-2">
               {t.settings.appearance}
             </div>
 
-            <div className="rounded-none bg-[#FAF5ED] dark:bg-[#1E1B18] border-1.5 border-[#7A6A5E]/30 dark:border-[#EDE5DD]/30 divide-y divide-[#7A6A5E]/15 dark:divide-[#EDE5DD]/15 overflow-hidden sketch-border-sm">
+            <div className="relative bg-[#F3EDE2]/55 dark:bg-[#191614]/80 divide-y divide-[#8C7E72]/20 dark:divide-[#7A6F66]/20 overflow-hidden">
+              <RoughBorder borderRadius={2} width={1.0} color="#8C7E72" darkColor="#7A6F66" opacity={0.35} />
               
               {/* Theme Row */}
-              <div className="p-3 sm:p-3.5 flex items-center justify-between gap-3">
+              <div className="relative z-10 p-3.5 flex items-center justify-between gap-3">
                 <div className="flex items-center gap-2.5">
                   {theme === 'dark' ? (
-                    <Moon className="w-4 h-4 text-[#D9822B] stroke-[2.2] shrink-0" />
+                    <Moon className="w-4 h-4 text-[#B88028] stroke-[2.2] shrink-0" />
                   ) : (
-                    <Sun className="w-4 h-4 text-[#C97A1E] stroke-[2.2] shrink-0" />
+                    <Sun className="w-4 h-4 text-[#B88028] stroke-[2.2] shrink-0" />
                   )}
-                  <span className="text-xs sm:text-sm font-hand font-bold text-[#4A3E36] dark:text-[#EDE5DD]">
+                  <span className="text-base font-sans font-bold text-[#332B25] dark:text-[#EAE2D9]">
                     {t.settings.theme}
                   </span>
                 </div>
 
-                <div className="inline-flex p-1 bg-[#EAE0D2] dark:bg-[#2D2420] border border-[#7A6A5E]/30 rounded-none sketch-shadow-sm">
+                <div className="inline-flex p-1 bg-[#EAE2D3] dark:bg-[#2A2623] border border-[#8C7E72]/30">
                   <button
                     type="button"
                     onClick={() => setTheme('light')}
-                    className={`px-2.5 py-1 rounded-none border-0 text-xs font-hand transition-all flex items-center gap-1 ${
+                    className={`px-2.5 py-1 border-0 text-sm font-sans transition-all flex items-center gap-1 ${
                       theme === 'light'
-                        ? 'bg-[#FDFBF7] dark:bg-[#1E1B18] text-[#4A3E36] dark:text-[#EDE5DD] shadow-2xs font-bold'
-                        : 'text-[#7D6E63] dark:text-[#BA9F83]'
+                        ? 'bg-[#FCF9F4] dark:bg-[#191614] text-[#332B25] dark:text-[#EAE2D9] font-bold'
+                        : 'text-[#7A6F66] dark:text-[#A3968B]'
                     }`}
                   >
-                    <Sun className="w-3.5 h-3.5 text-[#C97A1E] stroke-[2.2]" />
+                    <Sun className="w-3.5 h-3.5 text-[#B88028] stroke-[2.2]" />
                     <span>{t.settings.light}</span>
                   </button>
                   <button
                     type="button"
                     onClick={() => setTheme('dark')}
-                    className={`px-2.5 py-1 rounded-none border-0 text-xs font-hand transition-all flex items-center gap-1 ${
+                    className={`px-2.5 py-1 border-0 text-sm font-sans transition-all flex items-center gap-1 ${
                       theme === 'dark'
-                        ? 'bg-[#FDFBF7] dark:bg-[#1E1B18] text-[#4A3E36] dark:text-[#EDE5DD] shadow-2xs font-bold'
-                        : 'text-[#7D6E63] dark:text-[#BA9F83]'
+                        ? 'bg-[#FCF9F4] dark:bg-[#191614] text-[#332B25] dark:text-[#EAE2D9] font-bold'
+                        : 'text-[#7A6F66] dark:text-[#A3968B]'
                     }`}
                   >
-                    <Moon className="w-3.5 h-3.5 text-[#D9822B] stroke-[2.2]" />
+                    <Moon className="w-3.5 h-3.5 text-[#B88028] stroke-[2.2]" />
                     <span>{t.settings.dark}</span>
                   </button>
                 </div>
               </div>
 
               {/* Language Row */}
-              <div className="p-3 sm:p-3.5 flex items-center justify-between gap-3">
+              <div className="relative z-10 p-3.5 flex items-center justify-between gap-3">
                 <div className="flex items-center gap-2.5">
-                  <Globe className="w-4 h-4 text-[#7D6E63] dark:text-[#BA9F83] stroke-[2.2] shrink-0" />
-                  <span className="text-xs sm:text-sm font-hand font-bold text-[#4A3E36] dark:text-[#EDE5DD]">
+                  <Globe className="w-4 h-4 text-[#7A6F66] dark:text-[#A3968B] stroke-[2.2] shrink-0" />
+                  <span className="text-base font-sans font-bold text-[#332B25] dark:text-[#EAE2D9]">
                     {t.settings.language}
                   </span>
                 </div>
 
-                <div className="inline-flex p-1 bg-[#EAE0D2] dark:bg-[#2D2420] border border-[#7A6A5E]/30 rounded-none sketch-shadow-sm">
+                <div className="inline-flex p-1 bg-[#EAE2D3] dark:bg-[#2A2623] border border-[#8C7E72]/30">
                   <button
                     type="button"
                     onClick={() => setLanguage('de')}
-                    className={`px-3 py-1 rounded-none border-0 text-xs font-hand transition-all ${
+                    className={`px-3 py-1 border-0 text-sm font-sans transition-all ${
                       language === 'de'
-                        ? 'bg-[#FDFBF7] dark:bg-[#1E1B18] text-[#4A3E36] dark:text-[#EDE5DD] shadow-2xs font-bold'
-                        : 'text-[#7D6E63] dark:text-[#BA9F83]'
+                        ? 'bg-[#FCF9F4] dark:bg-[#191614] text-[#332B25] dark:text-[#EAE2D9] font-bold'
+                        : 'text-[#7A6F66] dark:text-[#A3968B]'
                     }`}
                   >
                     DE
@@ -437,10 +441,10 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                   <button
                     type="button"
                     onClick={() => setLanguage('en')}
-                    className={`px-3 py-1 rounded-none border-0 text-xs font-hand transition-all ${
+                    className={`px-3 py-1 border-0 text-sm font-sans transition-all ${
                       language === 'en'
-                        ? 'bg-[#FDFBF7] dark:bg-[#1E1B18] text-[#4A3E36] dark:text-[#EDE5DD] shadow-2xs font-bold'
-                        : 'text-[#7D6E63] dark:text-[#BA9F83]'
+                        ? 'bg-[#FCF9F4] dark:bg-[#191614] text-[#332B25] dark:text-[#EAE2D9] font-bold'
+                        : 'text-[#7A6F66] dark:text-[#A3968B]'
                     }`}
                   >
                     EN
@@ -453,26 +457,27 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
 
           {/* 3. Notifications Section */}
           <div>
-            <div className="text-xs font-hand font-bold uppercase tracking-wider text-[#7D6E63] dark:text-[#BA9F83] px-1 mb-2 flex items-center justify-between">
+            <div className="text-xs font-sans font-bold uppercase tracking-wider text-[#7A6F66] dark:text-[#A3968B] px-1 mb-2 flex items-center justify-between">
               <span>{t.settings.notifications}</span>
-              <span className="text-2xs font-normal normal-case text-[#7D6E63] dark:text-[#BA9F83] font-sans">
+              <span className="text-2xs font-normal normal-case text-[#7A6F66] dark:text-[#A3968B] font-serif italic">
                 So & Mo 17:00
               </span>
             </div>
 
-            <div className="rounded-none bg-[#FAF5ED] dark:bg-[#1E1B18] border-1.5 border-[#7A6A5E]/30 dark:border-[#EDE5DD]/30 divide-y divide-[#7A6A5E]/15 dark:divide-[#EDE5DD]/15 overflow-hidden sketch-border-sm">
+            <div className="relative bg-[#F3EDE2]/55 dark:bg-[#191614]/80 divide-y divide-[#8C7E72]/20 dark:divide-[#7A6F66]/20 overflow-hidden">
+              <RoughBorder borderRadius={2} width={1.0} color="#8C7E72" darkColor="#7A6F66" opacity={0.35} />
               {user ? (
                 <>
                   {/* Push Notifications Row */}
-                  <div className="p-3.5 sm:p-4 space-y-3">
+                  <div className="relative z-10 p-3.5 sm:p-4 space-y-3">
                     <div className="flex items-center justify-between gap-3">
                       <div className="flex items-center gap-2.5">
-                        <Smartphone className="w-4 h-4 text-[#7D6E63] dark:text-[#BA9F83] stroke-[2.2] shrink-0" />
+                        <Smartphone className="w-4 h-4 text-[#7A6F66] dark:text-[#A3968B] stroke-[2.2] shrink-0" />
                         <div>
-                          <h6 className="text-xs sm:text-sm font-hand font-bold text-[#4A3E36] dark:text-[#EDE5DD]">
+                          <h6 className="text-base font-sans font-bold text-[#332B25] dark:text-[#EAE2D9]">
                             {t.notifications.pushTitle}
                           </h6>
-                          <p className="text-2xs text-[#7D6E63] dark:text-[#BA9F83] font-sans">
+                          <p className="text-xs text-[#7A6F66] dark:text-[#A3968B] font-serif">
                             {t.notifications.pushDesc}
                           </p>
                         </div>
@@ -484,12 +489,12 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                         aria-checked={notificationPrefs.pushEnabled}
                         disabled={isRegisteringPush || (!isPushSupported && !isIos)}
                         onClick={handleTogglePush}
-                        className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-none border-2 border-[#7A6A5E] dark:border-[#EDE5DD]/50 transition-colors duration-200 ease-in-out focus:outline-none ${
-                          notificationPrefs.pushEnabled ? 'bg-[#D7195F]' : 'bg-[#D9CEBF] dark:bg-[#4A3E36]'
+                        className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer border border-[#8C7E72] transition-colors duration-200 ease-in-out focus:outline-none ${
+                          notificationPrefs.pushEnabled ? 'bg-[#C46345]' : 'bg-[#D9CEBF] dark:bg-[#332B25]'
                         } ${isRegisteringPush ? 'opacity-50 cursor-wait' : ''}`}
                       >
                         <span
-                          className={`pointer-events-none inline-block h-5 w-5 transform rounded-none bg-white shadow-md ring-0 transition duration-200 ease-in-out ${
+                          className={`pointer-events-none inline-block h-5 w-5 transform bg-[#FCF9F4] shadow-xs transition duration-200 ease-in-out ${
                             notificationPrefs.pushEnabled ? 'translate-x-5' : 'translate-x-0'
                           }`}
                         />
@@ -498,31 +503,31 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
 
                     {/* iOS Note */}
                     {isIos && !isStandalone && (
-                      <div className="p-2.5 rounded-none bg-[#FFF9F2] dark:bg-[#2C231D] border border-[#D4A759] flex items-start gap-2 text-2xs text-[#A66814] dark:text-[#F3D190]">
+                      <div className="p-2.5 bg-[#FAF4E8] dark:bg-[#2C231D] border border-[#B88028]/50 flex items-start gap-2 text-xs text-[#B88028] dark:text-[#E2B467]">
                         <Info className="w-3.5 h-3.5 stroke-[2.2] shrink-0 mt-0.5" />
-                        <span className="font-sans">{t.notifications.iosNotice}</span>
+                        <span className="font-serif">{t.notifications.iosNotice}</span>
                       </div>
                     )}
 
                     {/* Push Status / Message */}
                     {pushStatusMessage && (
-                      <div className="text-2xs text-[#7D6E63] dark:text-[#BA9F83] flex items-center gap-1.5 pt-1 font-sans">
-                        <AlertCircle className="w-3.5 h-3.5 text-[#D7195F] shrink-0 stroke-[2.2]" />
+                      <div className="text-xs text-[#7A6F66] dark:text-[#A3968B] flex items-center gap-1.5 pt-1 font-serif">
+                        <AlertCircle className="w-3.5 h-3.5 text-[#C46345] shrink-0 stroke-[2.2]" />
                         <span>{pushStatusMessage}</span>
                       </div>
                     )}
 
                     {/* Unregistered Device Callout */}
                     {notificationPrefs.pushEnabled && !isDeviceRegistered && (
-                      <div className="p-2.5 rounded-none bg-[#FDF0EE] dark:bg-[#361914] border border-[#DFA098] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
-                        <span className="text-2xs text-[#4A3E36] dark:text-[#EDE5DD] font-sans">
+                      <div className="p-2.5 bg-[#FAF1ED] dark:bg-[#2E1E1A] border border-[#C46345]/40 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
+                        <span className="text-xs text-[#332B25] dark:text-[#EAE2D9] font-serif">
                           {t.notifications.deviceNotRegistered}
                         </span>
                         <button
                           type="button"
                           onClick={handleRegisterCurrentDevice}
                           disabled={isRegisteringPush}
-                          className="px-2.5 py-1 rounded-none bg-gradient-to-r from-[#9123A6] to-[#D7195F] text-white text-xs font-hand font-bold sketch-btn-press transition-all shadow-pencil-sm whitespace-nowrap"
+                          className="px-3 py-1 bg-[#C46345] text-[#FAF6F0] text-sm font-sans font-bold sketch-btn-press transition-all whitespace-nowrap"
                         >
                           {t.notifications.enableCurrentDevice}
                         </button>
@@ -531,12 +536,12 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
 
                     {/* Device Status & Test Push */}
                     {notificationPrefs.pushEnabled && (
-                      <div className="pt-2 flex items-center justify-between border-t border-[#7A6A5E]/15 dark:border-[#EDE5DD]/15">
-                        <span className="text-2xs text-[#3B6B38] dark:text-[#A6D6A2] font-semibold flex items-center gap-1 font-sans">
+                      <div className="pt-2 flex items-center justify-between border-t border-[#8C7E72]/20">
+                        <span className="text-xs text-[#4E7A52] dark:text-[#89B08E] font-semibold flex items-center gap-1 font-sans">
                           <Check className="w-3 h-3 stroke-[2.5]" />
                           <span>{isDeviceRegistered ? t.notifications.deviceActive : t.notifications.statusEnabled}</span>
                           {deviceCount > 1 && (
-                            <span className="text-[#7D6E63] dark:text-[#BA9F83] font-normal">
+                            <span className="text-[#7A6F66] dark:text-[#A3968B] font-normal">
                               ({deviceCount} {t.notifications.devicesRegistered})
                             </span>
                           )}
@@ -544,7 +549,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                         <button
                           type="button"
                           onClick={handleSendTestPush}
-                          className="px-2.5 py-1 rounded-none border-0 text-2xs text-[#4A3E36] dark:text-[#EDE5DD] font-hand font-bold flex items-center gap-1 sketch-btn-press transition-all"
+                          className="px-2.5 py-1 border-0 text-sm text-[#332B25] dark:text-[#EAE2D9] font-sans font-bold flex items-center gap-1 sketch-btn-press transition-all"
                         >
                           <Send className="w-3 h-3 stroke-[2.2]" />
                           <span>{testSent ? t.notifications.testPushSent : t.notifications.sendTestPush}</span>
@@ -554,14 +559,14 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                   </div>
 
                   {/* Email Notifications Row */}
-                  <div className="p-3.5 sm:p-4 flex items-center justify-between gap-3">
+                  <div className="relative z-10 p-3.5 sm:p-4 flex items-center justify-between gap-3">
                     <div className="flex items-center gap-2.5">
-                      <Mail className="w-4 h-4 text-[#7D6E63] dark:text-[#BA9F83] stroke-[2.2] shrink-0" />
+                      <Mail className="w-4 h-4 text-[#7A6F66] dark:text-[#A3968B] stroke-[2.2] shrink-0" />
                       <div>
-                        <h6 className="text-xs sm:text-sm font-hand font-bold text-[#4A3E36] dark:text-[#EDE5DD]">
+                        <h6 className="text-base font-sans font-bold text-[#332B25] dark:text-[#EAE2D9]">
                           {t.notifications.emailTitle}
                         </h6>
-                        <p className="text-2xs text-[#7D6E63] dark:text-[#BA9F83] font-sans">
+                        <p className="text-xs text-[#7A6F66] dark:text-[#A3968B] font-serif">
                           {user.email ? `${t.notifications.emailDesc} ${user.email}` : t.notifications.emailDesc}
                         </p>
                       </div>
@@ -572,12 +577,12 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                       role="switch"
                       aria-checked={notificationPrefs.emailEnabled}
                       onClick={handleToggleEmail}
-                      className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-none border-2 border-[#7A6A5E] dark:border-[#EDE5DD]/50 transition-colors duration-200 ease-in-out focus:outline-none ${
-                        notificationPrefs.emailEnabled ? 'bg-[#D7195F]' : 'bg-[#D9CEBF] dark:bg-[#4A3E36]'
+                      className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer border border-[#8C7E72] transition-colors duration-200 ease-in-out focus:outline-none ${
+                        notificationPrefs.emailEnabled ? 'bg-[#C46345]' : 'bg-[#D9CEBF] dark:bg-[#332B25]'
                       }`}
                     >
                       <span
-                        className={`pointer-events-none inline-block h-5 w-5 transform rounded-none bg-white shadow-md ring-0 transition duration-200 ease-in-out ${
+                        className={`pointer-events-none inline-block h-5 w-5 transform bg-[#FCF9F4] shadow-xs transition duration-200 ease-in-out ${
                           notificationPrefs.emailEnabled ? 'translate-x-5' : 'translate-x-0'
                         }`}
                       />
@@ -585,8 +590,8 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                   </div>
                 </>
               ) : (
-                <div className="p-3.5 sm:p-4 text-xs text-[#7D6E63] dark:text-[#BA9F83] flex items-center gap-2 font-hand">
-                  <Bell className="w-4 h-4 stroke-[2.2] text-[#7D6E63] shrink-0" />
+                <div className="relative z-10 p-4 text-sm text-[#7A6F66] dark:text-[#A3968B] flex items-center gap-2 font-serif italic">
+                  <Bell className="w-4 h-4 stroke-[2.2] text-[#7A6F66] shrink-0" />
                   <span>{t.notifications.loginRequired}</span>
                 </div>
               )}
@@ -595,21 +600,22 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
 
           {/* 4. Data & Backup Section */}
           <div>
-            <div className="text-xs font-hand font-bold uppercase tracking-wider text-[#7D6E63] dark:text-[#BA9F83] px-1 mb-2">
+            <div className="text-xs font-sans font-bold uppercase tracking-wider text-[#7A6F66] dark:text-[#A3968B] px-1 mb-2">
               {t.settings.data}
             </div>
 
-            <div className="rounded-none bg-[#FAF5ED] dark:bg-[#1E1B18] border-1.5 border-[#7A6A5E]/30 dark:border-[#EDE5DD]/30 divide-y divide-[#7A6A5E]/15 dark:divide-[#EDE5DD]/15 overflow-hidden sketch-border-sm">
+            <div className="relative bg-[#F3EDE2]/55 dark:bg-[#191614]/80 divide-y divide-[#8C7E72]/20 dark:divide-[#7A6F66]/20 overflow-hidden">
+              <RoughBorder borderRadius={2} width={1.0} color="#8C7E72" darkColor="#7A6F66" opacity={0.35} />
               
               {/* Export Row */}
-              <div className="p-3 sm:p-3.5 flex items-center justify-between gap-3">
+              <div className="relative z-10 p-3.5 flex items-center justify-between gap-3">
                 <div className="flex items-center gap-2.5">
-                  <Download className="w-4 h-4 text-[#7D6E63] dark:text-[#BA9F83] stroke-[2.2] shrink-0" />
+                  <Download className="w-4 h-4 text-[#7A6F66] dark:text-[#A3968B] stroke-[2.2] shrink-0" />
                   <div>
-                    <span className="text-xs sm:text-sm font-hand font-bold text-[#4A3E36] dark:text-[#EDE5DD]">
+                    <span className="text-base font-sans font-bold text-[#332B25] dark:text-[#EAE2D9]">
                       {t.actions.exportData}
                     </span>
-                    <p className="text-2xs text-[#7D6E63] font-sans">
+                    <p className="text-xs text-[#7A6F66] font-serif">
                       JSON-Backup Datei sichern
                     </p>
                   </div>
@@ -617,27 +623,27 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
 
                 <button
                   onClick={handleExport}
-                  className="px-3.5 py-1.5 rounded-none border-0 text-xs font-hand font-bold text-[#4A3E36] dark:text-[#EDE5DD] sketch-btn-press transition-all shrink-0"
+                  className="px-3.5 py-1.5 border border-[#8C7E72]/35 bg-[#FCF9F4] dark:bg-[#221F1D] text-sm font-sans font-bold text-[#332B25] dark:text-[#EAE2D9] sketch-btn-press transition-all shrink-0"
                 >
                   Exportieren
                 </button>
               </div>
 
               {/* Import Row */}
-              <div className="p-3 sm:p-3.5 flex items-center justify-between gap-3">
+              <div className="relative z-10 p-3.5 flex items-center justify-between gap-3">
                 <div className="flex items-center gap-2.5">
-                  <Upload className="w-4 h-4 text-[#7D6E63] dark:text-[#BA9F83] stroke-[2.2] shrink-0" />
+                  <Upload className="w-4 h-4 text-[#7A6F66] dark:text-[#A3968B] stroke-[2.2] shrink-0" />
                   <div>
-                    <span className="text-xs sm:text-sm font-hand font-bold text-[#4A3E36] dark:text-[#EDE5DD]">
+                    <span className="text-base font-sans font-bold text-[#332B25] dark:text-[#EAE2D9]">
                       {t.actions.importData}
                     </span>
-                    <p className="text-2xs text-[#7D6E63] font-sans">
+                    <p className="text-xs text-[#7A6F66] font-serif">
                       Pläne aus JSON wiederherstellen
                     </p>
                   </div>
                 </div>
 
-                <label className="px-3.5 py-1.5 rounded-none border-0 text-xs font-hand font-bold text-[#4A3E36] dark:text-[#EDE5DD] cursor-pointer sketch-btn-press transition-all shrink-0">
+                <label className="px-3.5 py-1.5 border border-[#8C7E72]/35 bg-[#FCF9F4] dark:bg-[#221F1D] text-sm font-sans font-bold text-[#332B25] dark:text-[#EAE2D9] cursor-pointer sketch-btn-press transition-all shrink-0">
                   Importieren
                   <input
                     type="file"
@@ -649,7 +655,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
               </div>
 
               {importStatus && (
-                <div className="p-2.5 text-center text-xs text-[#3B6B38] font-hand font-bold bg-[#EEF5ED] dark:bg-[#203322]">
+                <div className="relative z-10 p-2.5 text-center text-sm text-[#4E7A52] font-sans font-bold bg-[#F1F6F1] dark:bg-[#1E2A20]">
                   {importStatus}
                 </div>
               )}

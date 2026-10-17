@@ -4,7 +4,9 @@ import {
   ChevronRight, 
   User as UserIcon,
   Check,
-  Lock
+  Lock,
+  BookOpen,
+  RotateCcw
 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { useAuth } from '../context/AuthContext';
@@ -17,6 +19,8 @@ import {
 } from '../utils/dateUtils';
 
 import { RoughBackground } from './RoughBackground';
+import { RoughBorder } from './RoughBorder';
+import { RoughDivider } from './RoughDivider';
 import { IconButton } from './IconButton';
 import { PrimaryActionButton } from './PrimaryActionButton';
 
@@ -60,52 +64,57 @@ export const Header: React.FC<HeaderProps> = ({
   };
 
   return (
-    <header className="sticky top-0 z-30 w-full bg-transparent transition-colors pt-safe">
-      <div className="max-w-6xl mx-auto px-3.5 sm:px-6 py-2.5 sm:py-3.5 flex flex-col gap-2.5 sm:gap-3">
-        {/* Top bar: Brand & Controls */}
-        <div className="flex items-center justify-between gap-2">
-          <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
-            <button 
-              onClick={() => {
-                if (isHistoryView) onToggleHistory();
-                goToCurrentWeek();
-              }}
-              className="text-left flex items-center gap-2 sm:gap-2.5 focus:outline-none min-w-0"
-              aria-label="Home"
-            >
-              <h1 className="text-2xl sm:text-3xl font-hand font-bold tracking-wide bg-gradient-to-r from-[#9123A6] to-[#D7195F] bg-clip-text text-transparent truncate leading-tight select-none">
-                {t.appTitle}
-              </h1>
-            </button>
-          </div>
+    <header className="w-full bg-transparent transition-colors pt-safe">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 pt-3.5 sm:pt-5 pb-2 flex flex-col gap-3 sm:gap-4">
+        {/* Top Row: Artisanal Journal Brand & Utility Controls */}
+        <div className="flex items-center justify-between gap-3">
+          <button 
+            onClick={() => {
+              if (isHistoryView) onToggleHistory();
+              goToCurrentWeek();
+            }}
+            className="group text-left flex items-center gap-2.5 sm:gap-3 focus:outline-none min-w-0"
+            aria-label="Home"
+          >
+            {/* Three colored-pencil dimension dots (Terracotta, Sage, Dusty Rose) */}
+            <span className="inline-flex items-center gap-1 shrink-0" aria-hidden="true">
+              <span className="w-2.5 h-2.5 rounded-full bg-[#C46345] dark:bg-[#E2876B] opacity-85" />
+              <span className="w-2.5 h-2.5 rounded-full bg-[#557659] dark:bg-[#89B08E] opacity-85" />
+              <span className="w-2.5 h-2.5 rounded-full bg-[#9E5870] dark:bg-[#D48BA3] opacity-85" />
+            </span>
+            <h1 className="text-xl sm:text-2xl font-hand font-bold tracking-normal text-[#332B25] dark:text-[#EAE2D9] truncate leading-relaxed py-0.5 select-none">
+              {t.appTitle}
+            </h1>
+          </button>
 
-          {/* Right Action Icons */}
-          <div className="flex items-center gap-2 shrink-0">
-            {/* History Toggle */}
+          {/* Right Action Controls */}
+          <div className="flex items-center gap-2 sm:gap-2.5 shrink-0">
+            {/* History Journal Toggle — Muted rounded pencil pill */}
             <button
               onClick={onToggleHistory}
               title={t.history}
               aria-label={t.history}
-              className={`group relative px-3 py-1.5 rounded-none border-0 text-sm font-hand font-bold transition-all sketch-btn-press min-h-[34px] flex items-center justify-center overflow-hidden ${
-                isHistoryView
-                  ? 'text-white shadow-pencil'
-                  : 'bg-[#FDFBF7] dark:bg-[#28221D] text-[#4A3E36] dark:text-[#EDE5DD] shadow-pencil-sm'
-              }`}
+              className="group relative px-4 py-1.5 rounded-full border-0 bg-transparent shadow-none text-xs sm:text-sm font-sans font-semibold text-[#332B25] dark:text-[#EAE2D9] hover:-translate-y-0.5 hover:scale-[1.03] active:scale-95 transition-all duration-150 min-h-[36px] flex items-center gap-1.5 justify-center select-none overflow-hidden"
             >
-              {isHistoryView ? (
-                <RoughBackground
-                  fill="#D7195F"
-                  darkFill="#C51756"
-                  fillStyle="cross-hatch"
-                  hachureAngle={-41}
-                  hachureGap={3.2}
-                  fillWeight={1.2}
-                  roughness={1.1}
-                  opacity={0.94}
-                  seed={91}
-                />
-              ) : null}
-              <span className={`relative z-10 ${isHistoryView ? 'drop-shadow-[0_1px_1px_rgba(0,0,0,0.2)]' : ''}`}>
+              <RoughBackground
+                fill={isHistoryView ? '#C46345' : '#C8A986'}
+                darkFill={isHistoryView ? '#E2876B' : '#C8A986'}
+                stroke={isHistoryView ? '#964229' : '#9C7C58'}
+                darkStroke={isHistoryView ? '#E2876B' : '#DFC4A4'}
+                strokeWidth={1.15}
+                shape="rounded"
+                borderRadius={999}
+                fillStyle="cross-hatch"
+                hachureAngle={-41}
+                hachureGap={2.8}
+                fillWeight={1.35}
+                roughness={1.1}
+                opacity={isHistoryView ? 0.6 : 0.5}
+                hoverOpacity={isHistoryView ? 0.8 : 0.78}
+                seed={91}
+              />
+              <BookOpen className="w-3.5 h-3.5 stroke-[2] relative z-10 opacity-85 transition-transform duration-150 group-hover:scale-105" />
+              <span className="relative z-10 leading-none">
                 {t.history}
               </span>
             </button>
@@ -120,88 +129,116 @@ export const Header: React.FC<HeaderProps> = ({
               className="relative"
             >
               {user?.photoURL ? (
-                <img src={user.photoURL} alt="Avatar" className="w-5 h-5 rounded-full object-cover border border-[#7A6A5E]/20" />
+                <img src={user.photoURL} alt="Avatar" className="w-5 h-5 rounded-full object-cover border border-[#8C7E72]/30" />
               ) : (
                 <UserIcon className="w-4 h-4 stroke-[2]" />
               )}
-              {/* Status Dot */}
-              <span 
-                className={`absolute top-0.5 right-0.5 w-2.5 h-2.5 rounded-full border border-white dark:border-[#1F1B18] z-20 ${
-                  user ? 'bg-[#4D7A4A]' : 'bg-[#BA9F83]'
-                }`} 
-                />
             </IconButton>
           </div>
         </div>
 
-        {/* Bottom bar: Week Navigator & Main Action */}
+        {/* Centered Editorial Journal Masthead: Week Navigator & Primary CTA */}
         {!isHistoryView && (
-          <div className="flex items-center justify-between gap-2 pt-1 sm:pt-2">
-            {/* Week Switcher */}
-            <div className="flex items-center gap-1.5 sm:gap-2 flex-1 sm:flex-initial min-w-0">
-              <IconButton
-                onClick={() => selectWeek(getPreviousWeekId(currentWeekId))}
-                title="Vorherige Woche"
-                aria-label="Vorherige Woche"
-                variant="default"
-                size="md"
-              >
-                <ChevronLeft className="w-4 h-4 stroke-[2.2]" />
-              </IconButton>
-
-              <div className="flex items-center justify-center gap-2 px-2 py-1 flex-1 sm:flex-initial min-w-0">
-                <span className="text-base sm:text-lg font-hand font-bold text-[#4A3E36] dark:text-[#EDE5DD] whitespace-nowrap">
-                  {t.week} {weekNumber}
-                </span>
-                {currentWeekPlan.reviewedAt && (
-                  <span className="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-none bg-[#EEF5ED] dark:bg-[#203322] text-[#2F612C] dark:text-[#A6D6A2] border border-[#7CA379]/60 text-2xs font-semibold shrink-0">
-                    <Check className="w-2.5 h-2.5 stroke-[2.5]" />
-                    <span className="hidden xs:inline">{t.reviewed}</span>
-                  </span>
-                )}
-                <span className="text-[#C5B4A2] dark:text-[#6E5F54] text-xs shrink-0">•</span>
-                <span className="text-2xs sm:text-xs text-[#7D6E63] dark:text-[#BA9F83] truncate font-sans font-medium">
-                  {formatWeekRange(startDate, endDate, language)}
-                </span>
-              </div>
-
-              <IconButton
-                onClick={handleNextWeek}
-                title={!isNextAccessible ? t.unlockNextWeek : "Nächste Woche"}
-                aria-label={!isNextAccessible ? t.unlockNextWeek : "Nächste Woche"}
-                variant={!isNextAccessible ? 'subtle' : 'default'}
-                size="md"
-              >
-                {!isNextAccessible ? (
-                  <Lock className="w-3.5 h-3.5 stroke-[2.2] text-[#8C7D71]" />
-                ) : (
-                  <ChevronRight className="w-4 h-4 stroke-[2.2]" />
-                )}
-              </IconButton>
-
+          <div className="pt-1 pb-1.5 flex flex-col md:grid md:grid-cols-[1fr_auto_1fr] items-center gap-3">
+            {/* Left Balancing Slot: "Back to Current Week" Pill when browsing past/future weeks */}
+            <div className="hidden md:flex items-center justify-start">
               {!isCurrent && (
                 <button
                   onClick={goToCurrentWeek}
-                  className="relative text-xs px-2.5 py-1 rounded-none border-0 bg-[#FDF7EA] dark:bg-[#342714] text-[#8C5212] dark:text-[#F3D190] sketch-btn-press transition-all font-sans font-semibold shrink-0 overflow-hidden"
+                  className="relative inline-flex items-center gap-1.5 text-xs px-3 py-1.5 bg-[#FCF9F4] dark:bg-[#221F1D] text-[#B88028] dark:text-[#E2B467] sketch-btn-press transition-all font-sans font-semibold shrink-0 overflow-hidden"
                 >
                   <RoughBackground
-                    fill="#D4A759"
-                    darkFill="#D4A759"
-                    fillStyle="cross-hatch"
+                    fill="#B88028"
+                    darkFill="#E2B467"
+                    fillStyle="hachure"
                     hachureAngle={-35}
                     hachureGap={4.5}
                     fillWeight={1.0}
                     roughness={1.1}
-                    opacity={0.18}
+                    opacity={0.14}
                     seed={92}
                   />
+                  <RoughBorder
+                    borderRadius={2}
+                    width={0.9}
+                    roughness={1.2}
+                    color="#B88028"
+                    darkColor="#E2B467"
+                    opacity={0.5}
+                  />
+                  <RotateCcw className="w-3 h-3 stroke-[2.2] relative z-10" />
                   <span className="relative z-10">{t.backToCurrentWeek}</span>
                 </button>
               )}
             </div>
 
-            {/* Review & Plan Main CTA Button (Desktop/Tablet) */}
-            <div className="hidden md:flex items-center gap-2 ml-auto">
+            {/* Center: Tactile Week Switcher */}
+            <div className="flex flex-col items-center justify-center w-full md:w-auto">
+              <div className="flex items-center justify-center gap-2 sm:gap-3">
+                <IconButton
+                  onClick={() => selectWeek(getPreviousWeekId(currentWeekId))}
+                  title="Vorherige Woche"
+                  aria-label="Vorherige Woche"
+                  variant="default"
+                  size="md"
+                >
+                  <ChevronLeft className="w-4 h-4 stroke-[2.2]" />
+                </IconButton>
+
+                <div className="flex flex-col items-center justify-center px-3 py-0.5 min-w-[170px] sm:min-w-[210px] text-center">
+                  <div className="flex items-center justify-center gap-2">
+                    <span className="text-lg sm:text-xl font-sans font-bold text-[#332B25] dark:text-[#EAE2D9] tracking-tight leading-none">
+                      {t.week} {weekNumber}
+                    </span>
+                    {currentWeekPlan.reviewedAt && (
+                      <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-[#F1F6F1] dark:bg-[#1E2A20] text-[#4E7A52] dark:text-[#89B08E] border border-[#557659]/40 text-2xs font-sans font-semibold shrink-0">
+                        <Check className="w-2.5 h-2.5 stroke-[2.5]" />
+                        <span>{t.reviewed}</span>
+                      </span>
+                    )}
+                  </div>
+                  <span className="text-xs text-[#7A6F66] dark:text-[#A3968B] font-sans mt-1">
+                    {formatWeekRange(startDate, endDate, language)}
+                  </span>
+                </div>
+
+                <IconButton
+                  onClick={handleNextWeek}
+                  title={!isNextAccessible ? t.unlockNextWeek : "Nächste Woche"}
+                  aria-label={!isNextAccessible ? t.unlockNextWeek : "Nächste Woche"}
+                  variant={!isNextAccessible ? 'subtle' : 'default'}
+                  size="md"
+                >
+                  {!isNextAccessible ? (
+                    <Lock className="w-3.5 h-3.5 stroke-[2.2] text-[#7A6F66] dark:text-[#A3968B]" />
+                  ) : (
+                    <ChevronRight className="w-4 h-4 stroke-[2.2]" />
+                  )}
+                </IconButton>
+              </div>
+
+              {/* Mobile-only "Back to Current Week" button below week switcher */}
+              {!isCurrent && (
+                <button
+                  onClick={goToCurrentWeek}
+                  className="md:hidden mt-2 relative inline-flex items-center gap-1.5 text-xs px-3 py-1 bg-[#FCF9F4] dark:bg-[#221F1D] text-[#B88028] dark:text-[#E2B467] sketch-btn-press transition-all font-sans font-semibold shrink-0 overflow-hidden"
+                >
+                  <RoughBorder
+                    borderRadius={2}
+                    width={0.9}
+                    roughness={1.2}
+                    color="#B88028"
+                    darkColor="#E2B467"
+                    opacity={0.5}
+                  />
+                  <RotateCcw className="w-3 h-3 stroke-[2.2] relative z-10" />
+                  <span className="relative z-10">{t.backToCurrentWeek}</span>
+                </button>
+              )}
+            </div>
+
+            {/* Right Slot: Primary Review & Plan Action Button (Desktop/Tablet) */}
+            <div className="hidden md:flex items-center justify-end">
               <PrimaryActionButton
                 onClick={onOpenReview}
                 isReviewed={Boolean(currentWeekPlan.reviewedAt)}
@@ -210,6 +247,16 @@ export const Header: React.FC<HeaderProps> = ({
             </div>
           </div>
         )}
+
+        {/* Hand-sketched pencil rule grounding the masthead */}
+        <RoughDivider
+          color="#8C7E72"
+          darkColor="#7A6F66"
+          opacity={0.35}
+          roughness={1.3}
+          strokeWidth={1.0}
+          seed={19}
+        />
       </div>
     </header>
   );

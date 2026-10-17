@@ -11,6 +11,7 @@ import { formatWeekRange, parseWeekId, getNextWeekId } from '../utils/dateUtils'
 import { CategoryIcon } from './CategoryIcon';
 import { RoughBorder } from './RoughBorder';
 import { RoughBackground } from './RoughBackground';
+import { RoughDivider } from './RoughDivider';
 import { IconButton } from './IconButton';
 
 interface ReviewModalProps {
@@ -102,44 +103,44 @@ export const ReviewModal: React.FC<ReviewModalProps> = ({ isOpen, onClose }) => 
   };
 
   const getCategoryIcon = (cat: Category, status?: GoalStatus) => {
-    return <CategoryIcon category={cat} status={status} size={24} className="w-6 h-6 object-contain" />;
+    return <CategoryIcon category={cat} status={status} size={32} className="w-8 h-8 object-contain" />;
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center sm:p-4 bg-[#4A3E36]/50 backdrop-blur-xs animate-fade-in">
-      <div className="relative w-full max-w-2xl bg-[#FDFBF7] dark:bg-[#25201C] rounded-none shadow-xl h-[92vh] sm:h-auto sm:max-h-[88vh] flex flex-col overflow-hidden animate-slide-up sm:animate-scale-in shadow-pencil">
-        <RoughBorder borderRadius={0} width={1.2} opacity={0.4} color="#6E5F54" />
+    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center sm:p-4 bg-[#332B25]/50 backdrop-blur-xs animate-fade-in">
+      <div className="relative w-full max-w-2xl bg-[#FCF9F4] dark:bg-[#221F1D] shadow-notebook h-[92vh] sm:h-auto sm:max-h-[88vh] flex flex-col overflow-hidden animate-slide-up sm:animate-scale-in">
+        <RoughBorder borderRadius={2} width={1.3} opacity={0.45} color="#8C7E72" darkColor="#7A6F66" />
         
         {/* Mobile Drag / Sheet Handle Indicator */}
-        <div className="sm:hidden pt-2.5 pb-1 bg-[#F5F2EB] dark:bg-[#25201C] flex justify-center shrink-0">
-          <div className="w-10 h-1 bg-[#7A6A5E]/30 rounded-none" />
+        <div className="sm:hidden pt-2.5 pb-1 bg-[#F3EDE2] dark:bg-[#221F1D] flex justify-center shrink-0">
+          <div className="w-10 h-1 bg-[#8C7E72]/35 rounded-none" />
         </div>
 
-        {/* Header - Delicate Notebook Header with Hand-Drawn Cross-Hatch Background */}
-        <div className="relative px-4 py-3 sm:px-6 sm:py-4 border-b border-[#7A6A5E]/20 dark:border-[#EDE5DD]/15 flex items-center justify-between shrink-0 overflow-hidden bg-[#F2EAE0]/90 dark:bg-[#2B231C]">
+        {/* Header - Botanical Notebook Header with Hand-Drawn Cross-Hatch Wash */}
+        <div className="relative px-4 py-3.5 sm:px-6 sm:py-4 flex items-center justify-between shrink-0 overflow-hidden bg-[#FAF1ED] dark:bg-[#2A201D]">
           <RoughBackground
-            fill="#8A5034"
-            darkFill="#D49B7A"
-            fillStyle="cross-hatch"
+            fill="#C46345"
+            darkFill="#E2876B"
+            fillStyle="hachure"
             hachureAngle={-41}
-            hachureGap={6}
+            hachureGap={6.5}
             fillWeight={1.0}
-            roughness={1.2}
+            roughness={1.3}
             opacity={0.14}
             drawBottomLine={true}
-            bottomLineColor="#7A6A5E"
-            darkBottomLineColor="#EDE5DD"
+            bottomLineColor="#C46345"
+            darkBottomLineColor="#E2876B"
             seed={111}
           />
-          <div className="relative z-10 flex items-center gap-2.5">
-            <div className="p-1.5 sm:p-2 rounded-none bg-white/95 dark:bg-[#28221D] border border-[#7A6A5E]/25 dark:border-[#EDE5DD]/20 shadow-pencil-sm shrink-0">
-              <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-[#D7195F] stroke-[2.2]" />
+          <div className="relative z-10 flex items-center gap-3">
+            <div className="p-2 bg-[#FCF9F4] dark:bg-[#221F1D] border border-[#C46345]/30 dark:border-[#E2876B]/30 shrink-0">
+              <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-[#C46345] dark:text-[#E2876B] stroke-[2.2]" />
             </div>
             <div>
-              <h3 className="text-xl sm:text-2xl font-hand font-bold tracking-wide text-[#4A3E36] dark:text-[#EDE5DD]">
+              <h3 className="text-xl sm:text-2xl font-hand font-bold tracking-wide text-[#332B25] dark:text-[#EAE2D9]">
                 {t.reviewModal.title}
               </h3>
-              <p className="text-2xs sm:text-xs text-[#7D6E63] dark:text-[#BA9F83] font-sans">
+              <p className="text-xs text-[#7A6F66] dark:text-[#A3968B] font-serif italic">
                 {t.week} {weekNumber} • {formatWeekRange(startDate, endDate, language)}
               </p>
             </div>
@@ -158,7 +159,7 @@ export const ReviewModal: React.FC<ReviewModalProps> = ({ isOpen, onClose }) => 
 
         {/* Content Body */}
         {isSuccess ? (
-          <div className="p-6 sm:p-8 flex-1 flex flex-col items-center justify-center text-center gap-3.5 overflow-y-auto">
+          <div className="p-6 sm:p-8 flex-1 flex flex-col items-center justify-center text-center gap-4 overflow-y-auto">
             <div className="flex items-center justify-center gap-3 my-2">
               {(['body', 'mind', 'soul'] as Category[]).map(cat => {
                 const catGoals = currentWeekPlan.goals.filter(g => g.category === cat);
@@ -172,44 +173,46 @@ export const ReviewModal: React.FC<ReviewModalProps> = ({ isOpen, onClose }) => 
                       : 'partial';
 
                 return (
-                  <div key={cat} className="p-2.5 rounded-none bg-[#FDFBF7] dark:bg-[#28221D] border border-[#7A6A5E]/20 dark:border-[#EDE5DD]/20 shadow-pencil-sm flex flex-col items-center gap-1.5 min-w-[80px]">
-                    <CategoryIcon category={cat} variant={variant} size={44} className="w-11 h-11" />
-                    <span className="text-xs font-hand font-bold text-[#4A3E36] dark:text-[#EDE5DD] capitalize">
+                  <div key={cat} className="relative p-3.5 bg-[#FCF9F4] dark:bg-[#2A2623] flex flex-col items-center gap-2 min-w-[95px] overflow-hidden">
+                    <RoughBorder borderRadius={2} width={1.0} color="#8C7E72" opacity={0.4} />
+                    <CategoryIcon category={cat} variant={variant} size={64} className="w-16 h-16 relative z-10" />
+                    <span className="text-sm font-sans font-semibold text-[#332B25] dark:text-[#EAE2D9] capitalize relative z-10">
                       {t.categories[cat].title}
                     </span>
                   </div>
                 );
               })}
             </div>
-            <h4 className="text-xl sm:text-2xl font-hand font-bold text-[#4A3E36] dark:text-[#EDE5DD]">
+            <h4 className="text-2xl sm:text-3xl font-sans font-semibold text-[#332B25] dark:text-[#EAE2D9]">
               {t.reviewModal.successMessage}
             </h4>
-            <p className="text-xs sm:text-sm text-[#7D6E63] dark:text-[#BA9F83] max-w-md font-sans">
-              Deine Reflexion für {t.week} {weekNumber} wurde erfolgreich im Skizzenbuch gespeichert.
+            <p className="text-xs sm:text-sm text-[#7A6F66] dark:text-[#A3968B] max-w-md font-serif">
+              Deine Reflexion für {t.week} {weekNumber} wurde im Journal festgehalten.
             </p>
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 mt-3 w-full sm:w-auto">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 mt-3 w-full sm:w-auto">
               <button
                 onClick={onClose}
-                className="px-4 py-2 rounded-none border-0 text-[#4A3E36] dark:text-[#EDE5DD] bg-[#FDFBF7] dark:bg-[#28221D] font-hand font-bold text-sm sm:text-base sketch-btn-press transition-all"
+                className="relative px-4 py-2 border-0 text-[#332B25] dark:text-[#EAE2D9] bg-[#F3EDE2] dark:bg-[#2A2623] font-sans font-semibold text-base sketch-btn-press transition-all overflow-hidden"
               >
-                {t.viewReview}
+                <RoughBorder borderRadius={2} width={0.9} color="#8C7E72" opacity={0.4} />
+                <span className="relative z-10">{t.viewReview}</span>
               </button>
               <button
                 onClick={handleFinishAndOpenNextWeek}
-                className="group relative px-5 py-2 rounded-none border-0 text-white font-hand font-bold text-sm sm:text-base shadow-pencil-sm sketch-btn-press transition-all flex items-center justify-center gap-1.5 overflow-hidden active:scale-95"
+                className="group relative px-5 py-2 border-0 text-[#FAF6F0] font-sans font-semibold text-base sm:text-lg sketch-btn-press transition-all flex items-center justify-center gap-1.5 overflow-hidden"
               >
-                {/* Cross-hatch rough background */}
                 <RoughBackground
-                  fill="#D7195F"
-                  darkFill="#C51756"
+                  fill="#C46345"
+                  darkFill="#B05236"
                   fillStyle="cross-hatch"
-                  hachureAngle={-41}
-                  hachureGap={3.2}
-                  fillWeight={1.2}
+                  hachureAngle={-38}
+                  hachureGap={2.8}
+                  fillWeight={1.4}
                   roughness={1.1}
                   opacity={0.94}
                   seed={77}
                 />
+                <RoughBorder borderRadius={2} width={1.0} color="#8F4028" opacity={0.5} />
                 <span className="relative z-10 drop-shadow-[0_1px_1px_rgba(0,0,0,0.2)]">
                   {t.actions.startNextWeek} ({t.week} {nextWeekDetails.weekNumber})
                 </span>
@@ -219,23 +222,23 @@ export const ReviewModal: React.FC<ReviewModalProps> = ({ isOpen, onClose }) => 
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="flex-1 flex flex-col min-h-0 overflow-hidden">
-            <div className="flex-1 overflow-y-auto p-4 sm:p-5 space-y-4 overscroll-contain">
-              <p className="text-sm sm:text-base text-[#7D6E63] dark:text-[#BA9F83] italic font-hand">
+            <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-5 overscroll-contain">
+              <p className="text-sm sm:text-base text-[#7A6F66] dark:text-[#A3968B] italic font-serif">
                 {t.reviewModal.description}
               </p>
 
               {/* Section 1: Evaluate Goals */}
               <div className="space-y-3">
-                <h4 className="text-2xs sm:text-xs font-bold uppercase tracking-wider text-[#7D6E63] dark:text-[#BA9F83] font-sans">
+                <h4 className="text-2xs sm:text-xs font-bold uppercase tracking-wider text-[#7A6F66] dark:text-[#A3968B] font-sans">
                   {t.reviewModal.step1Title}
                 </h4>
 
                 {currentWeekPlan.goals.length === 0 ? (
-                  <div className="p-4 rounded-none bg-[#F7F2EB] dark:bg-[#1E1B18] border border-dashed border-[#BA9F83] text-[#7D6E63] text-xs text-center font-hand">
+                  <div className="p-5 bg-[#F3EDE2]/60 dark:bg-[#191614]/60 border border-dashed border-[#8C7E72]/40 text-[#7A6F66] text-base text-center font-hand">
                     Für diese Woche wurden keine Ziele hinterlegt.
                   </div>
                 ) : (
-                  <div className="space-y-2.5">
+                  <div className="space-y-3">
                     {currentWeekPlan.goals.map((goal) => {
                       const currentEval = evaluations[goal.id] || { status: 'good', comment: '' };
                       const isCarried = carryOverIds.includes(goal.id);
@@ -243,41 +246,48 @@ export const ReviewModal: React.FC<ReviewModalProps> = ({ isOpen, onClose }) => 
                       return (
                         <div
                           key={goal.id}
-                          className="p-3 sm:p-3.5 rounded-none bg-[#FDFBF7] dark:bg-[#28221D] border border-[#7A6A5E]/20 dark:border-[#EDE5DD]/20 shadow-pencil-sm space-y-2.5"
+                          className="relative p-3.5 sm:p-4 bg-[#FCF9F4] dark:bg-[#282421] space-y-3 overflow-hidden"
                         >
+                          <RoughBorder borderRadius={2} width={1.0} color="#8C7E72" darkColor="#7A6F66" opacity={0.35} />
                           {/* Goal Item Description */}
-                          <div className="flex items-start gap-2.5">
-                            <span className="p-1.5 rounded-none bg-[#FAF5ED] dark:bg-[#241E19] border border-[#7A6A5E]/20 dark:border-[#EDE5DD]/20 mt-0.5 shrink-0 flex items-center justify-center shadow-pencil-sm">
+                          <div className="relative z-10 flex items-start gap-2.5">
+                            <span className="p-1.5 bg-[#F3EDE2] dark:bg-[#201D1B] border border-[#8C7E72]/25 mt-0.5 shrink-0 flex items-center justify-center">
                               {getCategoryIcon(goal.category, currentEval.status)}
                             </span>
-                            <span className="text-xs sm:text-sm font-sans font-medium text-[#4A3E36] dark:text-[#EDE5DD] flex-1 leading-snug pt-1">
+                            <span className="text-sm sm:text-[15px] font-serif text-[#332B25] dark:text-[#EAE2D9] flex-1 leading-relaxed pt-1">
                               {goal.description}
                             </span>
                           </div>
 
                           {/* Status Radio Buttons (Good / Partly / Poor) */}
-                          <div className="grid grid-cols-3 gap-2">
+                          <div className="relative z-10 grid grid-cols-3 gap-2">
                             <button
                               type="button"
                               onClick={() => handleStatusChange(goal.id, 'good')}
-                              className={`group relative py-1.5 px-1 sm:px-2 rounded-none border-0 text-sm font-hand font-bold flex items-center justify-center gap-1.5 transition-all min-h-[38px] sketch-btn-press overflow-hidden ${
+                              className={`group relative py-1.5 px-1 sm:px-2 border-0 text-sm sm:text-base font-sans font-semibold flex items-center justify-center gap-1.5 transition-all min-h-[38px] sketch-btn-press overflow-hidden ${
                                 currentEval.status === 'good'
-                                  ? 'text-[#244E22] dark:text-[#A6D6A2] shadow-pencil-sm'
-                                  : 'bg-[#FAF5ED]/80 dark:bg-[#25201C] text-[#7D6E63] dark:text-[#BA9F83]'
+                                  ? 'text-[#3A5E3D] dark:text-[#A3C9A8]'
+                                  : 'bg-[#F3EDE2]/70 dark:bg-[#201D1B] text-[#7A6F66] dark:text-[#A3968B]'
                               }`}
                             >
                               {currentEval.status === 'good' && (
                                 <RoughBackground
-                                   fill="#4D7A4A"
-                                   darkFill="#4D7A4A"
-                                   fillStyle="cross-hatch"
-                                   hachureAngle={-41}
-                                   hachureGap={3.4}
-                                   fillWeight={1.1}
-                                   opacity={0.26}
-                                   seed={401}
-                                 />
+                                  fill="#557659"
+                                  darkFill="#557659"
+                                  fillStyle="cross-hatch"
+                                  hachureAngle={-41}
+                                  hachureGap={3.4}
+                                  fillWeight={1.1}
+                                  opacity={0.22}
+                                  seed={401}
+                                />
                               )}
+                              <RoughBorder
+                                borderRadius={2}
+                                width={currentEval.status === 'good' ? 1.2 : 0.7}
+                                color={currentEval.status === 'good' ? '#4E7A52' : '#8C7E72'}
+                                opacity={currentEval.status === 'good' ? 0.65 : 0.25}
+                              />
                               <CategoryIcon category={goal.category} variant="achieved" size={20} className="w-5 h-5 shrink-0 relative z-10" />
                               <span className="truncate relative z-10">{t.status.good}</span>
                             </button>
@@ -285,24 +295,30 @@ export const ReviewModal: React.FC<ReviewModalProps> = ({ isOpen, onClose }) => 
                             <button
                               type="button"
                               onClick={() => handleStatusChange(goal.id, 'partly')}
-                              className={`group relative py-1.5 px-1 sm:px-2 rounded-none border-0 text-sm font-hand font-bold flex items-center justify-center gap-1.5 transition-all min-h-[38px] sketch-btn-press overflow-hidden ${
+                              className={`group relative py-1.5 px-1 sm:px-2 border-0 text-sm sm:text-base font-sans font-semibold flex items-center justify-center gap-1.5 transition-all min-h-[38px] sketch-btn-press overflow-hidden ${
                                 currentEval.status === 'partly'
-                                  ? 'text-[#7A4305] dark:text-[#F3D190] shadow-pencil-sm'
-                                  : 'bg-[#FAF5ED]/80 dark:bg-[#25201C] text-[#7D6E63] dark:text-[#BA9F83]'
+                                  ? 'text-[#8C5A12] dark:text-[#E2B467]'
+                                  : 'bg-[#F3EDE2]/70 dark:bg-[#201D1B] text-[#7A6F66] dark:text-[#A3968B]'
                               }`}
                             >
                               {currentEval.status === 'partly' && (
                                 <RoughBackground
-                                  fill="#C97A1E"
-                                  darkFill="#C97A1E"
+                                  fill="#B88028"
+                                  darkFill="#B88028"
                                   fillStyle="cross-hatch"
                                   hachureAngle={-41}
                                   hachureGap={3.4}
                                   fillWeight={1.1}
-                                  opacity={0.26}
+                                  opacity={0.22}
                                   seed={402}
                                 />
                               )}
+                              <RoughBorder
+                                borderRadius={2}
+                                width={currentEval.status === 'partly' ? 1.2 : 0.7}
+                                color={currentEval.status === 'partly' ? '#B88028' : '#8C7E72'}
+                                opacity={currentEval.status === 'partly' ? 0.65 : 0.25}
+                              />
                               <CategoryIcon category={goal.category} variant="partial" size={20} className="w-5 h-5 shrink-0 relative z-10" />
                               <span className="truncate relative z-10">{t.status.partly}</span>
                             </button>
@@ -310,48 +326,54 @@ export const ReviewModal: React.FC<ReviewModalProps> = ({ isOpen, onClose }) => 
                             <button
                               type="button"
                               onClick={() => handleStatusChange(goal.id, 'poor')}
-                              className={`group relative py-1.5 px-1 sm:px-2 rounded-none border-0 text-sm font-hand font-bold flex items-center justify-center gap-1.5 transition-all min-h-[38px] sketch-btn-press overflow-hidden ${
+                              className={`group relative py-1.5 px-1 sm:px-2 border-0 text-sm sm:text-base font-sans font-semibold flex items-center justify-center gap-1.5 transition-all min-h-[38px] sketch-btn-press overflow-hidden ${
                                 currentEval.status === 'poor'
-                                  ? 'text-[#87231A] dark:text-[#F3A59C] shadow-pencil-sm'
-                                  : 'bg-[#FAF5ED]/80 dark:bg-[#25201C] text-[#7D6E63] dark:text-[#BA9F83]'
+                                  ? 'text-[#963626] dark:text-[#E2876B]'
+                                  : 'bg-[#F3EDE2]/70 dark:bg-[#201D1B] text-[#7A6F66] dark:text-[#A3968B]'
                               }`}
                             >
                               {currentEval.status === 'poor' && (
                                 <RoughBackground
-                                  fill="#C44B40"
-                                  darkFill="#C44B40"
+                                  fill="#B84A39"
+                                  darkFill="#B84A39"
                                   fillStyle="cross-hatch"
                                   hachureAngle={-41}
                                   hachureGap={3.4}
                                   fillWeight={1.1}
-                                  opacity={0.26}
+                                  opacity={0.22}
                                   seed={403}
                                 />
                               )}
+                              <RoughBorder
+                                borderRadius={2}
+                                width={currentEval.status === 'poor' ? 1.2 : 0.7}
+                                color={currentEval.status === 'poor' ? '#B84A39' : '#8C7E72'}
+                                opacity={currentEval.status === 'poor' ? 0.65 : 0.25}
+                              />
                               <CategoryIcon category={goal.category} variant="not_achieved" size={20} className="w-5 h-5 shrink-0 relative z-10" />
                               <span className="truncate relative z-10">{t.status.poor}</span>
                             </button>
                           </div>
 
                           {/* Optional Goal Comment */}
-                          <div className="flex items-center gap-2">
+                          <div className="relative z-10 flex items-center gap-2">
                             <input
                               type="text"
                               value={currentEval.comment}
                               onChange={(e) => handleCommentChange(goal.id, e.target.value)}
                               placeholder="Kurze Reflexion notieren..."
-                              className="w-full text-xs p-2.5 rounded-none border border-[#7A6A5E]/25 dark:border-[#EDE5DD]/20 bg-[#FAF6F0] dark:bg-[#201C18] text-[#4A3E36] dark:text-[#EDE5DD] placeholder-[#8C7D71] focus:outline-none focus:ring-1 focus:ring-[#D7195F] font-sans"
+                              className="w-full text-xs sm:text-sm p-2.5 border border-[#8C7E72]/30 dark:border-[#7A6F66]/30 bg-[#F3EDE2]/60 dark:bg-[#191614] text-[#332B25] dark:text-[#EAE2D9] placeholder-[#7A6F66] focus:outline-none focus:border-[#C46345] font-serif"
                             />
                           </div>
 
                           {/* Carry over toggle */}
-                          <div className="flex items-center justify-between pt-0.5 text-2xs sm:text-xs">
-                            <label className="flex items-center gap-2 cursor-pointer select-none text-[#7D6E63] dark:text-[#BA9F83] py-0.5 font-sans">
+                          <div className="relative z-10 flex items-center justify-between pt-0.5 text-xs">
+                            <label className="flex items-center gap-2 cursor-pointer select-none text-[#7A6F66] dark:text-[#A3968B] py-0.5 font-sans">
                               <input
                                 type="checkbox"
                                 checked={isCarried}
                                 onChange={() => toggleCarryOver(goal.id)}
-                                className="w-3.5 h-3.5 rounded-none border-[#7A6A5E]/40 text-[#D7195F] focus:ring-[#D7195F]"
+                                className="w-3.5 h-3.5 rounded-none border-[#8C7E72]/50 text-[#C46345] focus:ring-[#C46345]"
                               />
                               <span>{t.actions.carryOver} (KW {nextWeekDetails.weekNumber})</span>
                             </label>
@@ -363,9 +385,11 @@ export const ReviewModal: React.FC<ReviewModalProps> = ({ isOpen, onClose }) => 
                 )}
               </div>
 
+              <RoughDivider color="#8C7E72" darkColor="#7A6F66" opacity={0.3} seed={305} />
+
               {/* Section 2: General Weekly Reflection */}
-              <div className="space-y-2 pt-2 border-t border-dashed border-[#7A6A5E]/20 dark:border-[#EDE5DD]/15">
-                <h4 className="text-2xs sm:text-xs font-bold uppercase tracking-wider text-[#7D6E63] dark:text-[#BA9F83] font-sans">
+              <div className="space-y-2 pt-1">
+                <h4 className="text-2xs sm:text-xs font-bold uppercase tracking-wider text-[#7A6F66] dark:text-[#A3968B] font-sans">
                   {t.actions.addReflection}
                 </h4>
                 <textarea
@@ -373,37 +397,38 @@ export const ReviewModal: React.FC<ReviewModalProps> = ({ isOpen, onClose }) => 
                   onChange={(e) => setGeneralReflection(e.target.value)}
                   placeholder={t.reviewModal.generalReflectionPlaceholder}
                   rows={3}
-                  className="w-full text-xs sm:text-sm p-3 rounded-none border border-[#7A6A5E]/25 dark:border-[#EDE5DD]/20 bg-[#FAF6F0] dark:bg-[#201C18] text-[#4A3E36] dark:text-[#EDE5DD] placeholder-[#8C7D71] focus:outline-none focus:ring-1 focus:ring-[#D7195F] font-sans"
+                  className="w-full text-sm p-3 border border-[#8C7E72]/30 dark:border-[#7A6F66]/30 bg-[#F3EDE2]/60 dark:bg-[#191614] text-[#332B25] dark:text-[#EAE2D9] placeholder-[#7A6F66] focus:outline-none focus:border-[#C46345] font-serif leading-relaxed"
                 />
               </div>
             </div>
 
             {/* Sticky Submit Action Bar */}
-            <div className="p-3 sm:p-4 bg-[#F5F2EB]/95 dark:bg-[#201C18]/95 border-t border-[#7A6A5E]/20 dark:border-[#EDE5DD]/15 flex items-center justify-between gap-3 shrink-0 pb-safe">
+            <div className="p-3.5 sm:p-4 bg-[#F3EDE2]/95 dark:bg-[#191614]/95 border-t border-[#8C7E72]/25 dark:border-[#7A6F66]/25 flex items-center justify-between gap-3 shrink-0 pb-safe">
               <button
                 type="button"
                 onClick={onClose}
-                className="relative px-3.5 py-2 rounded-none border-0 text-[#4A3E36] dark:text-[#EDE5DD] text-sm font-hand font-bold transition-all sketch-btn-press shadow-pencil-sm"
+                className="relative px-4 py-2 border-0 bg-[#FCF9F4] dark:bg-[#221F1D] text-[#332B25] dark:text-[#EAE2D9] text-base font-sans font-semibold transition-all sketch-btn-press overflow-hidden"
               >
+                <RoughBorder borderRadius={2} width={0.9} color="#8C7E72" opacity={0.4} />
                 <span className="relative z-10">{t.actions.cancel}</span>
               </button>
               <button
                 type="submit"
-                className="group relative flex-1 sm:flex-initial px-5 py-2 rounded-none border-0 text-white font-hand font-bold text-sm sm:text-base shadow-pencil-sm transition-all flex items-center justify-center gap-1.5 sketch-btn-press overflow-hidden active:scale-95"
+                className="group relative flex-1 sm:flex-initial px-5 py-2 border-0 text-[#FAF6F0] font-sans font-semibold text-base sm:text-lg transition-all flex items-center justify-center gap-2 sketch-btn-press overflow-hidden"
               >
-                {/* Tactile cross-hatch rough background */}
                 <RoughBackground
-                  fill="#D7195F"
-                  darkFill="#C51756"
+                  fill="#C46345"
+                  darkFill="#B05236"
                   fillStyle="cross-hatch"
-                  hachureAngle={-41}
-                  hachureGap={3.2}
-                  fillWeight={1.2}
+                  hachureAngle={-38}
+                  hachureGap={2.8}
+                  fillWeight={1.4}
                   roughness={1.1}
                   opacity={0.94}
                   seed={66}
                 />
-                <Sparkles className="w-4 h-4 stroke-[2.2] shrink-0 text-[#FFE2CD] relative z-10" />
+                <RoughBorder borderRadius={2} width={1.0} color="#8F4028" opacity={0.5} />
+                <Sparkles className="w-4 h-4 stroke-[2.2] shrink-0 text-[#FAF6F0] relative z-10" />
                 <span className="truncate relative z-10 drop-shadow-[0_1px_1px_rgba(0,0,0,0.2)]">{t.reviewModal.finishButton}</span>
               </button>
             </div>

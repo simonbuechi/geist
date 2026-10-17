@@ -3,6 +3,8 @@ import { Download, X } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { KgsLogo } from './KgsLogo';
 import { IconButton } from './IconButton';
+import { RoughBorder } from './RoughBorder';
+import { RoughBackground } from './RoughBackground';
 
 export const PwaInstallBanner: React.FC = () => {
   const { t } = useLanguage();
@@ -42,15 +44,16 @@ export const PwaInstallBanner: React.FC = () => {
   if (!showBanner) return null;
 
   return (
-    <div className="fixed bottom-20 md:bottom-4 left-3.5 right-3.5 sm:left-auto sm:right-6 sm:max-w-sm z-40 p-4 rounded-none bg-[#FDFBF7] dark:bg-[#25201C] text-[#4A3E36] dark:text-[#EDE5DD] shadow-2xl border-2 border-[#7A6A5E]/40 dark:border-[#EDE5DD]/40 sketch-shadow animate-slide-up flex flex-col gap-3">
-      <div className="flex items-start justify-between gap-3">
+    <div className="fixed bottom-20 md:bottom-4 left-3.5 right-3.5 sm:left-auto sm:right-6 sm:max-w-sm z-40 p-4 bg-[#FCF9F4] dark:bg-[#221F1D] text-[#332B25] dark:text-[#EAE2D9] shadow-notebook animate-slide-up flex flex-col gap-3 overflow-hidden">
+      <RoughBorder borderRadius={2} width={1.2} color="#8C7E72" darkColor="#7A6F66" opacity={0.45} />
+      <div className="relative z-10 flex items-start justify-between gap-3">
         <div className="flex items-start gap-2.5">
           <KgsLogo size={28} />
           <div>
-            <h4 className="text-sm font-hand font-bold text-[#4A3E36] dark:text-[#EDE5DD]">
+            <h4 className="text-base font-sans font-semibold text-[#332B25] dark:text-[#EAE2D9]">
               {t.pwa.installTitle}
             </h4>
-            <p className="text-2xs text-[#7D6E63] dark:text-[#BA9F83] mt-0.5 leading-snug font-sans">
+            <p className="text-xs text-[#7A6F66] dark:text-[#A3968B] mt-0.5 leading-snug font-serif">
               {t.pwa.installDesc}
             </p>
           </div>
@@ -66,19 +69,30 @@ export const PwaInstallBanner: React.FC = () => {
         </IconButton>
       </div>
 
-      <div className="flex items-center justify-end gap-2 pt-1">
+      <div className="relative z-10 flex items-center justify-end gap-2 pt-1">
         <button
           onClick={handleDismiss}
-          className="px-3 py-1 text-xs font-hand font-bold text-[#7D6E63] dark:text-[#BA9F83] transition-colors"
+          className="px-3 py-1 text-sm font-sans font-semibold text-[#7A6F66] dark:text-[#A3968B] transition-colors"
         >
           {t.pwa.dismissButton}
         </button>
         <button
           onClick={handleInstall}
-          className="px-4 py-1.5 rounded-none bg-gradient-to-r from-[#9123A6] to-[#D7195F] text-white border-0 font-hand font-bold text-xs shadow-pencil-sm transition-all flex items-center gap-1.5 sketch-btn-press"
+          className="relative px-4 py-1.5 text-[#FAF6F0] border-0 font-sans font-semibold text-sm transition-all flex items-center gap-1.5 sketch-btn-press overflow-hidden"
         >
-          <Download className="w-3.5 h-3.5 stroke-[2.2]" />
-          <span>{t.pwa.installButton}</span>
+          <RoughBackground
+            fill="#C46345"
+            darkFill="#B05236"
+            fillStyle="cross-hatch"
+            hachureAngle={-38}
+            hachureGap={2.8}
+            fillWeight={1.4}
+            opacity={0.94}
+            seed={801}
+          />
+          <RoughBorder borderRadius={2} width={0.9} color="#8F4028" opacity={0.5} />
+          <Download className="w-3.5 h-3.5 stroke-[2.2] relative z-10" />
+          <span className="relative z-10">{t.pwa.installButton}</span>
         </button>
       </div>
     </div>

@@ -54,7 +54,7 @@ describe('IconButton', () => {
     );
     let button = screen.getByRole('button', { name: /save/i });
     expect(button.className).toContain('bg-transparent');
-    expect(button.className).toContain('text-[#D7195F]');
+    expect(button.className).toContain('text-[#C46345]');
 
     rerender(
       <IconButton variant="ghost" aria-label="Save">

@@ -15,6 +15,9 @@ import { parseWeekId, formatWeekRange } from '../utils/dateUtils';
 import type { Category, GoalStatus } from '../types';
 import { CategoryIcon } from './CategoryIcon';
 import { IconButton } from './IconButton';
+import { RoughBorder } from './RoughBorder';
+import { RoughBackground } from './RoughBackground';
+import { RoughDivider } from './RoughDivider';
 
 interface HistoryViewProps {
   onClose: () => void;
@@ -41,15 +44,16 @@ export const HistoryView: React.FC<HistoryViewProps> = ({ onClose }) => {
       case 'poor':
         return <CategoryIcon category={category} status={status} size={18} className="w-4.5 h-4.5 object-contain" />;
       default:
-        return <div className="w-3.5 h-3.5 rounded-none border border-[#8A796D]/50" />;
+        return <div className="w-2.5 h-2.5 rounded-full bg-[#8C7E72]/40 mt-1.5" />;
     }
   };
 
   return (
-    <div className="w-full max-w-5xl mx-auto px-3.5 sm:px-4 py-4 sm:py-6 space-y-4 sm:space-y-6 animate-fade-in pb-20 md:pb-6">
-      {/* Header Bar with clean readable background */}
-      <div className="flex items-center justify-between gap-3 p-3.5 sm:p-4 rounded-none bg-[#FDFBF7] dark:bg-[#28221D] border border-[#7A6A5E]/20 dark:border-[#EDE5DD]/20 shadow-pencil-sm">
-        <div className="flex items-center gap-3">
+    <div className="w-full max-w-5xl mx-auto px-1 sm:px-2 py-2 sm:py-4 space-y-5 animate-fade-in pb-20 md:pb-6">
+      {/* Header Bar with notebook sheet styling */}
+      <div className="relative flex items-center justify-between gap-3 p-4 sm:p-5 bg-[#FCF9F4] dark:bg-[#221F1D] shadow-notebook overflow-hidden">
+        <RoughBorder borderRadius={2} width={1.2} color="#8C7E72" darkColor="#7A6F66" opacity={0.45} />
+        <div className="relative z-10 flex items-center gap-3.5">
           <IconButton
             onClick={onClose}
             title={t.actions.cancel || 'Zurück'}
@@ -60,29 +64,30 @@ export const HistoryView: React.FC<HistoryViewProps> = ({ onClose }) => {
             <ArrowLeft className="w-4 h-4 stroke-[2.2]" />
           </IconButton>
           <div>
-            <h2 className="text-lg sm:text-xl font-hand font-bold text-[#4A3E36] dark:text-[#EDE5DD]">
+            <h2 className="text-xl sm:text-2xl font-hand font-bold text-[#332B25] dark:text-[#EAE2D9] tracking-wide">
               {t.historyTitle}
             </h2>
-            <p className="text-2xs sm:text-xs text-[#7D6E63] dark:text-[#BA9F83] font-sans">
-              Deine bisherigen Wochen und Erfolge im Rückblick
+            <p className="text-xs sm:text-sm text-[#7A6F66] dark:text-[#A3968B] font-serif italic">
+              Deine bisherigen Wochen und Notizen im Rückblick
             </p>
           </div>
         </div>
       </div>
 
       {sortedPlans.length === 0 ? (
-        <div className="p-8 sm:p-12 text-center rounded-none bg-[#FDFBF7] dark:bg-[#28221D] border-2 border-dashed border-[#BA9F83] space-y-2.5">
-          <History className="w-8 h-8 sm:w-10 sm:h-10 mx-auto text-[#BA9F83] stroke-[1.8]" />
-          <h3 className="text-base sm:text-lg font-hand font-bold text-[#4A3E36] dark:text-[#EDE5DD]">
+        <div className="relative p-10 sm:p-14 text-center bg-[#FCF9F4] dark:bg-[#221F1D] shadow-notebook space-y-2.5 overflow-hidden">
+          <RoughBorder borderRadius={2} width={1.1} color="#8C7E72" opacity={0.4} />
+          <History className="w-8 h-8 sm:w-10 sm:h-10 mx-auto text-[#8C7E72] stroke-[1.8]" />
+          <h3 className="text-xl sm:text-2xl font-sans font-semibold text-[#332B25] dark:text-[#EAE2D9]">
             {t.historyView.noHistoryYet}
           </h3>
-          <p className="text-xs sm:text-sm text-[#7D6E63] dark:text-[#BA9F83] max-w-sm mx-auto font-sans">
+          <p className="text-xs sm:text-sm text-[#7A6F66] dark:text-[#A3968B] max-w-sm mx-auto font-serif italic">
             {t.historyView.noHistorySub}
           </p>
         </div>
       ) : (
-        <div className="space-y-3">
-          {sortedPlans.map((plan) => {
+        <div className="space-y-3.5">
+          {sortedPlans.map((plan, idx) => {
             const { weekNumber, year, startDate, endDate } = parseWeekId(plan.id);
             const isExpanded = expandedWeekId === plan.id;
             const goals = plan.goals || [];
@@ -93,99 +98,110 @@ export const HistoryView: React.FC<HistoryViewProps> = ({ onClose }) => {
             return (
               <div
                 key={plan.id}
-                className="rounded-none bg-[#FDFBF7] dark:bg-[#28221D] border border-[#7A6A5E]/20 dark:border-[#EDE5DD]/20 shadow-pencil-sm transition-all overflow-hidden"
+                className="relative bg-[#FCF9F4] dark:bg-[#221F1D] shadow-notebook transition-all overflow-hidden"
               >
+                <RoughBorder borderRadius={2} width={1.1} color="#8C7E72" darkColor="#7A6F66" opacity={0.42} />
+
                 {/* Week summary header */}
                 <div
                   onClick={() => setExpandedWeekId(isExpanded ? null : plan.id)}
-                  className="p-3.5 sm:p-4 flex flex-wrap items-center justify-between gap-2 sm:gap-3 cursor-pointer transition-colors"
+                  className="relative z-10 p-4 sm:p-5 flex flex-wrap items-center justify-between gap-3 cursor-pointer transition-colors hover:bg-[#F3EDE2]/40 dark:hover:bg-[#2A2623]/40"
                 >
-                  <div className="flex items-center gap-2.5 min-w-0">
-                    <div className="px-3 py-1 rounded-none bg-[#EAE0D2] dark:bg-[#342C24] border border-[#7A6A5E]/25 text-[#4A3E36] dark:text-[#EDE5DD] font-hand font-bold text-xs flex items-center justify-center shrink-0 whitespace-nowrap">
+                  <div className="flex items-center gap-3 min-w-0">
+                    <div className="px-3 py-1 bg-[#F3EDE2] dark:bg-[#2E2A27] border border-[#8C7E72]/30 text-[#332B25] dark:text-[#EAE2D9] font-sans font-semibold text-sm flex items-center justify-center shrink-0 whitespace-nowrap">
                       {t.week} {weekNumber}
                     </div>
                     <div className="min-w-0">
-                      <h4 className="text-sm sm:text-base font-hand font-bold text-[#4A3E36] dark:text-[#EDE5DD] flex items-center gap-1.5 flex-wrap">
+                      <h4 className="text-base sm:text-lg font-sans font-semibold text-[#332B25] dark:text-[#EAE2D9] flex items-center gap-2 flex-wrap">
                         <span>{t.week} {weekNumber} ({year})</span>
                         {plan.reviewedAt && (
-                          <span className="text-2xs px-2 py-0.2 rounded-none bg-[#EEF5ED] dark:bg-[#203322] text-[#2F612C] dark:text-[#A6D6A2] border border-[#7CA379]/60 font-sans font-semibold whitespace-nowrap">
+                          <span className="text-2xs px-2 py-0.5 bg-[#F1F6F1] dark:bg-[#1E2A20] text-[#4E7A52] dark:text-[#89B08E] border border-[#557659]/40 font-sans font-semibold whitespace-nowrap">
                             ✓ {t.reviewWeek}
                           </span>
                         )}
                       </h4>
-                      <p className="text-2xs sm:text-xs text-[#7D6E63] dark:text-[#BA9F83] truncate font-sans">
+                      <p className="text-xs text-[#7A6F66] dark:text-[#A3968B] truncate font-serif italic">
                         {formatWeekRange(startDate, endDate, language)}
                       </p>
                     </div>
                   </div>
 
                   {/* Goal Outcome Pills */}
-                  <div className="flex items-center gap-2.5 sm:gap-3.5 ml-auto shrink-0">
-                    <div className="flex items-center gap-1.5 text-xs font-semibold">
-                      <span className="flex items-center gap-0.5 text-[#2F612C] dark:text-[#A6D6A2]">
+                  <div className="flex items-center gap-3 sm:gap-4 ml-auto shrink-0">
+                    <div className="flex items-center gap-2 text-xs font-sans font-semibold">
+                      <span className="flex items-center gap-0.5 text-[#4E7A52] dark:text-[#89B08E]">
                         <CheckCircle2 className="w-3.5 h-3.5 stroke-[2.2]" />
                         {goodCount}
                       </span>
-                      <span className="flex items-center gap-0.5 text-[#8C5212] dark:text-[#F2CF87]">
+                      <span className="flex items-center gap-0.5 text-[#B88028] dark:text-[#E2B467]">
                         <MinusCircle className="w-3.5 h-3.5 stroke-[2.2]" />
                         {partlyCount}
                       </span>
-                      <span className="flex items-center gap-0.5 text-[#9E352B] dark:text-[#F3A59C]">
+                      <span className="flex items-center gap-0.5 text-[#B84A39] dark:text-[#E2876B]">
                         <XCircle className="w-3.5 h-3.5 stroke-[2.2]" />
                         {poorCount}
                       </span>
                     </div>
 
-                    <div className="px-2 py-0.5 rounded-none bg-[#EAE0D2] dark:bg-[#342C24] text-2xs font-sans font-semibold text-[#7D6E63] dark:text-[#BA9F83]">
+                    <div className="px-2.5 py-0.5 bg-[#F3EDE2] dark:bg-[#2E2A27] text-2xs font-sans font-semibold text-[#7A6F66] dark:text-[#A3968B]">
                       {goals.length} {t.historyView.totalGoals}
                     </div>
 
                     {isExpanded ? (
-                      <ChevronDown className="w-4 h-4 text-[#7D6E63] stroke-[2.2]" />
+                      <ChevronDown className="w-4 h-4 text-[#7A6F66] stroke-[2.2]" />
                     ) : (
-                      <ChevronRight className="w-4 h-4 text-[#7D6E63] stroke-[2.2]" />
+                      <ChevronRight className="w-4 h-4 text-[#7A6F66] stroke-[2.2]" />
                     )}
                   </div>
                 </div>
 
                 {/* Expanded Detailed Breakdown */}
                 {isExpanded && (
-                  <div className="px-4 pb-4 pt-2 border-t border-dashed border-[#7A6A5E]/20 dark:border-[#EDE5DD]/15 space-y-3.5 animate-slide-up">
+                  <div className="relative z-10 px-4 sm:px-5 pb-5 pt-1 space-y-4 animate-slide-up">
+                    <RoughDivider color="#8C7E72" darkColor="#7A6F66" opacity={0.3} seed={600 + idx} />
+
                     {/* General Reflection if available */}
                     {plan.generalReflection && (
-                      <div className="p-3.5 rounded-none bg-[#FAF5ED] dark:bg-[#2C231D] border border-[#D4A759]/40 flex items-start gap-2.5 shadow-pencil-sm">
-                        <Quote className="w-4 h-4 text-[#C97A1E] shrink-0 mt-0.5" />
-                        <p className="text-xs sm:text-sm text-[#7D6E63] dark:text-[#BA9F83] italic font-hand leading-relaxed">
-                          „{plan.generalReflection}“
+                      <div className="p-3.5 bg-[#FAF4E8] dark:bg-[#2A2319] border border-[#B88028]/35 flex items-start gap-2.5">
+                        <Quote className="w-4 h-4 text-[#B88028] shrink-0 mt-0.5" />
+                        <p className="text-sm sm:text-base text-[#5C524B] dark:text-[#C5B9AE] font-hand leading-relaxed">
+                          &ldquo;{plan.generalReflection}&rdquo;
                         </p>
                       </div>
                     )}
 
                     {/* Goals List organized by Dimension */}
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                       {(['body', 'mind', 'soul'] as Category[]).map(cat => {
                         const catGoals = goals.filter(g => g.category === cat);
+                        const headerWash =
+                          cat === 'body'
+                            ? 'bg-[#FAF1ED] dark:bg-[#2A201D] border-[#C46345]/25'
+                            : cat === 'mind'
+                            ? 'bg-[#F1F6F1] dark:bg-[#1D261F] border-[#557659]/25'
+                            : 'bg-[#F9F1F4] dark:bg-[#281E23] border-[#9E5870]/25';
+
                         return (
-                          <div key={cat} className="p-3 rounded-none bg-[#FAF5ED] dark:bg-[#201C18] border border-[#7A6A5E]/20 dark:border-[#EDE5DD]/20 space-y-2">
-                            <div className="flex items-center gap-1.5 font-hand font-bold text-xs text-[#4A3E36] dark:text-[#EDE5DD]">
+                          <div key={cat} className={`p-3.5 border ${headerWash} space-y-2.5`}>
+                            <div className="flex items-center gap-1.5 font-sans font-semibold text-base text-[#332B25] dark:text-[#EAE2D9]">
                               {getCategoryIcon(cat)}
                               <span className="capitalize">{t.categories[cat].title}</span>
-                              <span className="text-[#8C7D71] font-sans font-normal">({catGoals.length})</span>
+                              <span className="text-xs text-[#7A6F66] font-sans font-normal">({catGoals.length})</span>
                             </div>
                             {catGoals.length === 0 ? (
-                              <p className="text-2xs text-[#8C7D71] italic font-hand">Keine Ziele</p>
+                              <p className="text-sm text-[#7A6F66] italic font-hand">Keine Notizen</p>
                             ) : (
-                              <div className="space-y-1.5">
+                              <div className="space-y-2">
                                 {catGoals.map(g => (
-                                  <div key={g.id} className="p-2 rounded-none bg-[#FDFBF7] dark:bg-[#28221D] border border-[#7A6A5E]/15 dark:border-[#EDE5DD]/15 text-xs flex items-start gap-2">
-                                    <span className="shrink-0">{getGoalStatusIcon(g.category, g.status)}</span>
-                                    <div className="flex-1 min-w-0 font-sans">
-                                      <p className="text-[#4A3E36] dark:text-[#EDE5DD] leading-snug break-words">
+                                  <div key={g.id} className="p-2.5 bg-[#FCF9F4] dark:bg-[#221F1D] border border-[#8C7E72]/20 text-xs sm:text-sm flex items-start gap-2">
+                                    <span className="shrink-0 mt-0.5">{getGoalStatusIcon(g.category, g.status)}</span>
+                                    <div className="flex-1 min-w-0">
+                                      <p className="text-[#332B25] dark:text-[#EAE2D9] font-serif leading-snug break-words">
                                         {g.description}
                                       </p>
                                       {g.comment && (
-                                        <p className="text-2xs text-[#7D6E63] dark:text-[#BA9F83] font-hand italic mt-0.5">
-                                          „{g.comment}“
+                                        <p className="text-sm text-[#7A6F66] dark:text-[#A3968B] font-hand mt-0.5">
+                                          &ldquo;{g.comment}&rdquo;
                                         </p>
                                       )}
                                     </div>
@@ -205,9 +221,23 @@ export const HistoryView: React.FC<HistoryViewProps> = ({ onClose }) => {
                           selectWeek(plan.id);
                           onClose();
                         }}
-                        className="w-full sm:w-auto px-4 py-2 sm:py-1.5 rounded-none bg-gradient-to-r from-[#9123A6] to-[#D7195F] text-white border-0 font-hand font-bold text-xs shadow-pencil-sm sketch-btn-press transition-all flex items-center justify-center gap-1"
+                        className="relative w-full sm:w-auto px-4 py-2 text-[#FAF6F0] border-0 font-sans font-semibold text-base sketch-btn-press transition-all flex items-center justify-center gap-1.5 overflow-hidden"
                       >
-                        Diese Woche öffnen & bearbeiten →
+                        <RoughBackground
+                          fill="#C46345"
+                          darkFill="#B05236"
+                          fillStyle="cross-hatch"
+                          hachureAngle={-38}
+                          hachureGap={2.8}
+                          fillWeight={1.4}
+                          roughness={1.1}
+                          opacity={0.94}
+                          seed={700 + idx}
+                        />
+                        <RoughBorder borderRadius={2} width={1.0} color="#8F4028" opacity={0.5} />
+                        <span className="relative z-10 drop-shadow-[0_1px_1px_rgba(0,0,0,0.2)]">
+                          Diese Woche öffnen & bearbeiten →
+                        </span>
                       </button>
                     </div>
                   </div>
