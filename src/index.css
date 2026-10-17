@@ -1,50 +1,68 @@
-/* Typography: LiebeHeide Signature Hand-Drawn Fonts */
-@font-face {
-  font-family: 'LiebeHeide';
-  src: url('./assets/fonts/liebeheide-finelinermedium.otf') format('opentype');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'LiebeHeide';
-  src: url('./assets/fonts/liebeheide-finelinermedium.otf') format('opentype');
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'LiebeHeide';
-  src: url('./assets/fonts/liebeheide-finelinerbold.otf') format('opentype');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-
+/* Typography: Playwrite Norge (Title/Accent) + Playwrite Deutschland Grundschrift (Body & UI) */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
-
   html,
   body {
     overscroll-behavior-y: none;
     -webkit-text-size-adjust: 100%;
     -webkit-tap-highlight-color: transparent;
+    font-synthesis: none;
+    font-weight: 300;
+  }
+
+  /* Map Playwrite's native 100..400 variable weight axis for crisp pen hierarchy */
+  .font-normal {
+    font-weight: 300;
+  }
+  .font-medium {
+    font-weight: 350;
+  }
+  .font-semibold,
+  .font-bold {
+    font-weight: 400;
   }
 
   body {
-    background-color: #F4EFE6;
+    background-color: #F3EDE2;
+    background-image: radial-gradient(
+      ellipse at 50% 20%,
+      rgba(255, 251, 245, 0.55) 0%,
+      rgba(224, 212, 194, 0.25) 100%
+    );
+    background-attachment: fixed;
     position: relative;
-    color: #4A3E36;
+    color: #332B25;
+  }
+
+  /* Subtle, calm natural cotton paper grain */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    opacity: 0.09;
+    mix-blend-mode: multiply;
+    pointer-events: none;
+    z-index: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
   }
 
   .dark body {
-    background-color: #1C1815;
-    color: #EDE5DD;
+    background-color: #191614;
+    background-image: radial-gradient(
+      ellipse at 50% 20%,
+      rgba(48, 41, 36, 0.35) 0%,
+      rgba(12, 10, 9, 0.5) 100%
+    );
+    background-attachment: fixed;
+    color: #EAE2D9;
+  }
+
+  .dark body::before {
+    opacity: 0.06;
+    mix-blend-mode: overlay;
   }
 
   /* Custom Sketchbook Scrollbars */
@@ -58,39 +76,27 @@
   }
 
   ::-webkit-scrollbar-thumb {
-    @apply bg-[#C5B4A2]/70 dark:bg-[#5C4F45]/70 rounded-full;
+    @apply bg-[#C8BAAB]/70 dark:bg-[#4A4038]/70 rounded-full;
   }
 }
 
 @layer components {
+  /* Tactile Notebook Sheet */
+  .notebook-sheet {
+    @apply bg-[#FCF9F4] dark:bg-[#231F1C] shadow-notebook dark:shadow-notebook-dark;
+  }
 
   /* Warm Paper Card Styles */
   .paper-card {
-    @apply bg-[#FDFBF7] dark:bg-[#28221D] border border-[#7A6A5E]/25 dark:border-[#EDE5DD]/20 sketch-border sketch-shadow;
+    @apply bg-[#FCF9F4] dark:bg-[#231F1C] shadow-pencil;
   }
 
   .paper-card-sm {
-    @apply bg-[#FDFBF7] dark:bg-[#28221D] border border-[#7A6A5E]/25 dark:border-[#EDE5DD]/20 sketch-border-sm sketch-shadow-sm;
-  }
-
-  /* Lined Paper Note Motif */
-  .lined-paper {
-    background-image: repeating-linear-gradient(transparent,
-        transparent 23px,
-        rgba(200, 180, 160, 0.18) 23px,
-        rgba(200, 180, 160, 0.18) 24px);
-  }
-
-  .dark .lined-paper {
-    background-image: repeating-linear-gradient(transparent,
-        transparent 23px,
-        rgba(80, 70, 60, 0.25) 23px,
-        rgba(80, 70, 60, 0.25) 24px);
+    @apply bg-[#FCF9F4] dark:bg-[#231F1C] shadow-pencil-sm;
   }
 }
 
 @layer utilities {
-
   /* Safe Area Spacing */
   .pt-safe {
     padding-top: env(safe-area-inset-top, 0px);
@@ -115,16 +121,12 @@
   /* Compact Micro Typography */
   .text-2xs {
     font-size: 0.6875rem !important;
-    /* 11px */
-    line-height: 0.875rem !important;
-    /* 14px */
+    line-height: 0.95rem !important;
   }
 
   .text-3xs {
     font-size: 0.625rem !important;
-    /* 10px */
-    line-height: 0.75rem !important;
-    /* 12px */
+    line-height: 0.8rem !important;
   }
 
   /* Hand-Drawn Sketch Corners */
@@ -132,33 +134,48 @@
   .sketch-border-alt,
   .sketch-border-sm,
   .sketch-pill {
-    border-radius: 0px;
+    border-radius: 2px;
   }
 
   /* Tactile Pencil Sketch Shadows */
   .sketch-shadow {
-    box-shadow: 1.5px 2.5px 0px 0px rgba(74, 62, 54, 0.22);
+    box-shadow: 2px 2.5px 0px 0px rgba(74, 62, 52, 0.18);
   }
 
   .dark .sketch-shadow {
-    box-shadow: 1.5px 2.5px 0px 0px rgba(237, 229, 221, 0.16);
+    box-shadow: 2px 2.5px 0px 0px rgba(0, 0, 0, 0.35);
   }
 
   .sketch-shadow-sm {
-    box-shadow: 1px 1.5px 0px 0px rgba(74, 62, 54, 0.18);
+    box-shadow: 1.25px 1.75px 0px 0px rgba(74, 62, 52, 0.14);
   }
 
   .dark .sketch-shadow-sm {
-    box-shadow: 1px 1.5px 0px 0px rgba(237, 229, 221, 0.14);
+    box-shadow: 1.25px 1.75px 0px 0px rgba(0, 0, 0, 0.28);
   }
 
-  .sketch-btn-press:active {
+  .sketch-btn-press {
+    transition: transform 150ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 150ms ease, filter 150ms ease, background-color 150ms ease;
+  }
+
+  .sketch-btn-press:hover:not(:disabled) {
+    transform: translateY(-1.5px);
+    box-shadow: 2px 3px 0px 0px rgba(74, 62, 52, 0.22);
+    filter: brightness(1.03);
+  }
+
+  .dark .sketch-btn-press:hover:not(:disabled) {
+    box-shadow: 2px 3px 0px 0px rgba(0, 0, 0, 0.42);
+    filter: brightness(1.08);
+  }
+
+  .sketch-btn-press:active:not(:disabled) {
     transform: translate(1px, 1.5px);
-    box-shadow: 0.5px 0.5px 0px 0px rgba(74, 62, 54, 0.16);
+    box-shadow: 0.5px 0.5px 0px 0px rgba(74, 62, 52, 0.14);
   }
 
-  .dark .sketch-btn-press:active {
-    box-shadow: 0.5px 0.5px 0px 0px rgba(237, 229, 221, 0.1);
+  .dark .sketch-btn-press:active:not(:disabled) {
+    box-shadow: 0.5px 0.5px 0px 0px rgba(0, 0, 0, 0.25);
   }
 }
 

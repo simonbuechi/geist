@@ -15,8 +15,8 @@ export default defineConfig({
         name: 'Körper Geist Seele',
         short_name: 'KGS',
         description: 'Wöchentliche Ziele für Körper, Geist & Seele planen und reflektieren',
-        theme_color: '#9123A6',
-        background_color: '#f8faf9',
+        theme_color: '#C46345',
+        background_color: '#F3EDE2',
         display: 'standalone',
         orientation: 'portrait-primary',
         icons: [

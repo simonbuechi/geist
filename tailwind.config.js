@@ -8,98 +8,73 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        hand: ['"LiebeHeide"', '"Caveat"', '"Marck Script"', 'cursive'],
-        serif: ['"Caveat"', 'Georgia', 'serif'],
-        sans: ['"Nunito"', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+        hand: ['"Playwrite NO"', 'cursive'],
+        sans: ['"Playwrite DE Grund"', 'cursive'],
+        serif: ['"Playwrite DE Grund"', 'cursive'],
       },
       fontSize: {
-        '2xs': ['0.6875rem', { lineHeight: '0.875rem' }], // 11px
-        '3xs': ['0.625rem', { lineHeight: '0.75rem' }],   // 10px
+        '2xs': ['0.6875rem', { lineHeight: '0.95rem' }], // 11px
+        '3xs': ['0.625rem', { lineHeight: '0.8rem' }],   // 10px
       },
       borderWidth: {
         '1.5': '1.5px',
       },
       boxShadow: {
-        'pencil': '1.5px 2px 0px 0px rgba(87, 74, 64, 0.28)',
-        'pencil-sm': '1px 1.5px 0px 0px rgba(87, 74, 64, 0.22)',
-        'pencil-lg': '2.5px 3.5px 0px 0px rgba(87, 74, 64, 0.35)',
-        'pencil-dark': '1.5px 2px 0px 0px rgba(237, 229, 221, 0.18)',
-        'pencil-hover': '2px 2.5px 0px 0px rgba(87, 74, 64, 0.4)',
+        'notebook': '2.5px 3.5px 0px 0px rgba(68, 56, 46, 0.14), 0 4px 14px -4px rgba(68, 56, 46, 0.08)',
+        'notebook-dark': '2.5px 3.5px 0px 0px rgba(0, 0, 0, 0.38), 0 4px 14px -4px rgba(0, 0, 0, 0.25)',
+        'pencil': '2px 2.5px 0px 0px rgba(74, 62, 52, 0.18)',
+        'pencil-sm': '1.25px 1.75px 0px 0px rgba(74, 62, 52, 0.15)',
+        'pencil-lg': '3px 4px 0px 0px rgba(74, 62, 52, 0.24)',
+        'pencil-dark': '1.5px 2px 0px 0px rgba(234, 226, 217, 0.14)',
+        'pencil-hover': '2.5px 3px 0px 0px rgba(74, 62, 52, 0.28)',
       },
       colors: {
-        brand: {
-          50: '#fdf2f6',
-          100: '#fce7ef',
-          200: '#f9cfe0',
-          300: '#f4a7c6',
-          400: '#eb71a2',
-          500: '#D7195F', // Primary Vivid Berry
-          600: '#c01252',
-          700: '#a10e44',
-          800: '#850f39',
-          900: '#701132',
-          start: '#9123A6',
-          end: '#D7195F',
+        paper: {
+          desk: '#F3EDE2',
+          sheet: '#FCF9F4',
+          warm: '#F7F1E7',
+          subtle: '#EFE6D8',
+          darkDesk: '#191614',
+          darkSheet: '#231F1C',
+          darkWarm: '#2B2521',
         },
-        primary: {
-          DEFAULT: '#D7195F',
-          start: '#9123A6',
-          end: '#D7195F',
-        },
-        parchment: {
-          50: '#fdfbf7',
-          100: '#faf6f0',
-          200: '#f4ece1',
-          300: '#e8dbca',
-          400: '#d5c2ab',
-          500: '#ba9f83',
-          800: '#3a312a',
-          900: '#26201b',
-        },
-        charcoal: {
-          700: '#453a32',
-          800: '#2d2621',
-          900: '#1c1917',
-          950: '#141210',
+        ink: {
+          primary: '#332B25',
+          secondary: '#6E6258',
+          muted: '#9A8D82',
+          darkPrimary: '#EAE2D9',
+          darkSecondary: '#A89B8F',
+          darkMuted: '#70655B',
         },
         body: {
-          light: '#fbf1eb',
-          border: '#e8aa90',
-          accent: '#c85a32',
-          darkBg: '#341d14',
-          darkBorder: '#6d3620',
-          badge: '#c85a32',
+          light: '#FAF1ED',
+          border: '#C46345',
+          accent: '#C46345',
+          darkBg: '#2C211D',
+          darkBorder: '#E2876B',
+          badge: '#C46345',
         },
         mind: {
-          light: '#fdf7ea',
-          border: '#f2cf87',
-          accent: '#c97a1e',
-          darkBg: '#2f2310',
-          darkBorder: '#64481b',
-          badge: '#c97a1e',
+          light: '#F1F6F1',
+          border: '#557659',
+          accent: '#557659',
+          darkBg: '#1E2820',
+          darkBorder: '#89B08E',
+          badge: '#557659',
         },
         soul: {
-          light: '#fbf0f3',
-          border: '#e8a5b8',
-          accent: '#b84d68',
-          darkBg: '#31161f',
-          darkBorder: '#68283a',
-          badge: '#b84d68',
-        }
-      },
-      backgroundImage: {
-        'brand-gradient': 'linear-gradient(135deg, #9123A6 0%, #D7195F 100%)',
-        'brand-gradient-r': 'linear-gradient(to right, #9123A6, #D7195F)',
-        'brand-gradient-tr': 'linear-gradient(to top right, #9123A6, #D7195F)',
-        'brand-gradient-hover': 'linear-gradient(135deg, #811e94 0%, #c01252 100%)',
-        'primary-gradient': 'linear-gradient(to right, #9123A6, #D7195F)',
+          light: '#F9F1F4',
+          border: '#9E5870',
+          accent: '#9E5870',
+          darkBg: '#2A1F24',
+          darkBorder: '#D48BA3',
+          badge: '#9E5870',
+        },
       },
       animation: {
         'fade-in': 'fadeIn 0.25s ease-out',
         'slide-up': 'slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
         'scale-in': 'scaleIn 0.2s cubic-bezier(0.16, 1, 0.3, 1)',
-        'progress': 'progress 2.2s ease-in-out forwards',
-        'spin-slow': 'spin 4s linear infinite',
       },
       keyframes: {
         fadeIn: {
@@ -107,20 +82,15 @@ export default {
           '100%': { opacity: '1' },
         },
         slideUp: {
-          '0%': { opacity: '0', transform: 'translateY(12px)' },
+          '0%': { opacity: '0', transform: 'translateY(10px)' },
           '100%': { opacity: '1', transform: 'translateY(0)' },
         },
         scaleIn: {
-          '0%': { opacity: '0', transform: 'scale(0.96)' },
+          '0%': { opacity: '0', transform: 'scale(0.97)' },
           '100%': { opacity: '1', transform: 'scale(1)' },
-        },
-        progress: {
-          '0%': { width: '0%' },
-          '100%': { width: '100%' },
         },
       }
     },
   },
   plugins: [],
 }
-
