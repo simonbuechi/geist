@@ -23,6 +23,7 @@ import { useLanguage } from '../context/LanguageContext';
 import { useTheme } from '../context/ThemeContext';
 import { useGoals } from '../context/GoalsContext';
 import { RoughBorder } from './RoughBorder';
+import { IconButton } from './IconButton';
 import { 
   getDefaultFirebaseConfig, 
   saveStoredFirebaseConfig, 
@@ -215,14 +216,16 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
           <h3 className="text-lg sm:text-xl font-hand font-bold text-[#4A3E36] dark:text-[#EDE5DD]">
             {t.settings.title}
           </h3>
-          <button 
+          <IconButton 
             onClick={onClose} 
+            title="Schließen"
             aria-label="Schließen"
-            className="relative p-1.5 -mr-1.5 rounded-full text-[#7D6E63] hover:text-[#4A3E36] dark:hover:text-[#EDE5DD] hover:bg-[#FAF5ED] dark:hover:bg-[#342C26] sketch-btn-press transition-all"
+            variant="ghost"
+            size="md"
+            className="-mr-1.5"
           >
-            <RoughBorder shape="circle" width={0.9} />
-            <X className="w-4 h-4 stroke-[2.2] relative z-10" />
-          </button>
+            <X className="w-4 h-4 stroke-[2.2]" />
+          </IconButton>
         </div>
 
         {/* Scrollable Settings Content */}
@@ -257,7 +260,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
 
                   <button
                     onClick={signOut}
-                    className="px-3 py-1.5 rounded-none border border-[#7A6A5E]/30 dark:border-[#EDE5DD]/30 text-[#7D6E63] dark:text-[#BA9F83] hover:text-[#B83E32] dark:hover:text-[#F3A59C] hover:bg-[#FDF0EE] dark:hover:bg-[#361914] text-xs font-hand font-bold transition-colors flex items-center gap-1.5 shrink-0 sketch-btn-press"
+                    className="px-3 py-1.5 rounded-none border-0 text-[#7D6E63] dark:text-[#BA9F83] text-xs font-hand font-bold transition-colors flex items-center gap-1.5 shrink-0 sketch-btn-press"
                   >
                     <LogOut className="w-3.5 h-3.5 stroke-[2.2]" />
                     <span>{t.actions.signOut}</span>
@@ -280,7 +283,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                   {isConfigured ? (
                     <button
                       onClick={signInWithGoogle}
-                      className="w-full py-2.5 px-4 rounded-none bg-[#5C4F45] dark:bg-[#EDE5DD] text-white dark:text-[#4A3E36] hover:bg-[#4A3E36] dark:hover:bg-white font-hand font-bold text-xs sm:text-sm transition-all shadow-pencil-sm flex items-center justify-center gap-2 sketch-btn-press"
+                      className="w-full py-2.5 px-4 rounded-none bg-[#5C4F45] dark:bg-[#EDE5DD] text-white dark:text-[#4A3E36] font-hand font-bold text-xs sm:text-sm transition-all shadow-pencil-sm flex items-center justify-center gap-2 sketch-btn-press"
                     >
                       <svg className="w-4 h-4" viewBox="0 0 24 24">
                         <path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
@@ -303,7 +306,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                 <button
                   type="button"
                   onClick={() => setShowConfig(!showConfig)}
-                  className="w-full flex items-center justify-between text-2xs text-[#7D6E63] dark:text-[#BA9F83] hover:text-[#4A3E36] dark:hover:text-[#EDE5DD] transition-colors"
+                  className="w-full flex items-center justify-between text-2xs text-[#7D6E63] dark:text-[#BA9F83] transition-colors"
                 >
                   <span className="flex items-center gap-1.5 font-hand font-bold text-xs">
                     <Database className="w-3.5 h-3.5 stroke-[2.2]" />
@@ -350,7 +353,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                       ) : <span />}
                       <button
                         type="submit"
-                        className="px-3.5 py-1.5 bg-gradient-to-r from-[#9123A6] to-[#D7195F] hover:opacity-95 text-white rounded-none text-xs font-hand font-bold sketch-shadow-sm sketch-btn-press transition-all"
+                        className="px-3.5 py-1.5 bg-gradient-to-r from-[#9123A6] to-[#D7195F] text-white rounded-none text-xs font-hand font-bold sketch-shadow-sm sketch-btn-press transition-all"
                       >
                         Speichern
                       </button>
@@ -386,10 +389,10 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                   <button
                     type="button"
                     onClick={() => setTheme('light')}
-                    className={`px-2.5 py-1 rounded-none text-xs font-hand transition-all flex items-center gap-1 ${
+                    className={`px-2.5 py-1 rounded-none border-0 text-xs font-hand transition-all flex items-center gap-1 ${
                       theme === 'light'
-                        ? 'bg-[#FDFBF7] dark:bg-[#1E1B18] text-[#4A3E36] dark:text-[#EDE5DD] shadow-2xs font-bold border border-[#7A6A5E]/30'
-                        : 'text-[#7D6E63] dark:text-[#BA9F83] hover:text-[#4A3E36]'
+                        ? 'bg-[#FDFBF7] dark:bg-[#1E1B18] text-[#4A3E36] dark:text-[#EDE5DD] shadow-2xs font-bold'
+                        : 'text-[#7D6E63] dark:text-[#BA9F83]'
                     }`}
                   >
                     <Sun className="w-3.5 h-3.5 text-[#C97A1E] stroke-[2.2]" />
@@ -398,10 +401,10 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                   <button
                     type="button"
                     onClick={() => setTheme('dark')}
-                    className={`px-2.5 py-1 rounded-none text-xs font-hand transition-all flex items-center gap-1 ${
+                    className={`px-2.5 py-1 rounded-none border-0 text-xs font-hand transition-all flex items-center gap-1 ${
                       theme === 'dark'
-                        ? 'bg-[#FDFBF7] dark:bg-[#1E1B18] text-[#4A3E36] dark:text-[#EDE5DD] shadow-2xs font-bold border border-[#7A6A5E]/30'
-                        : 'text-[#7D6E63] dark:text-[#BA9F83] hover:text-[#4A3E36]'
+                        ? 'bg-[#FDFBF7] dark:bg-[#1E1B18] text-[#4A3E36] dark:text-[#EDE5DD] shadow-2xs font-bold'
+                        : 'text-[#7D6E63] dark:text-[#BA9F83]'
                     }`}
                   >
                     <Moon className="w-3.5 h-3.5 text-[#D9822B] stroke-[2.2]" />
@@ -423,10 +426,10 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                   <button
                     type="button"
                     onClick={() => setLanguage('de')}
-                    className={`px-3 py-1 rounded-none text-xs font-hand transition-all ${
+                    className={`px-3 py-1 rounded-none border-0 text-xs font-hand transition-all ${
                       language === 'de'
-                        ? 'bg-[#FDFBF7] dark:bg-[#1E1B18] text-[#4A3E36] dark:text-[#EDE5DD] shadow-2xs font-bold border border-[#7A6A5E]/30'
-                        : 'text-[#7D6E63] dark:text-[#BA9F83] hover:text-[#4A3E36]'
+                        ? 'bg-[#FDFBF7] dark:bg-[#1E1B18] text-[#4A3E36] dark:text-[#EDE5DD] shadow-2xs font-bold'
+                        : 'text-[#7D6E63] dark:text-[#BA9F83]'
                     }`}
                   >
                     DE
@@ -434,10 +437,10 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                   <button
                     type="button"
                     onClick={() => setLanguage('en')}
-                    className={`px-3 py-1 rounded-none text-xs font-hand transition-all ${
+                    className={`px-3 py-1 rounded-none border-0 text-xs font-hand transition-all ${
                       language === 'en'
-                        ? 'bg-[#FDFBF7] dark:bg-[#1E1B18] text-[#4A3E36] dark:text-[#EDE5DD] shadow-2xs font-bold border border-[#7A6A5E]/30'
-                        : 'text-[#7D6E63] dark:text-[#BA9F83] hover:text-[#4A3E36]'
+                        ? 'bg-[#FDFBF7] dark:bg-[#1E1B18] text-[#4A3E36] dark:text-[#EDE5DD] shadow-2xs font-bold'
+                        : 'text-[#7D6E63] dark:text-[#BA9F83]'
                     }`}
                   >
                     EN
@@ -519,7 +522,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                           type="button"
                           onClick={handleRegisterCurrentDevice}
                           disabled={isRegisteringPush}
-                          className="px-2.5 py-1 rounded-none bg-gradient-to-r from-[#9123A6] to-[#D7195F] hover:opacity-95 text-white text-xs font-hand font-bold sketch-btn-press transition-all shadow-pencil-sm whitespace-nowrap"
+                          className="px-2.5 py-1 rounded-none bg-gradient-to-r from-[#9123A6] to-[#D7195F] text-white text-xs font-hand font-bold sketch-btn-press transition-all shadow-pencil-sm whitespace-nowrap"
                         >
                           {t.notifications.enableCurrentDevice}
                         </button>
@@ -541,7 +544,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                         <button
                           type="button"
                           onClick={handleSendTestPush}
-                          className="px-2.5 py-1 rounded-none border border-[#7A6A5E]/30 dark:border-[#EDE5DD]/30 text-2xs text-[#4A3E36] dark:text-[#EDE5DD] hover:bg-white dark:hover:bg-[#25201C] font-hand font-bold flex items-center gap-1 sketch-btn-press transition-all"
+                          className="px-2.5 py-1 rounded-none border-0 text-2xs text-[#4A3E36] dark:text-[#EDE5DD] font-hand font-bold flex items-center gap-1 sketch-btn-press transition-all"
                         >
                           <Send className="w-3 h-3 stroke-[2.2]" />
                           <span>{testSent ? t.notifications.testPushSent : t.notifications.sendTestPush}</span>
@@ -614,7 +617,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
 
                 <button
                   onClick={handleExport}
-                  className="px-3.5 py-1.5 rounded-none border border-[#7A6A5E]/30 dark:border-[#EDE5DD]/30 hover:bg-white dark:hover:bg-[#25201C] text-xs font-hand font-bold text-[#4A3E36] dark:text-[#EDE5DD] sketch-btn-press transition-all shrink-0"
+                  className="px-3.5 py-1.5 rounded-none border-0 text-xs font-hand font-bold text-[#4A3E36] dark:text-[#EDE5DD] sketch-btn-press transition-all shrink-0"
                 >
                   Exportieren
                 </button>
@@ -634,7 +637,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                   </div>
                 </div>
 
-                <label className="px-3.5 py-1.5 rounded-none border border-[#7A6A5E]/30 dark:border-[#EDE5DD]/30 hover:bg-white dark:hover:bg-[#25201C] text-xs font-hand font-bold text-[#4A3E36] dark:text-[#EDE5DD] cursor-pointer sketch-btn-press transition-all shrink-0">
+                <label className="px-3.5 py-1.5 rounded-none border-0 text-xs font-hand font-bold text-[#4A3E36] dark:text-[#EDE5DD] cursor-pointer sketch-btn-press transition-all shrink-0">
                   Importieren
                   <input
                     type="file"

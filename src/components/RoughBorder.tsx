@@ -8,10 +8,14 @@ export interface RoughBorderProps {
   shape?: 'rectangle' | 'circle';
   color?: string;
   darkColor?: string;
+  fill?: string;
+  darkFill?: string;
+  fillStyle?: 'solid' | 'hachure' | 'zigzag' | 'cross-hatch' | 'dots' | 'dashed';
   width?: number;
   roughness?: number;
   bowing?: number;
   opacity?: number;
+  disableMultiStroke?: boolean;
 }
 
 export const RoughBorder: React.FC<RoughBorderProps> = ({
@@ -20,10 +24,14 @@ export const RoughBorder: React.FC<RoughBorderProps> = ({
   shape,
   color,
   darkColor,
+  fill,
+  darkFill,
+  fillStyle = 'solid',
   width = 1.5,
   roughness = 1.5,
   bowing = 1.2,
   opacity = 0.75,
+  disableMultiStroke = false,
 }) => {
   const svgRef = useRef<SVGSVGElement | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -73,34 +81,49 @@ export const RoughBorder: React.FC<RoughBorderProps> = ({
         ? (darkColor || color || '#EDE5DD') 
         : (color || '#6E5F54');
 
-      const isCircle = shape === 'circle' || (borderRadius !== undefined && borderRadius >= 16);
+      const fillColor = theme === 'dark'
+        ? (darkFill || fill)
+        : fill;
+
+      const drawOptions: any = {
+        stroke: strokeColor,
+        strokeWidth: width,
+        roughness: roughness,
+        bowing: bowing,
+        disableMultiStroke,
+      };
+
+      if (fillColor) {
+        drawOptions.fill = fillColor;
+        drawOptions.fillStyle = fillStyle;
+      }
 
       let borderNode: SVGGElement;
-      if (isCircle) {
-        borderNode = rc.ellipse(w / 2, h / 2, Math.max(1, w - pad * 2), Math.max(1, h - pad * 2), {
-          stroke: strokeColor,
-          strokeWidth: width,
-          roughness: roughness,
-          bowing: bowing,
-        });
+      if (shape === 'circle') {
+        borderNode = rc.ellipse(w / 2, h / 2, Math.max(1, w - pad * 2), Math.max(1, h - pad * 2), drawOptions);
+      } else if (borderRadius !== undefined && borderRadius > 0) {
+        const rw = Math.max(1, w - pad * 2);
+        const rh = Math.max(1, h - pad * 2);
+        const r = Math.min(borderRadius, rw / 2, rh / 2);
+        const x0 = pad;
+        const y0 = pad;
+        const x1 = pad + rw;
+        const y1 = pad + rh;
+        const d = `M ${x0 + r} ${y0} L ${x1 - r} ${y0} A ${r} ${r} 0 0 1 ${x1} ${y0 + r} L ${x1} ${y1 - r} A ${r} ${r} 0 0 1 ${x1 - r} ${y1} L ${x0 + r} ${y1} A ${r} ${r} 0 0 1 ${x0} ${y1 - r} L ${x0} ${y0 + r} A ${r} ${r} 0 0 1 ${x0 + r} ${y0} Z`;
+        borderNode = rc.path(d, drawOptions);
       } else {
-        borderNode = rc.rectangle(pad, pad, Math.max(1, w - pad * 2), Math.max(1, h - pad * 2), {
-          stroke: strokeColor,
-          strokeWidth: width,
-          roughness: roughness,
-          bowing: bowing,
-        });
+        borderNode = rc.rectangle(pad, pad, Math.max(1, w - pad * 2), Math.max(1, h - pad * 2), drawOptions);
       }
       svg.appendChild(borderNode);
     } catch (err) {
       console.warn('RoughBorder draw error:', err);
     }
-  }, [dimensions, color, darkColor, width, roughness, bowing, opacity, theme, shape, borderRadius]);
+  }, [dimensions, color, darkColor, fill, darkFill, fillStyle, width, roughness, bowing, opacity, theme, shape, borderRadius, disableMultiStroke]);
 
   return (
     <div
       ref={containerRef}
-      className={`absolute inset-0 pointer-events-none z-10 ${className}`}
+      className={`absolute inset-0 pointer-events-none ${fill || darkFill ? 'z-0' : 'z-10'} ${className}`}
       style={{ opacity }}
       aria-hidden="true"
     >

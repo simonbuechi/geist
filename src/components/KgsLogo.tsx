@@ -21,7 +21,7 @@ export const KgsLogo: React.FC<KgsLogoProps> = ({
         height={size}
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        className="w-full h-full transform transition-transform duration-300 hover:rotate-6 hover:scale-105"
+        className="w-full h-full"
       >
         {/* Sketch background circle */}
         <path

@@ -14,6 +14,7 @@ import { useLanguage } from '../context/LanguageContext';
 import { parseWeekId, formatWeekRange } from '../utils/dateUtils';
 import type { Category, GoalStatus } from '../types';
 import { CategoryIcon } from './CategoryIcon';
+import { IconButton } from './IconButton';
 
 interface HistoryViewProps {
   onClose: () => void;
@@ -46,16 +47,18 @@ export const HistoryView: React.FC<HistoryViewProps> = ({ onClose }) => {
 
   return (
     <div className="w-full max-w-5xl mx-auto px-3.5 sm:px-4 py-4 sm:py-6 space-y-4 sm:space-y-6 animate-fade-in pb-20 md:pb-6">
-      {/* Header Bar */}
-      <div className="flex items-center justify-between gap-3 pb-3 sm:pb-4 border-b-2 border-dashed border-[#7A6A5E]/20 dark:border-[#EDE5DD]/20">
+      {/* Header Bar with clean readable background */}
+      <div className="flex items-center justify-between gap-3 p-3.5 sm:p-4 rounded-none bg-[#FDFBF7] dark:bg-[#28221D] border border-[#7A6A5E]/20 dark:border-[#EDE5DD]/20 shadow-pencil-sm">
         <div className="flex items-center gap-3">
-          <button
+          <IconButton
             onClick={onClose}
-            aria-label="Back"
-            className="w-10 h-10 rounded-full bg-[#FDFBF7] dark:bg-[#28221D] border border-[#7A6A5E]/40 dark:border-[#EDE5DD]/30 text-[#4A3E36] dark:text-[#EDE5DD] hover:bg-[#F2EAE0] dark:hover:bg-[#322A23] sketch-shadow-sm sketch-btn-press transition-all flex items-center justify-center shrink-0"
+            title={t.actions.cancel || 'Zurück'}
+            aria-label="Zurück"
+            variant="default"
+            size="md"
           >
             <ArrowLeft className="w-4 h-4 stroke-[2.2]" />
-          </button>
+          </IconButton>
           <div>
             <h2 className="text-lg sm:text-xl font-hand font-bold text-[#4A3E36] dark:text-[#EDE5DD]">
               {t.historyTitle}
@@ -90,12 +93,12 @@ export const HistoryView: React.FC<HistoryViewProps> = ({ onClose }) => {
             return (
               <div
                 key={plan.id}
-                className="rounded-none bg-[#FDFBF7] dark:bg-[#28221D] border border-[#7A6A5E]/20 dark:border-[#EDE5DD]/20 shadow-pencil-sm hover:shadow-pencil transition-all overflow-hidden"
+                className="rounded-none bg-[#FDFBF7] dark:bg-[#28221D] border border-[#7A6A5E]/20 dark:border-[#EDE5DD]/20 shadow-pencil-sm transition-all overflow-hidden"
               >
                 {/* Week summary header */}
                 <div
                   onClick={() => setExpandedWeekId(isExpanded ? null : plan.id)}
-                  className="p-3.5 sm:p-4 flex flex-wrap items-center justify-between gap-2 sm:gap-3 cursor-pointer hover:bg-[#F5EDE1]/60 dark:hover:bg-[#2F2722] transition-colors"
+                  className="p-3.5 sm:p-4 flex flex-wrap items-center justify-between gap-2 sm:gap-3 cursor-pointer transition-colors"
                 >
                   <div className="flex items-center gap-2.5 min-w-0">
                     <div className="px-3 py-1 rounded-none bg-[#EAE0D2] dark:bg-[#342C24] border border-[#7A6A5E]/25 text-[#4A3E36] dark:text-[#EDE5DD] font-hand font-bold text-xs flex items-center justify-center shrink-0 whitespace-nowrap">
@@ -202,7 +205,7 @@ export const HistoryView: React.FC<HistoryViewProps> = ({ onClose }) => {
                           selectWeek(plan.id);
                           onClose();
                         }}
-                        className="w-full sm:w-auto px-4 py-2 sm:py-1.5 rounded-none bg-gradient-to-r from-[#9123A6] to-[#D7195F] hover:opacity-95 text-white border border-[#7A6A5E]/30 font-hand font-bold text-xs shadow-pencil-sm sketch-btn-press transition-all flex items-center justify-center gap-1"
+                        className="w-full sm:w-auto px-4 py-2 sm:py-1.5 rounded-none bg-gradient-to-r from-[#9123A6] to-[#D7195F] text-white border-0 font-hand font-bold text-xs shadow-pencil-sm sketch-btn-press transition-all flex items-center justify-center gap-1"
                       >
                         Diese Woche öffnen & bearbeiten →
                       </button>

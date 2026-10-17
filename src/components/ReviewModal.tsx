@@ -10,6 +10,8 @@ import { useGoals } from '../context/GoalsContext';
 import { formatWeekRange, parseWeekId, getNextWeekId } from '../utils/dateUtils';
 import { CategoryIcon } from './CategoryIcon';
 import { RoughBorder } from './RoughBorder';
+import { RoughBackground } from './RoughBackground';
+import { IconButton } from './IconButton';
 
 interface ReviewModalProps {
   isOpen: boolean;
@@ -113,8 +115,22 @@ export const ReviewModal: React.FC<ReviewModalProps> = ({ isOpen, onClose }) => 
           <div className="w-10 h-1 bg-[#7A6A5E]/30 rounded-none" />
         </div>
 
-        {/* Header - Delicate Notebook Header with Warm Tinted Background */}
+        {/* Header - Delicate Notebook Header with Hand-Drawn Cross-Hatch Background */}
         <div className="relative px-4 py-3 sm:px-6 sm:py-4 border-b border-[#7A6A5E]/20 dark:border-[#EDE5DD]/15 flex items-center justify-between shrink-0 overflow-hidden bg-[#F2EAE0]/90 dark:bg-[#2B231C]">
+          <RoughBackground
+            fill="#8A5034"
+            darkFill="#D49B7A"
+            fillStyle="cross-hatch"
+            hachureAngle={-41}
+            hachureGap={6}
+            fillWeight={1.0}
+            roughness={1.2}
+            opacity={0.14}
+            drawBottomLine={true}
+            bottomLineColor="#7A6A5E"
+            darkBottomLineColor="#EDE5DD"
+            seed={111}
+          />
           <div className="relative z-10 flex items-center gap-2.5">
             <div className="p-1.5 sm:p-2 rounded-none bg-white/95 dark:bg-[#28221D] border border-[#7A6A5E]/25 dark:border-[#EDE5DD]/20 shadow-pencil-sm shrink-0">
               <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-[#D7195F] stroke-[2.2]" />
@@ -128,14 +144,16 @@ export const ReviewModal: React.FC<ReviewModalProps> = ({ isOpen, onClose }) => 
               </p>
             </div>
           </div>
-          <button
+          <IconButton
             onClick={onClose}
-            aria-label="Close"
-            className="relative z-10 p-1.5 rounded-full text-[#7D6E63] dark:text-[#BA9F83] hover:text-[#4A3E36] dark:hover:text-[#EDE5DD] hover:bg-[#EAE0D2]/80 dark:hover:bg-[#382E28] transition-all shadow-pencil-sm"
+            title={t.actions.cancel || 'Schließen'}
+            aria-label="Schließen"
+            variant="ghost"
+            size="md"
+            className="relative z-10"
           >
-            <RoughBorder shape="circle" width={0.9} color="#6E5F54" />
-            <X className="w-4 h-4 stroke-[2] relative z-10" />
-          </button>
+            <X className="w-4 h-4 stroke-[2]" />
+          </IconButton>
         </div>
 
         {/* Content Body */}
@@ -172,16 +190,30 @@ export const ReviewModal: React.FC<ReviewModalProps> = ({ isOpen, onClose }) => 
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 mt-3 w-full sm:w-auto">
               <button
                 onClick={onClose}
-                className="px-4 py-2 rounded-none border-1.5 border-[#7A6A5E]/40 dark:border-[#EDE5DD]/40 text-[#4A3E36] dark:text-[#EDE5DD] bg-[#FDFBF7] dark:bg-[#28221D] hover:bg-[#F2EAE0] dark:hover:bg-[#322A23] font-hand font-bold text-sm sm:text-base sketch-btn-press transition-all"
+                className="px-4 py-2 rounded-none border-0 text-[#4A3E36] dark:text-[#EDE5DD] bg-[#FDFBF7] dark:bg-[#28221D] font-hand font-bold text-sm sm:text-base sketch-btn-press transition-all"
               >
                 {t.viewReview}
               </button>
               <button
                 onClick={handleFinishAndOpenNextWeek}
-                className="px-5 py-2 rounded-none bg-gradient-to-r from-[#9123A6] to-[#D7195F] hover:opacity-95 text-white border-2 border-[#7A6A5E]/50 dark:border-[#EDE5DD]/40 font-hand font-bold text-sm sm:text-base sketch-shadow-sm sketch-btn-press transition-all flex items-center justify-center gap-1.5"
+                className="group relative px-5 py-2 rounded-none border-0 text-white font-hand font-bold text-sm sm:text-base shadow-pencil-sm sketch-btn-press transition-all flex items-center justify-center gap-1.5 overflow-hidden active:scale-95"
               >
-                <span>{t.actions.startNextWeek} ({t.week} {nextWeekDetails.weekNumber})</span>
-                <ArrowRight className="w-4 h-4 stroke-[2.2]" />
+                {/* Cross-hatch rough background */}
+                <RoughBackground
+                  fill="#D7195F"
+                  darkFill="#C51756"
+                  fillStyle="cross-hatch"
+                  hachureAngle={-41}
+                  hachureGap={3.2}
+                  fillWeight={1.2}
+                  roughness={1.1}
+                  opacity={0.94}
+                  seed={77}
+                />
+                <span className="relative z-10 drop-shadow-[0_1px_1px_rgba(0,0,0,0.2)]">
+                  {t.actions.startNextWeek} ({t.week} {nextWeekDetails.weekNumber})
+                </span>
+                <ArrowRight className="w-4 h-4 stroke-[2.2] relative z-10" />
               </button>
             </div>
           </div>
@@ -228,40 +260,76 @@ export const ReviewModal: React.FC<ReviewModalProps> = ({ isOpen, onClose }) => 
                             <button
                               type="button"
                               onClick={() => handleStatusChange(goal.id, 'good')}
-                              className={`py-1.5 px-1 sm:px-2 rounded-none text-sm font-hand font-bold flex items-center justify-center gap-1.5 transition-all min-h-[38px] sketch-btn-press ${
+                              className={`group relative py-1.5 px-1 sm:px-2 rounded-none border-0 text-sm font-hand font-bold flex items-center justify-center gap-1.5 transition-all min-h-[38px] sketch-btn-press overflow-hidden ${
                                 currentEval.status === 'good'
-                                  ? 'bg-[#EEF5ED] dark:bg-[#203322] text-[#2F612C] dark:text-[#A6D6A2] border border-[#4D7A4A] shadow-pencil-sm'
-                                  : 'bg-[#FAF5ED]/80 dark:bg-[#25201C] text-[#7D6E63] dark:text-[#BA9F83] border border-[#7A6A5E]/20 dark:border-[#EDE5DD]/20 hover:border-[#4D7A4A]/50'
+                                  ? 'text-[#244E22] dark:text-[#A6D6A2] shadow-pencil-sm'
+                                  : 'bg-[#FAF5ED]/80 dark:bg-[#25201C] text-[#7D6E63] dark:text-[#BA9F83]'
                               }`}
                             >
-                              <CategoryIcon category={goal.category} variant="achieved" size={20} className="w-5 h-5 shrink-0" />
-                              <span className="truncate">{t.status.good}</span>
+                              {currentEval.status === 'good' && (
+                                <RoughBackground
+                                   fill="#4D7A4A"
+                                   darkFill="#4D7A4A"
+                                   fillStyle="cross-hatch"
+                                   hachureAngle={-41}
+                                   hachureGap={3.4}
+                                   fillWeight={1.1}
+                                   opacity={0.26}
+                                   seed={401}
+                                 />
+                              )}
+                              <CategoryIcon category={goal.category} variant="achieved" size={20} className="w-5 h-5 shrink-0 relative z-10" />
+                              <span className="truncate relative z-10">{t.status.good}</span>
                             </button>
 
                             <button
                               type="button"
                               onClick={() => handleStatusChange(goal.id, 'partly')}
-                              className={`py-1.5 px-1 sm:px-2 rounded-none text-sm font-hand font-bold flex items-center justify-center gap-1.5 transition-all min-h-[38px] sketch-btn-press ${
+                              className={`group relative py-1.5 px-1 sm:px-2 rounded-none border-0 text-sm font-hand font-bold flex items-center justify-center gap-1.5 transition-all min-h-[38px] sketch-btn-press overflow-hidden ${
                                 currentEval.status === 'partly'
-                                  ? 'bg-[#FDF7EA] dark:bg-[#342714] text-[#8C5212] dark:text-[#F3D190] border border-[#C97A1E] shadow-pencil-sm'
-                                  : 'bg-[#FAF5ED]/80 dark:bg-[#25201C] text-[#7D6E63] dark:text-[#BA9F83] border border-[#7A6A5E]/20 dark:border-[#EDE5DD]/20 hover:border-[#C97A1E]/50'
+                                  ? 'text-[#7A4305] dark:text-[#F3D190] shadow-pencil-sm'
+                                  : 'bg-[#FAF5ED]/80 dark:bg-[#25201C] text-[#7D6E63] dark:text-[#BA9F83]'
                               }`}
                             >
-                              <CategoryIcon category={goal.category} variant="partial" size={20} className="w-5 h-5 shrink-0" />
-                              <span className="truncate">{t.status.partly}</span>
+                              {currentEval.status === 'partly' && (
+                                <RoughBackground
+                                  fill="#C97A1E"
+                                  darkFill="#C97A1E"
+                                  fillStyle="cross-hatch"
+                                  hachureAngle={-41}
+                                  hachureGap={3.4}
+                                  fillWeight={1.1}
+                                  opacity={0.26}
+                                  seed={402}
+                                />
+                              )}
+                              <CategoryIcon category={goal.category} variant="partial" size={20} className="w-5 h-5 shrink-0 relative z-10" />
+                              <span className="truncate relative z-10">{t.status.partly}</span>
                             </button>
 
                             <button
                               type="button"
                               onClick={() => handleStatusChange(goal.id, 'poor')}
-                              className={`py-1.5 px-1 sm:px-2 rounded-none text-sm font-hand font-bold flex items-center justify-center gap-1.5 transition-all min-h-[38px] sketch-btn-press ${
+                              className={`group relative py-1.5 px-1 sm:px-2 rounded-none border-0 text-sm font-hand font-bold flex items-center justify-center gap-1.5 transition-all min-h-[38px] sketch-btn-press overflow-hidden ${
                                 currentEval.status === 'poor'
-                                  ? 'bg-[#FDF0EE] dark:bg-[#361914] text-[#9E352B] dark:text-[#F3A59C] border border-[#C44B40] shadow-pencil-sm'
-                                  : 'bg-[#FAF5ED]/80 dark:bg-[#25201C] text-[#7D6E63] dark:text-[#BA9F83] border border-[#7A6A5E]/20 dark:border-[#EDE5DD]/20 hover:border-[#C44B40]/50'
+                                  ? 'text-[#87231A] dark:text-[#F3A59C] shadow-pencil-sm'
+                                  : 'bg-[#FAF5ED]/80 dark:bg-[#25201C] text-[#7D6E63] dark:text-[#BA9F83]'
                               }`}
                             >
-                              <CategoryIcon category={goal.category} variant="not_achieved" size={20} className="w-5 h-5 shrink-0" />
-                              <span className="truncate">{t.status.poor}</span>
+                              {currentEval.status === 'poor' && (
+                                <RoughBackground
+                                  fill="#C44B40"
+                                  darkFill="#C44B40"
+                                  fillStyle="cross-hatch"
+                                  hachureAngle={-41}
+                                  hachureGap={3.4}
+                                  fillWeight={1.1}
+                                  opacity={0.26}
+                                  seed={403}
+                                />
+                              )}
+                              <CategoryIcon category={goal.category} variant="not_achieved" size={20} className="w-5 h-5 shrink-0 relative z-10" />
+                              <span className="truncate relative z-10">{t.status.poor}</span>
                             </button>
                           </div>
 
@@ -315,18 +383,28 @@ export const ReviewModal: React.FC<ReviewModalProps> = ({ isOpen, onClose }) => 
               <button
                 type="button"
                 onClick={onClose}
-                className="relative px-3.5 py-2 rounded-none text-[#4A3E36] dark:text-[#EDE5DD] hover:bg-[#EAE0D2] dark:hover:bg-[#28221C] text-sm font-hand font-bold transition-all sketch-btn-press shadow-pencil-sm"
+                className="relative px-3.5 py-2 rounded-none border-0 text-[#4A3E36] dark:text-[#EDE5DD] text-sm font-hand font-bold transition-all sketch-btn-press shadow-pencil-sm"
               >
-                <RoughBorder borderRadius={0} width={1.0} opacity={0.35} color="#6E5F54" />
                 <span className="relative z-10">{t.actions.cancel}</span>
               </button>
               <button
                 type="submit"
-                className="relative flex-1 sm:flex-initial px-5 py-2 rounded-none bg-gradient-to-r from-[#9123A6] to-[#D7195F] hover:opacity-95 text-white font-hand font-bold text-sm sm:text-base shadow-pencil-sm transition-all flex items-center justify-center gap-1.5 sketch-btn-press"
+                className="group relative flex-1 sm:flex-initial px-5 py-2 rounded-none border-0 text-white font-hand font-bold text-sm sm:text-base shadow-pencil-sm transition-all flex items-center justify-center gap-1.5 sketch-btn-press overflow-hidden active:scale-95"
               >
-                <RoughBorder borderRadius={0} color="#6E5F54" darkColor="#EDE5DD" opacity={0.45} />
+                {/* Tactile cross-hatch rough background */}
+                <RoughBackground
+                  fill="#D7195F"
+                  darkFill="#C51756"
+                  fillStyle="cross-hatch"
+                  hachureAngle={-41}
+                  hachureGap={3.2}
+                  fillWeight={1.2}
+                  roughness={1.1}
+                  opacity={0.94}
+                  seed={66}
+                />
                 <Sparkles className="w-4 h-4 stroke-[2.2] shrink-0 text-[#FFE2CD] relative z-10" />
-                <span className="truncate relative z-10">{t.reviewModal.finishButton}</span>
+                <span className="truncate relative z-10 drop-shadow-[0_1px_1px_rgba(0,0,0,0.2)]">{t.reviewModal.finishButton}</span>
               </button>
             </div>
           </form>

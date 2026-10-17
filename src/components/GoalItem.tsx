@@ -10,6 +10,7 @@ import type { Goal, Category } from '../types';
 import { useLanguage } from '../context/LanguageContext';
 import { RoughBorder } from './RoughBorder';
 import { CategoryIcon } from './CategoryIcon';
+import { IconButton } from './IconButton';
 
 interface GoalItemProps {
   goal: Goal;
@@ -68,7 +69,7 @@ export const GoalItem: React.FC<GoalItemProps> = ({
 
 
   return (
-    <div className="group relative p-3 sm:p-3.5 rounded-none bg-[#FDFBF7] dark:bg-[#28221D] sketch-border-sm shadow-pencil-sm hover:shadow-pencil transition-all flex flex-col gap-1.5">
+    <div className="group relative p-3 sm:p-3.5 rounded-none bg-[#FDFBF7] dark:bg-[#28221D] sketch-border-sm shadow-pencil-sm transition-all flex flex-col gap-1.5">
       <RoughBorder borderRadius={0} width={1.0} opacity={0.3} color="#6E5F54" />
       <div className="flex items-start justify-between gap-2.5 relative z-10">
         {/* Description / Edit Mode */}
@@ -85,24 +86,24 @@ export const GoalItem: React.FC<GoalItemProps> = ({
               autoFocus
               className="w-full text-sm px-3 py-1.5 rounded-none border border-[#7A6A5E]/25 dark:border-[#EDE5DD]/20 bg-[#FAF6F0] dark:bg-[#241E19] text-[#4A3E36] dark:text-[#EDE5DD] focus:outline-none focus:ring-1 focus:ring-[#D7195F]"
             />
-            <button
+            <IconButton
               onClick={handleSaveEdit}
-              className="relative p-1.5 rounded-full bg-[#5C4F45] dark:bg-[#EDE5DD] text-white dark:text-[#28221D] hover:opacity-90 sketch-btn-press transition-all shrink-0"
               title={t.actions.save}
               aria-label={t.actions.save}
+              variant="primary"
+              size="sm"
             >
-              <RoughBorder shape="circle" width={0.9} color="#6E5F54" />
-              <Check className="w-4 h-4 stroke-[2.2] relative z-10" />
-            </button>
-            <button
+              <Check className="w-3.5 h-3.5 stroke-[2.2]" />
+            </IconButton>
+            <IconButton
               onClick={() => setIsEditing(false)}
-              className="relative p-1.5 rounded-full bg-[#EAE0D2] dark:bg-[#3D342E] text-[#4A3E36] dark:text-[#EDE5DD] hover:bg-[#DDD2C2] dark:hover:bg-[#4D423B] sketch-btn-press transition-all shrink-0"
               title={t.actions.cancel}
               aria-label={t.actions.cancel}
+              variant="subtle"
+              size="sm"
             >
-              <RoughBorder shape="circle" width={0.9} color="#6E5F54" />
-              <X className="w-4 h-4 stroke-[2.2] relative z-10" />
-            </button>
+              <X className="w-3.5 h-3.5 stroke-[2.2]" />
+            </IconButton>
           </div>
         ) : (
           <div className="flex-1 min-w-0">
@@ -114,27 +115,29 @@ export const GoalItem: React.FC<GoalItemProps> = ({
 
         {/* Action icons (Edit / Delete) - hidden for finished/read-only weeks */}
         {!isEditing && !isReadOnly && (
-          <div className="flex items-center gap-0.5 opacity-75 sm:opacity-30 sm:group-hover:opacity-100 transition-opacity">
-            <button
+          <div className="flex items-center gap-1 opacity-75 sm:opacity-75">
+            <IconButton
               onClick={() => setIsEditing(true)}
-              className="p-1.5 text-[#7D6E63] hover:text-[#4A3E36] dark:hover:text-[#EDE5DD] hover:bg-[#F2EAE0] dark:hover:bg-[#322A23] active:scale-90 transition-all rounded-full"
               title={t.actions.edit}
               aria-label={t.actions.edit}
+              variant="ghost"
+              size="sm"
             >
               <Edit3 className="w-3.5 h-3.5 stroke-[2]" />
-            </button>
-            <button
+            </IconButton>
+            <IconButton
               onClick={() => {
                 if (window.confirm(t.actions.deleteConfirm)) {
                   onDelete();
                 }
               }}
-              className="p-1.5 text-[#7D6E63] hover:text-[#B83E32] dark:hover:text-[#F3A59C] hover:bg-[#FDF0EE] dark:hover:bg-[#361914] active:scale-90 transition-all rounded-full"
               title={t.actions.delete}
               aria-label={t.actions.delete}
+              variant="danger"
+              size="sm"
             >
               <Trash2 className="w-3.5 h-3.5 stroke-[2]" />
-            </button>
+            </IconButton>
           </div>
         )}
       </div>
