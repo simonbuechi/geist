@@ -26,16 +26,16 @@ Following the evolution of the sketchbook design, background areas use **warm pa
 
 | Component / Area | Light Mode Wash | Dark Mode Wash | Border Divider / Accent |
 | :--- | :--- | :--- | :--- |
-| **Canvas Body** | `#F4EFE6` (Radial Gradient with SVG Noise overlay) | `#1C1815` (Dark Radial Gradient) | Edge-to-edge textured paper canvas |
-| **Körper (Body) Header** | `#F2EAE0` (Warm Biscuit Wash) | `#2A221C` | `border-b border-[#7A6A5E]/20` |
-| **Geist (Mind) Header** | `#F2EAE0` (Warm Biscuit Wash) | `#2A221C` | `border-b border-[#7A6A5E]/20` |
-| **Seele (Soul) Header** | `#F2EAE0` (Warm Biscuit Wash) | `#2A221C` | `border-b border-[#7A6A5E]/20` |
-| **Inline Add Note Form** | `#FAF5ED` (Soft Oatmeal Paper) | `#25201C` | Hand-drawn dashed border |
-| **Review Modal Header** | `#F2EAE0` (Warm Biscuit Header) | `#2A221C` | `border-b border-[#7A6A5E]/20` |
-| **Unreviewed Banner** | `#FFF9F0` (Amber Parchment) | `#2A231A` | `border border-[#D4A759]/50` |
-| **Reviewed Banner** | `#F5FAF3` (Sage Tint) | `#202720` | `border border-[#4D7A4A]/35` |
-| **Primary Action Button** | Gradient `#9123A6` to `#D7195F` | Gradient `#9123A6` to `#D7195F` | `shadow-pencil-sm` (Retained vibrant berry/violet) |
-| **Dimension Card Box Border** | Hand-sketched via `rough.js` (`#6E5F54`) | Hand-sketched via `rough.js` (`#EDE5DD`) | Edgy sharp pencil stroke contour |
+| **Canvas Body** | `#F4EFE6` warm art paper with soft, uneven `rough.js` cross-hatch (`hachureGap: 18`, `roughness: 2.3`, `bowing: 1.3`, `opacity: 0.13`) | `#1C1815` dark paper with chalk ivory cross-hatch (`opacity: 0.09`) | Edge-to-edge textured hand-drawn paper canvas |
+| **Körper, Geist, Seele Areas** | Transparent column container (`bg-transparent`, no card cross-hatch) | Transparent column container (`bg-transparent`, no card cross-hatch) | Body background shines through; cards float on the surface |
+| **Category Header Cards** | Clean paper background (`#FDFBF7`) with hand-sketched RoughBorder | Clean dark paper (`#28221D`) with RoughBorder | `shadow-pencil-sm` tactile paper card |
+| **Inline Add Note Form** | Soft oatmeal paper with warm amber cross-hatch (`#D4A759`, `-30°`, `gap: 6.5px`) | Dark oatmeal paper with amber cross-hatch | Hand-drawn dashed pencil border |
+| **Review Modal Header** | Hand-drawn warm biscuit cross-hatch (`#8A5034`, `-41°`) | `#D49B7A` cross-hatch | `border-b border-[#7A6A5E]/20` + hand-drawn divider line |
+| **Unreviewed Banner** | Amber parchment cross-hatch (`#D4A759`, `-41°`, `gap: 9px`) | Dark amber parchment cross-hatch | Hand-drawn RoughBorder |
+| **Reviewed Banner** | Sage green cross-hatch (`#4D7A4A`, `-41°`, `gap: 9px`) | Dark sage cross-hatch | Hand-drawn RoughBorder |
+| **Primary Action Button** | Rounded pill (`rounded-full`) with tactile cross-hatch (`#D7195F` / `#4D7A4A`, `gap: 3.8px`) | Rounded pill with tactile cross-hatch | Borderless (`border-0`), defined purely by hand-drawn rough.js fill & shadow |
+| **Icon Buttons** | Circular (`rounded-full`) with rough.js **zigzag fill** (`fillStyle: 'zigzag'`, `fillWeight: 1.8`, `gap: 2.4px`, `opacity: 0.55`) | Circular with ivory chalk zigzag fill | No shadow, no border, no background color — defined purely by rough.js zigzag |
+| **Header Bar** | Borderless and transparent (`bg-transparent`) without background filling | Borderless and transparent (`bg-transparent`) | Canvas background flows seamlessly under the header |
 
 ---
 
@@ -244,15 +244,19 @@ Unlike harsh, high-contrast comic book shadows, KGS uses delicate, warm graphite
 ## 7. Component Layout & Aesthetics
 
 ### 7.1 Category Card ([`CategoryCard.tsx`](file:///d:/dev/antigravity/geist/src/components/CategoryCard.tsx))
-- **Container**: `paper-card shadow-pencil-sm border border-[#574A40]/25 dark:border-[#EDE5DD]/20`
-- **Header**: Backed by dynamic `RoughBackground` colored pencil hachure at a dimension-specific angle (`-35°`, `42°`, `-40°`), fine 1px pencil border separator, and icon pill in white paper with `shadow-pencil-sm`.
-- **Inline Add Form**: Sketchbook sticky note with soft cross-hatching (`opacity: 0.06`, `hachureGap: 12px`), dashed pencil border, and smooth autofocus textarea.
-- **Empty State**: Airy dashed border (`border border-dashed border-[#574A40]/30`) with pencil plus icon encouraging new entries.
+- **Container**: Transparent (`bg-transparent`) without background fill or outer cross-hatch, allowing the textured body background to shine through between sections.
+- **Header**: Dedicated clean card paper background (`bg-[#FDFBF7] dark:bg-[#28221D]`) with hand-sketched RoughBorder, dimension-specific vector icon, hand-written category title, and goal count badge.
+- **Goal Items**: Individual clean paper cards with hand-sketched rough borders.
+- **Inline Add Form**: Sketchbook sticky note with soft cross-hatching (`opacity: 0.14`, `hachureGap: 6.5px`), dashed pencil border, and smooth autofocus textarea.
+- **Empty State**: Clean paper card with dashed border and circular rough.js zigzag icon.
 
 ### 7.2 Header & Week Navigation ([`Header.tsx`](file:///d:/dev/antigravity/geist/src/components/Header.tsx))
-- Clean borderless, transparent header (`bg-transparent`) seamlessly blending into the canvas background.
-- Week indicator card styled as a pressed paper label with `shadow-pencil-sm`.
-- Primary CTA *"Rückblick & Planen"* in signature purple/berry gradient with gentle pencil shadow and hover micro-animations.
+- Clean borderless, transparent header (`bg-transparent`) seamlessly blending into the canvas background without filling.
+- Week navigation and actions blend directly with the textured background.
+- Primary CTA ([`PrimaryActionButton.tsx`](file:///d:/dev/antigravity/geist/src/components/PrimaryActionButton.tsx)):
+  - Borderless rounded pill with dynamic tactile rough.js cross-hatch shading (`#D7195F` unreviewed, `#4D7A4A` reviewed).
+  - Clean and steady appearance without hover bracket animations.
+  - Tactile active press response (`active:scale-95`).
 
 ### 7.3 Weekly Review Modal ([`ReviewModal.tsx`](file:///d:/dev/antigravity/geist/src/components/ReviewModal.tsx))
 - Notebook cover styled with dynamic terracotta `RoughBackground` hachure (`opacity: 0.14`).
