@@ -37,32 +37,13 @@
   }
 
   body {
-    background-color: #f4efe6;
-    background-image: radial-gradient(circle at center,
-        rgba(225, 204, 177, 0.4) 0%,
-        rgba(66, 52, 32, 0.15) 100%);
-    background-attachment: fixed;
+    background-color: #F4EFE6;
     position: relative;
     color: #4A3E36;
   }
 
-  body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    opacity: 0.2;
-    mix-blend-mode: overlay;
-    pointer-events: none;
-    z-index: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.80' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-  }
-
   .dark body {
-    background-color: #1f1b18;
-    background-image: radial-gradient(circle at center,
-        rgba(255, 255, 255, 0.05) 0%,
-        rgba(0, 0, 0, 0.35) 100%);
-    background-attachment: fixed;
+    background-color: #1C1815;
     color: #EDE5DD;
   }
 
@@ -78,10 +59,6 @@
 
   ::-webkit-scrollbar-thumb {
     @apply bg-[#C5B4A2]/70 dark:bg-[#5C4F45]/70 rounded-full;
-  }
-
-  ::-webkit-scrollbar-thumb:hover {
-    @apply bg-[#B5A18E] dark:bg-[#7A6A5E];
   }
 }
 
@@ -173,15 +150,6 @@
 
   .dark .sketch-shadow-sm {
     box-shadow: 1px 1.5px 0px 0px rgba(237, 229, 221, 0.14);
-  }
-
-  .sketch-shadow-hover:hover {
-    transform: translate(-0.5px, -0.5px);
-    box-shadow: 2px 3px 0px 0px rgba(74, 62, 54, 0.30);
-  }
-
-  .dark .sketch-shadow-hover:hover {
-    box-shadow: 2px 3px 0px 0px rgba(237, 229, 221, 0.22);
   }
 
   .sketch-btn-press:active {

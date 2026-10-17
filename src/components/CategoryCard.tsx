@@ -10,6 +10,8 @@ import { useGoals } from '../context/GoalsContext';
 import { GoalItem } from './GoalItem';
 import { CategoryIcon } from './CategoryIcon';
 import { RoughBorder } from './RoughBorder';
+import { RoughBackground } from './RoughBackground';
+import { IconButton } from './IconButton';
 
 interface CategoryCardProps {
   category: Category;
@@ -44,13 +46,11 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({ category }) => {
   const unifiedTheme = {
     accentColor: 'text-[#8A5034] dark:text-[#E8A588]',
     roughColor: '#7A6A5E',
-    headerBg: 'bg-[#F2EAE0]/85 dark:bg-[#322A23]/85',
     headerBorder: 'border-b border-[#7A6A5E]/20 dark:border-[#EDE5DD]/15',
     stickyBg: 'bg-[#FAF5ED] dark:bg-[#2C241E]',
-    cardBorder: 'border-[#7A6A5E]/25 hover:border-[#7A6A5E]/45 dark:border-[#EDE5DD]/20 dark:hover:border-[#EDE5DD]/35',
-    badgeBg: 'bg-[#E8DDCF] dark:bg-[#382E26] text-[#5C4F45] dark:text-[#D5C7BC]',
-    quickAddBg: 'hover:bg-[#E8DDCF] text-[#5C4F45] dark:text-[#D5C7BC]',
-    btnBg: 'bg-gradient-to-r from-[#9123A6] to-[#D7195F] hover:opacity-95 text-white',
+    cardBorder: 'border-[#7A6A5E]/25 dark:border-[#EDE5DD]/20',
+    badgeBg: 'bg-[#E8DDCF]/90 dark:bg-[#382E26]/90 text-[#5C4F45] dark:text-[#D5C7BC]',
+    quickAddBg: 'text-[#5C4F45] dark:text-[#D5C7BC]',
     focusRing: 'focus:ring-[#D7195F]/25 focus:border-[#D7195F]',
   };
 
@@ -65,19 +65,16 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({ category }) => {
   const isFinished = Boolean(currentWeekPlan.reviewedAt);
 
   return (
-    <div className="relative flex flex-col h-full bg-[#FDFBF7] dark:bg-[#28221D] rounded-none shadow-pencil transition-all">
-      {/* Rough.js Hand-Sketched Contour Border in Soft Brownish-Grey */}
-      <RoughBorder
-        color="#6E5F54"
-        darkColor="#EDE5DD"
-        width={1.2}
-        roughness={1.5}
-        bowing={1.2}
-        opacity={0.35}
-      />
-
-      {/* Category Header with Warm Beige Tinted Background Color */}
-      <div className={`relative p-3.5 sm:p-4 flex items-center justify-between gap-2.5 overflow-hidden ${currentTheme.headerBg} ${currentTheme.headerBorder}`}>
+    <div className="relative flex flex-col h-full bg-transparent rounded-none transition-all gap-2.5">
+      {/* Category Header Card with clean readable background */}
+      <div className="relative p-3 sm:p-3.5 rounded-none bg-[#FDFBF7] dark:bg-[#28221D] border border-[#7A6A5E]/25 dark:border-[#EDE5DD]/20 shadow-pencil-sm flex items-center justify-between gap-2.5 overflow-hidden">
+        <RoughBorder
+          borderRadius={0}
+          width={1.0}
+          opacity={0.3}
+          color="#6E5F54"
+          darkColor="#EDE5DD"
+        />
         <div className="relative z-10 flex items-center gap-2.5 sm:gap-3">
           <div className="shrink-0 flex items-center justify-center">
             <CategoryIcon category={category} variant="base" size={56} className="w-12 h-12 sm:w-14 sm:h-14" />
@@ -86,7 +83,7 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({ category }) => {
             <h2 className="text-xl sm:text-2xl font-hand font-bold tracking-wide text-[#4A3E36] dark:text-[#EDE5DD]">
               {categoryInfo.title}
             </h2>
-            <span className={`text-2xs px-2 py-0.5 rounded-none font-sans font-semibold ${currentTheme.badgeBg}`}>
+            <span className={`text-2xs px-2 py-0.5 rounded-none font-sans font-semibold border border-[#7A6A5E]/20 dark:border-[#EDE5DD]/15 shadow-pencil-sm ${currentTheme.badgeBg}`}>
               {categoryGoals.length} {categoryGoals.length === 1 ? 'Ziel' : 'Ziele'}
             </span>
           </div>
@@ -94,27 +91,37 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({ category }) => {
 
         {/* Quick Add Button - only for unfinished weeks */}
         {!isFinished && (
-          <button
+          <IconButton
             onClick={() => setIsAdding(!isAdding)}
-            title={t.actions.addGoal}
-            aria-label={t.actions.addGoal}
-            className={`relative z-10 p-1.5 rounded-full transition-all sketch-btn-press shrink-0 ${
-              isAdding
-                ? 'bg-[#EAE0D2] dark:bg-[#3D342E] text-[#4A3E36] dark:text-[#EDE5DD]'
-                : `${currentTheme.quickAddBg} bg-white/90 dark:bg-[#28221D] shadow-pencil-sm`
-            }`}
+            title={isAdding ? t.actions.cancel : t.actions.addGoal}
+            aria-label={isAdding ? t.actions.cancel : t.actions.addGoal}
+            variant={isAdding ? 'subtle' : 'default'}
+            size="md"
+            className="relative z-10"
           >
-            <RoughBorder shape="circle" width={1.0} opacity={0.35} />
-            <span className="relative z-10 block">{isAdding ? <X className="w-4 h-4 stroke-[2]" /> : <Plus className="w-4 h-4 stroke-[2]" />}</span>
-          </button>
+            {isAdding ? <X className="w-4 h-4 stroke-[2]" /> : <Plus className="w-4 h-4 stroke-[2]" />}
+          </IconButton>
         )}
       </div>
 
       {/* Goals List */}
-      <div className="p-3 sm:p-4 flex-1 flex flex-col gap-2.5 overflow-y-auto">
-        {/* Inline Add Form - Notebook Sticky Note Style with Warm Tinted Background (only for active weeks) */}
+      <div className="flex-1 flex flex-col gap-2.5 overflow-y-auto relative z-10">
+        {/* Inline Add Form - Notebook Sticky Note Style with Tactile Cross-Hatch Pencil Background */}
         {isAdding && !isFinished && (
           <form onSubmit={handleAddGoal} className={`relative p-3.5 rounded-none ${currentTheme.stickyBg} border border-dashed border-[#7A6A5E]/30 dark:border-[#EDE5DD]/25 flex flex-col gap-2.5 animate-slide-up shadow-pencil-sm overflow-hidden`}>
+            {/* Tactile sticky note cross-hatch texture */}
+            <RoughBackground
+              fill="#D4A759"
+              darkFill="#D4A759"
+              fillStyle="cross-hatch"
+              hachureAngle={-30}
+              hachureGap={6.5}
+              fillWeight={1.0}
+              roughness={1.2}
+              opacity={0.14}
+              seed={99}
+            />
+
             <textarea
               value={newGoalText}
               onChange={(e) => setNewGoalText(e.target.value)}
@@ -133,18 +140,29 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({ category }) => {
               <button
                 type="button"
                 onClick={() => setIsAdding(false)}
-                className="px-3.5 py-1.5 rounded-none text-xs text-[#7D6E63] dark:text-[#BA9F83] hover:bg-[#EAE0D2] dark:hover:bg-[#382E28] transition-all font-medium"
+                className="px-3.5 py-1.5 rounded-none text-xs text-[#7D6E63] dark:text-[#BA9F83] transition-all font-medium"
               >
                 {t.actions.cancel}
               </button>
               <button
                 type="submit"
                 disabled={!newGoalText.trim()}
-                className={`relative px-4 py-1.5 rounded-none ${currentTheme.btnBg} shadow-pencil-sm sketch-btn-press disabled:opacity-50 text-sm font-hand font-bold flex items-center gap-1.5 transition-all`}
+                className="group relative px-4 py-1.5 rounded-none border-0 shadow-pencil-sm sketch-btn-press disabled:opacity-50 text-sm font-hand font-bold text-white flex items-center gap-1.5 transition-all overflow-hidden"
               >
-                <RoughBorder borderRadius={0} width={1.0} opacity={0.4} />
+                {/* Tactile cross-hatch rough background */}
+                <RoughBackground
+                  fill="#D7195F"
+                  darkFill="#C51756"
+                  fillStyle="cross-hatch"
+                  hachureAngle={-41}
+                  hachureGap={3.2}
+                  fillWeight={1.2}
+                  roughness={1.1}
+                  opacity={0.94}
+                  seed={55}
+                />
                 <Check className="w-3.5 h-3.5 stroke-[2.2] relative z-10" />
-                <span className="relative z-10">{t.actions.save}</span>
+                <span className="relative z-10 drop-shadow-[0_1px_1px_rgba(0,0,0,0.2)]">{t.actions.save}</span>
               </button>
             </div>
           </form>
@@ -152,7 +170,7 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({ category }) => {
 
         {categoryGoals.length === 0 && !isAdding ? (
           isFinished ? (
-            <div className="flex-1 min-h-[120px] flex flex-col items-center justify-center p-6 border border-dashed border-[#7A6A5E]/20 dark:border-[#EDE5DD]/15 rounded-none text-center">
+            <div className="flex-1 min-h-[120px] flex flex-col items-center justify-center p-6 border border-dashed border-[#7A6A5E]/20 dark:border-[#EDE5DD]/15 rounded-none text-center bg-[#FDFBF7] dark:bg-[#28221D] shadow-pencil-sm">
               <p className="text-sm sm:text-base text-[#7D6E63] dark:text-[#BA9F83] font-hand italic max-w-[200px]">
                 {t.emptyCategory}
               </p>
@@ -160,10 +178,22 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({ category }) => {
           ) : (
             <div 
               onClick={() => setIsAdding(true)}
-              className="flex-1 min-h-[140px] flex flex-col items-center justify-center p-6 border border-dashed border-[#7A6A5E]/30 dark:border-[#EDE5DD]/25 rounded-none cursor-pointer hover:border-[#7A6A5E]/60 dark:hover:border-[#EDE5DD]/50 group transition-all text-center"
+              className="flex-1 min-h-[140px] flex flex-col items-center justify-center p-6 border border-dashed border-[#7A6A5E]/30 dark:border-[#EDE5DD]/25 rounded-none cursor-pointer group transition-all text-center bg-[#FDFBF7] dark:bg-[#28221D] shadow-pencil-sm hover:border-[#D7195F]/50"
             >
-              <div className="w-10 h-10 rounded-full bg-[#EFE7DC] dark:bg-[#28221D] border border-[#7A6A5E]/25 dark:border-[#EDE5DD]/20 flex items-center justify-center text-[#7D6E63] dark:text-[#BA9F83] group-hover:text-[#4A3E36] dark:group-hover:text-[#EDE5DD] group-hover:scale-110 transition-all mb-2 shadow-pencil-sm">
-                <Plus className="w-5 h-5 stroke-[2]" />
+              <div className="relative w-10 h-10 rounded-full bg-transparent flex items-center justify-center text-[#7D6E63] dark:text-[#BA9F83] transition-all mb-2 overflow-hidden">
+                <RoughBackground
+                  shape="circle"
+                  fillStyle="zigzag"
+                  fill="#7A6A5E"
+                  darkFill="#EDE5DD"
+                  hachureAngle={-41}
+                  hachureGap={2.4}
+                  fillWeight={1.8}
+                  roughness={1.0}
+                  opacity={0.55}
+                  seed={22}
+                />
+                <Plus className="w-5 h-5 stroke-[2] relative z-10" />
               </div>
               <p className="text-sm sm:text-base text-[#7D6E63] dark:text-[#BA9F83] font-hand font-medium max-w-[200px]">
                 {t.emptyCategory}
@@ -184,25 +214,12 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({ category }) => {
         )}
       </div>
 
-      {/* Footer / Quick Add Trigger Bar */}
-      {!isAdding && categoryGoals.length > 0 && (
-        <div className="px-3.5 py-2 bg-[#F5EDE1]/60 dark:bg-[#241E19]/70 border-t border-[#7A6A5E]/15 dark:border-[#EDE5DD]/10 flex items-center justify-between text-2xs">
-          {!isFinished ? (
-            <button
-              onClick={() => setIsAdding(true)}
-              className="py-1 px-2 -ml-1 text-sm font-hand font-bold text-[#7D6E63] dark:text-[#BA9F83] hover:text-[#4A3E36] dark:hover:text-[#EDE5DD] rounded-none active:bg-[#EAE0D2] dark:active:bg-[#28221D] flex items-center gap-1 transition-all"
-            >
-              <Plus className="w-3.5 h-3.5 stroke-[2.5]" />
-              <span>{t.actions.addGoal}</span>
-            </button>
-          ) : (
-            <div />
-          )}
-          {goodCount > 0 && (
-            <span className={`text-2xs font-sans font-semibold ${currentTheme.accentColor} ml-auto`}>
-              {goodCount} / {categoryGoals.length} {t.stats.goalsCompleted}
-            </span>
-          )}
+      {/* Footer / Stats Bar (shown when goals are reviewed and completed) */}
+      {!isAdding && categoryGoals.length > 0 && goodCount > 0 && (
+        <div className="px-3.5 py-1.5 bg-[#FDFBF7] dark:bg-[#28221D] border border-[#7A6A5E]/20 dark:border-[#EDE5DD]/15 shadow-pencil-sm flex items-center justify-end text-2xs rounded-none">
+          <span className={`text-2xs font-sans font-semibold ${currentTheme.accentColor}`}>
+            {goodCount} / {categoryGoals.length} {t.stats.goalsCompleted}
+          </span>
         </div>
       )}
     </div>
