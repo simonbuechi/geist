@@ -12,6 +12,9 @@ import { CategoryIcon } from './CategoryIcon';
 import { RoughBorder } from './RoughBorder';
 import { RoughBackground } from './RoughBackground';
 import { IconButton } from './IconButton';
+import { RoughButton } from './RoughButton';
+import { RoughHoverBorder } from './RoughHoverBorder';
+import { RoughNotationHighlight } from './RoughNotationHighlight';
 
 interface CategoryCardProps {
   category: Category;
@@ -31,48 +34,34 @@ interface DimensionTheme {
   saveDarkFill: string;
 }
 
+const unifiedTheme: Omit<DimensionTheme, 'seed' | 'hachureAngle'> = {
+  headerWash: 'bg-[#F3EDE2]/75 dark:bg-[#2A2521]/75',
+  roughFill: '#C8A986',
+  roughDarkFill: '#C8A986',
+  accentText: 'text-[#5C524B] dark:text-[#C5B9AE]',
+  badgeClasses:
+    'bg-[#EAE2D3]/90 dark:bg-[#2F2A26]/90 text-[#5C524B] dark:text-[#C5B9AE] border-[#8C7E72]/35 dark:border-[#7A6F66]/40',
+  tapeClasses: 'bg-[#D8C6B0]/45 dark:bg-[#8C7E72]/30 border-[#8C7E72]/25',
+  focusRing: 'focus:ring-[#8A6A46]/30 focus:border-[#8A6A46]',
+  saveFill: '#C46345',
+  saveDarkFill: '#B8583B',
+};
+
 const dimensionThemes: Record<Category, DimensionTheme> = {
   body: {
-    headerWash: 'bg-[#FAF1ED]/80 dark:bg-[#2C211D]/70',
-    roughFill: '#C46345',
-    roughDarkFill: '#E2876B',
+    ...unifiedTheme,
     hachureAngle: -38,
     seed: 101,
-    accentText: 'text-[#B55437] dark:text-[#E2876B]',
-    badgeClasses:
-      'bg-[#F4E3DC]/90 dark:bg-[#3A2721]/90 text-[#964229] dark:text-[#EBB09C] border-[#D49783]/45 dark:border-[#7A483A]/50',
-    tapeClasses: 'bg-[#DF9A84]/35 dark:bg-[#C46345]/30 border-[#C46345]/25',
-    focusRing: 'focus:ring-[#C46345]/30 focus:border-[#C46345]',
-    saveFill: '#C46345',
-    saveDarkFill: '#B35336',
   },
   mind: {
-    headerWash: 'bg-[#F1F6F1]/80 dark:bg-[#1E2820]/70',
-    roughFill: '#557659',
-    roughDarkFill: '#89B08E',
-    hachureAngle: 42,
+    ...unifiedTheme,
+    hachureAngle: -38,
     seed: 102,
-    accentText: 'text-[#46664A] dark:text-[#89B08E]',
-    badgeClasses:
-      'bg-[#E2EDE3]/90 dark:bg-[#253528]/90 text-[#3B593F] dark:text-[#A8CBAE] border-[#8FB093]/45 dark:border-[#4A6B4E]/50',
-    tapeClasses: 'bg-[#8FB093]/35 dark:bg-[#557659]/30 border-[#557659]/25',
-    focusRing: 'focus:ring-[#557659]/30 focus:border-[#557659]',
-    saveFill: '#557659',
-    saveDarkFill: '#46664A',
   },
   soul: {
-    headerWash: 'bg-[#F9F1F4]/80 dark:bg-[#2A1F24]/70',
-    roughFill: '#9E5870',
-    roughDarkFill: '#D48BA3',
-    hachureAngle: -32,
+    ...unifiedTheme,
+    hachureAngle: -38,
     seed: 103,
-    accentText: 'text-[#8C475F] dark:text-[#D48BA3]',
-    badgeClasses:
-      'bg-[#EFE0E6]/90 dark:bg-[#38252D]/90 text-[#7A3B51] dark:text-[#E5ACC0] border-[#C792A4]/45 dark:border-[#6E4253]/50',
-    tapeClasses: 'bg-[#C792A4]/35 dark:bg-[#9E5870]/30 border-[#9E5870]/25',
-    focusRing: 'focus:ring-[#9E5870]/30 focus:border-[#9E5870]',
-    saveFill: '#9E5870',
-    saveDarkFill: '#87445B',
   },
 };
 
@@ -87,6 +76,7 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({ category }) => {
 
   const [isAdding, setIsAdding] = useState(false);
   const [newGoalText, setNewGoalText] = useState('');
+  const [isEmptyHovered, setIsEmptyHovered] = useState(false);
 
   const categoryGoals = currentWeekPlan.goals.filter(g => g.category === category);
   const categoryInfo = t.categories[category];
@@ -106,7 +96,7 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({ category }) => {
   return (
     <section
       aria-label={categoryInfo.title}
-      className="relative flex flex-col h-full notebook-sheet rounded-xs transition-all pt-1 overflow-visible"
+      className="relative flex flex-col h-full notebook-sheet rounded-xs pt-1 overflow-visible"
     >
       {/* Playful artisanal washi-tape strip pinning the notebook page */}
       <div
@@ -125,7 +115,7 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({ category }) => {
       />
 
       {/* Category Notebook Header Band with Colored-Pencil Hachure */}
-      <div className={`relative px-4 py-3.5 sm:px-5 sm:py-4 flex items-center justify-between gap-2.5 overflow-hidden ${currentTheme.headerWash}`}>
+      <div className={`relative px-4 py-3.5 sm:px-5 sm:py-4 flex items-center justify-between gap-2.5 overflow-visible ${currentTheme.headerWash}`}>
         <RoughBackground
           fill={currentTheme.roughFill}
           darkFill={currentTheme.roughDarkFill}
@@ -141,7 +131,7 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({ category }) => {
           seed={currentTheme.seed}
         />
 
-        <div className="relative z-10 flex items-center gap-3.5">
+        <div className="relative z-10 flex items-center gap-3.5 overflow-visible">
           <div className="shrink-0 flex items-center justify-center">
             <CategoryIcon
               category={category}
@@ -150,10 +140,20 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({ category }) => {
               className="w-16 h-16 sm:w-20 sm:h-20 drop-shadow-[0_1px_2px_rgba(68,56,46,0.14)]"
             />
           </div>
-          <div className="flex items-center gap-2.5">
-            <h2 className="text-xl sm:text-2xl font-hand font-bold tracking-normal text-[#332B25] dark:text-[#EAE2D9] leading-relaxed py-0.5">
-              {categoryInfo.title}
-            </h2>
+          <div className="flex items-center gap-2.5 overflow-visible">
+            <RoughNotationHighlight
+              type="box"
+              trigger="click"
+              color="#9123A6"
+              darkColor="#D7195F"
+              strokeWidth={1.6}
+              padding={[3, 6, 6, 6]}
+              className="cursor-pointer"
+            >
+              <h2 className="text-xl sm:text-2xl font-hand font-bold tracking-normal bg-gradient-to-r from-[#9123A6] to-[#D7195F] bg-clip-text text-transparent leading-[1.7] pt-0.5 pb-1.5 px-1 select-none">
+                {categoryInfo.title}
+              </h2>
+            </RoughNotationHighlight>
             <span
               className={`text-2xs px-2 py-0.5 rounded-full font-sans font-semibold border ${currentTheme.badgeClasses}`}
             >
@@ -183,7 +183,7 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({ category }) => {
         {isAdding && !isFinished && (
           <form
             onSubmit={handleAddGoal}
-            className="relative p-3.5 mb-2 rounded-xs bg-[#F7F1E7] dark:bg-[#2B2521] border border-dashed border-[#7A6A5E]/40 dark:border-[#A89B8F]/30 flex flex-col gap-2.5 animate-slide-up shadow-pencil-sm overflow-hidden"
+            className="relative p-3.5 mb-2 rounded-xs bg-[#F7F1E7] dark:bg-[#2B2521] border border-dashed border-[#7A6A5E]/40 dark:border-[#A89B8F]/30 flex flex-col gap-2.5 animate-slide-up shadow-pencil-sm overflow-visible"
           >
             <RoughBackground
               fill={currentTheme.roughFill}
@@ -212,36 +212,24 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({ category }) => {
               }}
             />
             <div className="relative z-10 flex items-center justify-end gap-2">
-              <button
+              <RoughButton
                 type="button"
+                variant="ghost"
+                size="sm"
                 onClick={() => setIsAdding(false)}
-                className="px-3 py-1 rounded-xs text-xs text-[#6E6258] dark:text-[#A89B8F] hover:text-[#332B25] dark:hover:text-[#EAE2D9] transition-colors font-sans font-medium"
               >
-                {t.actions.cancel}
-              </button>
-              <button
+                <span>{t.actions.cancel}</span>
+              </RoughButton>
+              <RoughButton
                 type="submit"
+                variant="primary"
+                size="sm"
                 disabled={!newGoalText.trim()}
-                className="group relative px-4 py-1.5 rounded-full border-0 shadow-pencil-sm sketch-btn-press disabled:opacity-45 text-xs font-sans font-semibold text-white flex items-center gap-1.5 transition-all overflow-hidden"
+                seed={55}
               >
-                <RoughBackground
-                  fill={currentTheme.saveFill}
-                  darkFill={currentTheme.saveDarkFill}
-                  shape="rounded"
-                  borderRadius={999}
-                  fillStyle="cross-hatch"
-                  hachureAngle={-41}
-                  hachureGap={3.0}
-                  fillWeight={1.3}
-                  roughness={1.1}
-                  opacity={0.95}
-                  seed={55}
-                />
-                <Check className="w-3.5 h-3.5 stroke-[2.3] relative z-10" />
-                <span className="relative z-10 drop-shadow-[0_1px_1px_rgba(0,0,0,0.25)]">
-                  {t.actions.save}
-                </span>
-              </button>
+                <Check className="w-3.5 h-3.5 stroke-[2.3]" />
+                <span>{t.actions.save}</span>
+              </RoughButton>
             </div>
           </form>
         )}
@@ -257,24 +245,33 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({ category }) => {
             <button
               type="button"
               onClick={() => setIsAdding(true)}
-              className="flex-1 min-h-[150px] w-full flex flex-col items-center justify-center p-6 my-1 border border-dashed border-[#8C7D71]/30 dark:border-[#A89B8F]/20 rounded-xs cursor-pointer group transition-colors hover:bg-[#F7F1E7]/50 dark:hover:bg-[#2B2521]/40 text-center"
+              onMouseEnter={() => setIsEmptyHovered(true)}
+              onMouseLeave={() => setIsEmptyHovered(false)}
+              className="flex-1 min-h-[150px] w-full flex flex-col items-center justify-center p-6 my-1 border-0 rounded-2xl cursor-pointer group text-center"
             >
-              <div className="relative w-10 h-10 rounded-full bg-transparent flex items-center justify-center text-[#6E6258] dark:text-[#A89B8F] transition-transform group-hover:scale-105 mb-2 overflow-hidden">
+              <div className="relative w-10 h-10 rounded-full bg-transparent flex items-center justify-center text-[#332B25] dark:text-[#EAE2D9] mb-2 overflow-visible">
                 <RoughBackground
                   shape="circle"
                   fillStyle="zigzag"
                   fill={currentTheme.roughFill}
                   darkFill={currentTheme.roughDarkFill}
-                  stroke={currentTheme.roughFill}
-                  darkStroke={currentTheme.roughDarkFill}
-                  strokeWidth={1.1}
+                  stroke="transparent"
+                  darkStroke="transparent"
+                  strokeWidth={0}
                   hachureAngle={-41}
                   hachureGap={2.8}
                   fillWeight={1.4}
                   roughness={1.1}
-                  opacity={0.42}
-                  hoverOpacity={0.75}
+                  opacity={0.55}
                   seed={currentTheme.seed + 20}
+                  className="rounded-full"
+                />
+                <RoughHoverBorder
+                  active={isEmptyHovered}
+                  color="#8A6A46"
+                  darkColor="#DFC4A4"
+                  strokeWidth={1.5}
+                  padding={1}
                 />
                 <Plus className="w-4 h-4 stroke-[2.2] relative z-10" />
               </div>

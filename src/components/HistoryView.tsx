@@ -16,8 +16,8 @@ import type { Category, GoalStatus } from '../types';
 import { CategoryIcon } from './CategoryIcon';
 import { IconButton } from './IconButton';
 import { RoughBorder } from './RoughBorder';
-import { RoughBackground } from './RoughBackground';
 import { RoughDivider } from './RoughDivider';
+import { RoughButton } from './RoughButton';
 
 interface HistoryViewProps {
   onClose: () => void;
@@ -174,12 +174,7 @@ export const HistoryView: React.FC<HistoryViewProps> = ({ onClose }) => {
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                       {(['body', 'mind', 'soul'] as Category[]).map(cat => {
                         const catGoals = goals.filter(g => g.category === cat);
-                        const headerWash =
-                          cat === 'body'
-                            ? 'bg-[#FAF1ED] dark:bg-[#2A201D] border-[#C46345]/25'
-                            : cat === 'mind'
-                            ? 'bg-[#F1F6F1] dark:bg-[#1D261F] border-[#557659]/25'
-                            : 'bg-[#F9F1F4] dark:bg-[#281E23] border-[#9E5870]/25';
+                        const headerWash = 'bg-[#F3EDE2]/70 dark:bg-[#2A2521] border-[#8C7E72]/25';
 
                         return (
                           <div key={cat} className={`p-3.5 border ${headerWash} space-y-2.5`}>
@@ -216,29 +211,20 @@ export const HistoryView: React.FC<HistoryViewProps> = ({ onClose }) => {
 
                     {/* Switch to this week button */}
                     <div className="flex justify-end pt-1">
-                      <button
+                      <RoughButton
                         onClick={() => {
                           selectWeek(plan.id);
                           onClose();
                         }}
-                        className="relative w-full sm:w-auto px-4 py-2 text-[#FAF6F0] border-0 font-sans font-semibold text-base sketch-btn-press transition-all flex items-center justify-center gap-1.5 overflow-hidden"
+                        variant="primary"
+                        size="md"
+                        seed={700 + idx}
+                        className="w-full sm:w-auto"
                       >
-                        <RoughBackground
-                          fill="#C46345"
-                          darkFill="#B05236"
-                          fillStyle="cross-hatch"
-                          hachureAngle={-38}
-                          hachureGap={2.8}
-                          fillWeight={1.4}
-                          roughness={1.1}
-                          opacity={0.94}
-                          seed={700 + idx}
-                        />
-                        <RoughBorder borderRadius={2} width={1.0} color="#8F4028" opacity={0.5} />
-                        <span className="relative z-10 drop-shadow-[0_1px_1px_rgba(0,0,0,0.2)]">
+                        <span className="drop-shadow-[0_1px_1px_rgba(0,0,0,0.2)]">
                           Diese Woche öffnen & bearbeiten →
                         </span>
-                      </button>
+                      </RoughButton>
                     </div>
                   </div>
                 )}

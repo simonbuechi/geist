@@ -21,22 +21,10 @@ interface GoalItemProps {
   onDelete: () => void;
 }
 
-const dimensionAccents: Record<Category, { bulletBorder: string; bulletFill: string; quoteColor: string }> = {
-  body: {
-    bulletBorder: 'border-[#C46345] dark:border-[#E2876B]',
-    bulletFill: 'bg-[#C46345]/15 dark:bg-[#E2876B]/20',
-    quoteColor: 'text-[#C46345] dark:text-[#E2876B]',
-  },
-  mind: {
-    bulletBorder: 'border-[#557659] dark:border-[#89B08E]',
-    bulletFill: 'bg-[#557659]/15 dark:bg-[#89B08E]/20',
-    quoteColor: 'text-[#557659] dark:text-[#89B08E]',
-  },
-  soul: {
-    bulletBorder: 'border-[#9E5870] dark:border-[#D48BA3]',
-    bulletFill: 'bg-[#9E5870]/15 dark:bg-[#D48BA3]/20',
-    quoteColor: 'text-[#9E5870] dark:text-[#D48BA3]',
-  },
+const unifiedAccent = {
+  bulletBorder: 'border-[#8A6A46] dark:border-[#DFC4A4]',
+  bulletFill: 'bg-[#C8A986]/25 dark:bg-[#C8A986]/25',
+  quoteColor: 'text-[#8A6A46] dark:text-[#DFC4A4]',
 };
 
 export const GoalItem: React.FC<GoalItemProps> = ({
@@ -59,7 +47,7 @@ export const GoalItem: React.FC<GoalItemProps> = ({
   };
 
   const cat = category || goal.category;
-  const accent = dimensionAccents[cat];
+  const accent = unifiedAccent;
 
   // Deterministic seed from goal id for unique hand-drawn divider line
   const dividerSeed = useMemo(() => {
@@ -78,7 +66,7 @@ export const GoalItem: React.FC<GoalItemProps> = ({
           icon: <CategoryIcon category={cat} status="good" size={24} className="w-6 h-6 object-contain" />,
           label: t.status.good,
           classes:
-            'bg-[#EAF3EA] dark:bg-[#213224] text-[#355E39] dark:text-[#9RC4A0] dark:text-[#A3CFA7] border border-[#6E9B72]/50 dark:border-[#4E7A52]/60',
+            'bg-[#EAF3EA] dark:bg-[#213224] text-[#355E39] dark:text-[#A3CFA7] border border-[#6E9B72]/50 dark:border-[#4E7A52]/60',
         };
       case 'partly':
         return {
@@ -131,7 +119,7 @@ export const GoalItem: React.FC<GoalItemProps> = ({
               onClick={() => setIsEditing(false)}
               title={t.actions.cancel}
               aria-label={t.actions.cancel}
-              variant="subtle"
+              variant="default"
               size="sm"
             >
               <X className="w-3.5 h-3.5 stroke-[2.2]" />
@@ -147,14 +135,14 @@ export const GoalItem: React.FC<GoalItemProps> = ({
                 </span>
               ) : (
                 <span
-                  className={`w-2.5 h-2.5 rounded-full border-[1.5px] ${accent.bulletBorder} ${accent.bulletFill} inline-block transition-transform group-hover:scale-110`}
+                  className={`w-2.5 h-2.5 rounded-full border-[1.5px] ${accent.bulletBorder} ${accent.bulletFill} inline-block`}
                   aria-hidden="true"
                 />
               )}
             </div>
 
             <div className="flex-1 min-w-0">
-              <p className="text-[14.5px] sm:text-[15px] font-serif font-normal leading-relaxed text-[#332B25] dark:text-[#EAE2D9] break-words">
+              <p className="text-sm font-serif font-normal leading-relaxed text-[#332B25] dark:text-[#EAE2D9] break-words">
                 {goal.description}
               </p>
 
@@ -189,7 +177,7 @@ export const GoalItem: React.FC<GoalItemProps> = ({
               onClick={() => setIsEditing(true)}
               title={t.actions.edit}
               aria-label={t.actions.edit}
-              variant="ghost"
+              variant="default"
               size="sm"
             >
               <Edit3 className="w-3.5 h-3.5 stroke-[1.9]" />
@@ -202,7 +190,7 @@ export const GoalItem: React.FC<GoalItemProps> = ({
               }}
               title={t.actions.delete}
               aria-label={t.actions.delete}
-              variant="danger"
+              variant="default"
               size="sm"
             >
               <Trash2 className="w-3.5 h-3.5 stroke-[1.9]" />

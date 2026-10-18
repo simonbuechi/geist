@@ -4,7 +4,7 @@ import { useLanguage } from '../context/LanguageContext';
 import { KgsLogo } from './KgsLogo';
 import { IconButton } from './IconButton';
 import { RoughBorder } from './RoughBorder';
-import { RoughBackground } from './RoughBackground';
+import { RoughButton } from './RoughButton';
 
 export const PwaInstallBanner: React.FC = () => {
   const { t } = useLanguage();
@@ -70,30 +70,22 @@ export const PwaInstallBanner: React.FC = () => {
       </div>
 
       <div className="relative z-10 flex items-center justify-end gap-2 pt-1">
-        <button
+        <RoughButton
           onClick={handleDismiss}
-          className="px-3 py-1 text-sm font-sans font-semibold text-[#7A6F66] dark:text-[#A3968B] transition-colors"
+          variant="ghost"
+          size="sm"
         >
           {t.pwa.dismissButton}
-        </button>
-        <button
+        </RoughButton>
+        <RoughButton
           onClick={handleInstall}
-          className="relative px-4 py-1.5 text-[#FAF6F0] border-0 font-sans font-semibold text-sm transition-all flex items-center gap-1.5 sketch-btn-press overflow-hidden"
+          variant="primary"
+          size="sm"
+          seed={801}
         >
-          <RoughBackground
-            fill="#C46345"
-            darkFill="#B05236"
-            fillStyle="cross-hatch"
-            hachureAngle={-38}
-            hachureGap={2.8}
-            fillWeight={1.4}
-            opacity={0.94}
-            seed={801}
-          />
-          <RoughBorder borderRadius={2} width={0.9} color="#8F4028" opacity={0.5} />
-          <Download className="w-3.5 h-3.5 stroke-[2.2] relative z-10" />
-          <span className="relative z-10">{t.pwa.installButton}</span>
-        </button>
+          <Download className="w-3.5 h-3.5 stroke-[2.2]" />
+          <span>{t.pwa.installButton}</span>
+        </RoughButton>
       </div>
     </div>
   );

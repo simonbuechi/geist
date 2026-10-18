@@ -13,8 +13,12 @@ export default {
         serif: ['"Playwrite DE Grund"', 'cursive'],
       },
       fontSize: {
-        '2xs': ['0.6875rem', { lineHeight: '0.95rem' }], // 11px
-        '3xs': ['0.625rem', { lineHeight: '0.8rem' }],   // 10px
+        '3xs': ['0.53125rem', { lineHeight: '0.75rem' }],  // 8.5px
+        '2xs': ['0.59375rem', { lineHeight: '0.85rem' }],  // 9.5px
+        'xs': ['0.65625rem', { lineHeight: '0.95rem' }],   // 10.5px
+        'sm': ['0.71875rem', { lineHeight: '1.1rem' }],    // 11.5px
+        'base': ['0.78125rem', { lineHeight: '1.25rem' }], // 12.5px
+        'lg': ['0.875rem', { lineHeight: '1.35rem' }],     // 14px
       },
       borderWidth: {
         '1.5': '1.5px',

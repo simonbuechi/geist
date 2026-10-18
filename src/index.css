@@ -35,6 +35,8 @@
     background-attachment: fixed;
     position: relative;
     color: #332B25;
+    font-size: 0.75rem;
+    line-height: 1.45;
   }
 
   /* Subtle, calm natural cotton paper grain */
@@ -120,13 +122,13 @@
 
   /* Compact Micro Typography */
   .text-2xs {
-    font-size: 0.6875rem !important;
-    line-height: 0.95rem !important;
+    font-size: 0.625rem !important;
+    line-height: 0.875rem !important;
   }
 
   .text-3xs {
-    font-size: 0.625rem !important;
-    line-height: 0.8rem !important;
+    font-size: 0.5625rem !important;
+    line-height: 0.75rem !important;
   }
 
   /* Hand-Drawn Sketch Corners */
@@ -155,27 +157,7 @@
   }
 
   .sketch-btn-press {
-    transition: transform 150ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 150ms ease, filter 150ms ease, background-color 150ms ease;
-  }
-
-  .sketch-btn-press:hover:not(:disabled) {
-    transform: translateY(-1.5px);
-    box-shadow: 2px 3px 0px 0px rgba(74, 62, 52, 0.22);
-    filter: brightness(1.03);
-  }
-
-  .dark .sketch-btn-press:hover:not(:disabled) {
-    box-shadow: 2px 3px 0px 0px rgba(0, 0, 0, 0.42);
-    filter: brightness(1.08);
-  }
-
-  .sketch-btn-press:active:not(:disabled) {
-    transform: translate(1px, 1.5px);
-    box-shadow: 0.5px 0.5px 0px 0px rgba(74, 62, 52, 0.14);
-  }
-
-  .dark .sketch-btn-press:active:not(:disabled) {
-    box-shadow: 0.5px 0.5px 0px 0px rgba(0, 0, 0, 0.25);
+    transition: none;
   }
 }
 
@@ -184,4 +166,31 @@
   to {
     stroke-dashoffset: 0;
   }
+}
+
+/* Hand-Drawn Rough.js Sparkles Celebration Animation */
+@keyframes rough-sparkle-flight {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.25) rotate(0deg);
+  }
+  22% {
+    opacity: 1;
+    transform: translate(calc(-50% + var(--tx, 0px) * 0.4), calc(-50% + var(--ty, 0px) * 0.4)) scale(1.12) rotate(calc(var(--rot, 45deg) * 0.45));
+  }
+  65% {
+    opacity: 0.9;
+    transform: translate(calc(-50% + var(--tx, 0px) * 0.82), calc(-50% + var(--ty, 0px) * 0.82)) scale(0.95) rotate(calc(var(--rot, 45deg) * 0.85));
+  }
+  100% {
+    opacity: 0;
+    transform: translate(calc(-50% + var(--tx, 0px)), calc(-50% + var(--ty, 0px))) scale(0.45) rotate(var(--rot, 45deg));
+  }
+}
+
+.rough-sparkle-fly {
+  opacity: 0;
+  animation-name: rough-sparkle-flight;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  animation-fill-mode: forwards;
 }
