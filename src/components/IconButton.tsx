@@ -1,5 +1,6 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useState } from 'react';
 import { RoughBackground } from './RoughBackground';
+import { RoughHoverBorder } from './RoughHoverBorder';
 
 export type IconButtonVariant = 'default' | 'ghost' | 'subtle' | 'primary' | 'danger';
 export type IconButtonSize = 'sm' | 'md' | 'lg';
@@ -33,45 +34,45 @@ const sizeStyles: Record<IconButtonSize, string> = {
 
 const sketchConfigs: Record<
   IconButtonVariant,
-  { fill: string; darkFill: string; stroke: string; darkStroke: string; opacity: number; gap: number }
+  { fill: string; darkFill: string; hoverStroke: string; darkHoverStroke: string; opacity: number; gap: number }
 > = {
   default: {
     fill: '#C8A986',
     darkFill: '#C8A986',
-    stroke: '#9C7C58',
-    darkStroke: '#DFC4A4',
+    hoverStroke: '#8A6A46',
+    darkHoverStroke: '#DFC4A4',
     opacity: 0.55,
     gap: 2.6,
   },
   ghost: {
     fill: '#D2B694',
     darkFill: '#C8A986',
-    stroke: '#A88864',
-    darkStroke: '#D2B694',
+    hoverStroke: '#967652',
+    darkHoverStroke: '#D2B694',
     opacity: 0.36,
     gap: 2.8,
   },
   subtle: {
     fill: '#CCAFA0',
     darkFill: '#C8A986',
-    stroke: '#A38360',
-    darkStroke: '#D2B694',
+    hoverStroke: '#967652',
+    darkHoverStroke: '#D2B694',
     opacity: 0.45,
     gap: 2.7,
   },
   primary: {
     fill: '#C46345',
     darkFill: '#E2876B',
-    stroke: '#A3482C',
-    darkStroke: '#E2876B',
+    hoverStroke: '#964229',
+    darkHoverStroke: '#E2876B',
     opacity: 0.55,
     gap: 2.5,
   },
   danger: {
     fill: '#B54B3C',
     darkFill: '#E58B7E',
-    stroke: '#963628',
-    darkStroke: '#E58B7E',
+    hoverStroke: '#963628',
+    darkHoverStroke: '#E58B7E',
     opacity: 0.45,
     gap: 2.6,
   },
@@ -102,10 +103,13 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
       title,
       'aria-label': ariaLabel,
       type = 'button',
+      onMouseEnter,
+      onMouseLeave,
       ...props
     },
     ref
   ) => {
+    const [isHovered, setIsHovered] = useState(false);
     const computedAriaLabel = ariaLabel || title;
     const cfg = sketchConfigs[variant];
 
@@ -116,37 +120,53 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
         disabled={disabled}
         title={title}
         aria-label={computedAriaLabel}
+        onMouseEnter={(e) => {
+          setIsHovered(true);
+          onMouseEnter?.(e);
+        }}
+        onMouseLeave={(e) => {
+          setIsHovered(false);
+          onMouseLeave?.(e);
+        }}
         className={cn(
-          'group relative inline-flex items-center justify-center shrink-0 rounded-full transition-all duration-150 overflow-hidden',
-          'hover:-translate-y-0.5 hover:scale-105',
+          'group relative inline-flex items-center justify-center shrink-0 rounded-full overflow-visible',
           'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C46345]/50 focus-visible:ring-offset-1 focus-visible:ring-offset-[#F3EDE2] dark:focus-visible:ring-offset-[#191614]',
-          'active:scale-95 active:translate-y-0 select-none',
-          'disabled:opacity-40 disabled:cursor-not-allowed disabled:pointer-events-none disabled:active:scale-100',
+          'select-none',
+          'disabled:opacity-40 disabled:cursor-not-allowed disabled:pointer-events-none',
           variantStyles[variant],
           sizeStyles[size],
           className
         )}
         {...props}
       >
-        {/* Hand-sketched circular pencil shading & contour */}
+        {/* Borderless circular pencil shading */}
         <RoughBackground
           shape="circle"
           fillStyle="zigzag"
           fill={cfg.fill}
           darkFill={cfg.darkFill}
-          stroke={cfg.stroke}
-          darkStroke={cfg.darkStroke}
-          strokeWidth={1.1}
+          stroke="transparent"
+          darkStroke="transparent"
+          strokeWidth={0}
           hachureAngle={-41}
           hachureGap={cfg.gap}
           fillWeight={fillWeight}
           roughness={1.1}
           opacity={cfg.opacity}
-          hoverOpacity={Math.min(0.9, cfg.opacity + 0.35)}
           seed={variantSeeds[variant]}
+          className="rounded-full"
         />
 
-        <span className="relative z-10 flex items-center justify-center transition-transform duration-150 group-hover:scale-105">
+        {/* Animated rough-notation circle drawn around the button on hover */}
+        <RoughHoverBorder
+          active={isHovered && !disabled}
+          color={cfg.hoverStroke}
+          darkColor={cfg.darkHoverStroke}
+          strokeWidth={1.5}
+          padding={1}
+        />
+
+        <span className="relative z-10 flex items-center justify-center">
           {icon}
           {children}
         </span>

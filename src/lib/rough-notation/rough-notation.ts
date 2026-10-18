@@ -8,7 +8,7 @@ import type {
 import { renderAnnotation } from './render';
 
 const SVG_NS = 'http://www.w3.org/2000/svg';
-export const DEFAULT_ANIMATION_DURATION = 500;
+export const DEFAULT_ANIMATION_DURATION = 750;
 
 export function ensureKeyframes() {
   if (typeof document === 'undefined') return;
@@ -47,6 +47,7 @@ export class RoughAnnotationImpl implements RoughAnnotation {
     this._config = { ...config };
     this._seed = rough.newSeed ? rough.newSeed() : Math.floor(Math.random() * 2 ** 31);
     if (config.svg) {
+      ensureKeyframes();
       this._svg = config.svg;
       this._customSvg = true;
       this._state = 'not-showing';

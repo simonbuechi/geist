@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, useId } from 'react';
 import rough from 'roughjs';
 import { useTheme } from '../context/ThemeContext';
 
@@ -6,6 +6,8 @@ export interface RoughBackgroundProps {
   className?: string;
   fill?: string;
   darkFill?: string;
+  fillGradient?: [string, string];
+  darkFillGradient?: [string, string];
   fillStyle?: 'hachure' | 'zigzag' | 'cross-hatch' | 'dots' | 'dashed' | 'solid';
   hachureAngle?: number;
   hachureGap?: number;
@@ -32,6 +34,8 @@ export const RoughBackground: React.FC<RoughBackgroundProps> = ({
   className = '',
   fill = '#D7195F',
   darkFill,
+  fillGradient,
+  darkFillGradient,
   fillStyle = 'hachure',
   hachureAngle = -41,
   hachureGap = 3.5,
@@ -44,7 +48,6 @@ export const RoughBackground: React.FC<RoughBackgroundProps> = ({
   borderRadius,
   shape = 'rectangle',
   opacity = 0.25,
-  hoverOpacity,
   drawBottomLine = false,
   bottomLineColor = '#7A6A5E',
   darkBottomLineColor = '#EDE5DD',
@@ -57,6 +60,8 @@ export const RoughBackground: React.FC<RoughBackgroundProps> = ({
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [dimensions, setDimensions] = useState<{ width: number; height: number }>({ width: 0, height: 0 });
   const { theme } = useTheme();
+  const rawId = useId();
+  const gradientId = `rough-grad-${rawId.replace(/[^a-zA-Z0-9_-]/g, '')}`;
 
   useEffect(() => {
     const container = containerRef.current;
@@ -104,8 +109,38 @@ export const RoughBackground: React.FC<RoughBackgroundProps> = ({
       const strokeColor = rawStrokeColor || 'transparent';
       const effectiveStrokeWidth = drawBorder ? strokeWidth : (strokeColor === 'transparent' ? 0 : strokeWidth);
 
-      const chosenFill = isDark ? (darkFill || fill) : fill;
-      const effectiveFill = (chosenFill === 'none' || chosenFill === 'transparent') ? undefined : chosenFill;
+      const activeGradient = isDark ? (darkFillGradient || fillGradient) : fillGradient;
+      let effectiveFill: string | undefined;
+
+      if (activeGradient) {
+        const svgNs = 'http://www.w3.org/2000/svg';
+        const defs = document.createElementNS(svgNs, 'defs');
+        const linearGrad = document.createElementNS(svgNs, 'linearGradient');
+        linearGrad.setAttribute('id', gradientId);
+        linearGrad.setAttribute('gradientUnits', 'userSpaceOnUse');
+        linearGrad.setAttribute('x1', '0');
+        linearGrad.setAttribute('y1', '0');
+        linearGrad.setAttribute('x2', String(w));
+        linearGrad.setAttribute('y2', '0');
+
+        const stop1 = document.createElementNS(svgNs, 'stop');
+        stop1.setAttribute('offset', '0%');
+        stop1.setAttribute('stop-color', activeGradient[0]);
+
+        const stop2 = document.createElementNS(svgNs, 'stop');
+        stop2.setAttribute('offset', '100%');
+        stop2.setAttribute('stop-color', activeGradient[1]);
+
+        linearGrad.appendChild(stop1);
+        linearGrad.appendChild(stop2);
+        defs.appendChild(linearGrad);
+        svg.appendChild(defs);
+
+        effectiveFill = `url(#${gradientId})`;
+      } else {
+        const chosenFill = isDark ? (darkFill || fill) : fill;
+        effectiveFill = (chosenFill === 'none' || chosenFill === 'transparent') ? undefined : chosenFill;
+      }
 
       const rectOptions: Parameters<typeof rc.rectangle>[4] = {
         fill: effectiveFill,
@@ -124,21 +159,10 @@ export const RoughBackground: React.FC<RoughBackgroundProps> = ({
       }
 
       let shapeNode: SVGGElement;
-      if (shape === 'circle') {
+      if (shape === 'circle' && effectiveStrokeWidth > 0) {
         shapeNode = rc.ellipse(w / 2, h / 2, Math.max(1, w - 2), Math.max(1, h - 2), rectOptions);
-      } else if ((borderRadius !== undefined && borderRadius > 0) || shape === 'rounded') {
-        const pad = 1;
-        const rw = Math.max(1, w - pad * 2);
-        const rh = Math.max(1, h - pad * 2);
-        const r = Math.min(borderRadius ?? rh / 2, rw / 2, rh / 2);
-        const x0 = pad;
-        const y0 = pad;
-        const x1 = pad + rw;
-        const y1 = pad + rh;
-        const d = `M ${x0 + r} ${y0} L ${x1 - r} ${y0} A ${r} ${r} 0 0 1 ${x1} ${y0 + r} L ${x1} ${y1 - r} A ${r} ${r} 0 0 1 ${x1 - r} ${y1} L ${x0 + r} ${y1} A ${r} ${r} 0 0 1 ${x0} ${y1 - r} L ${x0} ${y0 + r} A ${r} ${r} 0 0 1 ${x0 + r} ${y0} Z`;
-        shapeNode = rc.path(d, rectOptions);
       } else {
-        shapeNode = rc.rectangle(1, 1, Math.max(1, w - 2), Math.max(1, h - 2), rectOptions);
+        shapeNode = rc.rectangle(0, 0, Math.max(1, w), Math.max(1, h), rectOptions);
       }
       svg.appendChild(shapeNode);
 
@@ -160,15 +184,14 @@ export const RoughBackground: React.FC<RoughBackgroundProps> = ({
     } catch (err) {
       console.warn('Rough.js draw error:', err);
     }
-  }, [dimensions, fill, darkFill, fillStyle, hachureAngle, hachureGap, fillWeight, roughness, bowing, stroke, darkStroke, strokeWidth, opacity, drawBottomLine, bottomLineColor, darkBottomLineColor, drawBorder, borderColor, darkBorderColor, theme, seed, shape, borderRadius]);
+  }, [dimensions, fill, darkFill, fillGradient, darkFillGradient, gradientId, fillStyle, hachureAngle, hachureGap, fillWeight, roughness, bowing, stroke, darkStroke, strokeWidth, opacity, drawBottomLine, bottomLineColor, darkBottomLineColor, drawBorder, borderColor, darkBorderColor, theme, seed, shape, borderRadius]);
 
   return (
     <div 
       ref={containerRef} 
-      className={`absolute inset-0 pointer-events-none overflow-hidden transition-opacity duration-150 opacity-[var(--rb-opacity)] group-hover:opacity-[var(--rb-hover-opacity)] ${className}`}
+      className={`absolute inset-0 pointer-events-none overflow-hidden opacity-[var(--rb-opacity)] ${className}`}
       style={{
         '--rb-opacity': opacity,
-        '--rb-hover-opacity': hoverOpacity ?? opacity,
       } as React.CSSProperties}
       aria-hidden="true"
     >

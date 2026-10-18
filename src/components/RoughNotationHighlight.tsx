@@ -5,6 +5,7 @@ import { useTheme } from '../context/ThemeContext';
 
 export interface RoughNotationHighlightProps {
   children: React.ReactNode;
+  type?: 'highlight' | 'box' | 'circle' | 'underline';
   className?: string;
   color?: string;
   darkColor?: string;
@@ -20,11 +21,12 @@ export interface RoughNotationHighlightProps {
 
 export const RoughNotationHighlight: React.FC<RoughNotationHighlightProps> = ({
   children,
+  type = 'highlight',
   className = '',
   color = 'rgba(215, 25, 95, 0.22)',
   darkColor = 'rgba(244, 114, 182, 0.32)',
-  animationDuration = 450,
-  iterations = 1,
+  animationDuration = 750,
+  iterations,
   strokeWidth,
   padding = [2, 6, 2, 6],
   trigger = 'both',
@@ -41,6 +43,7 @@ export const RoughNotationHighlight: React.FC<RoughNotationHighlightProps> = ({
   const [isPinned, setIsPinned] = useState(false);
 
   const activeColor = theme === 'dark' ? darkColor : color;
+  const effectiveIterations = iterations ?? (type === 'highlight' ? 1 : 2);
 
   // Determine if annotation should be visible
   const isVisible = controlledShow !== undefined
@@ -58,13 +61,13 @@ export const RoughNotationHighlight: React.FC<RoughNotationHighlightProps> = ({
     }
 
     const ann = annotate(target, {
-      type: 'highlight',
+      type,
       color: activeColor,
       animationDuration,
-      iterations,
+      iterations: effectiveIterations,
       strokeWidth,
       padding,
-      multiline: true,
+      multiline: type === 'highlight',
       svg,
     });
 
@@ -78,7 +81,7 @@ export const RoughNotationHighlight: React.FC<RoughNotationHighlightProps> = ({
       ann.remove();
       annotationRef.current = null;
     };
-  }, [activeColor, animationDuration, iterations, strokeWidth, JSON.stringify(padding)]);
+  }, [type, activeColor, animationDuration, effectiveIterations, strokeWidth, JSON.stringify(padding)]);
 
   // React to visibility state changes
   useEffect(() => {
@@ -115,17 +118,19 @@ export const RoughNotationHighlight: React.FC<RoughNotationHighlightProps> = ({
 
   return (
     <span
-      className={`relative inline-block ${className}`}
+      className={`relative inline-block overflow-visible ${className}`}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onClick={handleClick}
       title={title}
     >
-      {/* Background SVG highlighter annotation layer */}
+      {/* SVG annotation layer */}
       <svg
         ref={svgRef}
         aria-hidden="true"
-        className="absolute inset-0 pointer-events-none -z-0 overflow-visible w-full h-full"
+        className={`absolute inset-0 pointer-events-none overflow-visible w-full h-full ${
+          type === 'highlight' ? '-z-0' : 'z-20'
+        }`}
       />
       {/* Interactive text / children content positioned in front */}
       <span ref={targetRef} className="relative z-10 inline-block">

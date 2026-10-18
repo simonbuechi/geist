@@ -101,16 +101,6 @@ export const RoughBorder: React.FC<RoughBorderProps> = ({
       let borderNode: SVGGElement;
       if (shape === 'circle') {
         borderNode = rc.ellipse(w / 2, h / 2, Math.max(1, w - pad * 2), Math.max(1, h - pad * 2), drawOptions);
-      } else if (borderRadius !== undefined && borderRadius > 0) {
-        const rw = Math.max(1, w - pad * 2);
-        const rh = Math.max(1, h - pad * 2);
-        const r = Math.min(borderRadius, rw / 2, rh / 2);
-        const x0 = pad;
-        const y0 = pad;
-        const x1 = pad + rw;
-        const y1 = pad + rh;
-        const d = `M ${x0 + r} ${y0} L ${x1 - r} ${y0} A ${r} ${r} 0 0 1 ${x1} ${y0 + r} L ${x1} ${y1 - r} A ${r} ${r} 0 0 1 ${x1 - r} ${y1} L ${x0 + r} ${y1} A ${r} ${r} 0 0 1 ${x0} ${y1 - r} L ${x0} ${y0 + r} A ${r} ${r} 0 0 1 ${x0 + r} ${y0} Z`;
-        borderNode = rc.path(d, drawOptions);
       } else {
         borderNode = rc.rectangle(pad, pad, Math.max(1, w - pad * 2), Math.max(1, h - pad * 2), drawOptions);
       }
