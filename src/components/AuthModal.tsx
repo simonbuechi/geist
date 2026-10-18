@@ -22,8 +22,8 @@ import { useAuth } from '../context/AuthContext';
 import { useLanguage } from '../context/LanguageContext';
 import { useTheme } from '../context/ThemeContext';
 import { useGoals } from '../context/GoalsContext';
-import { RoughBorder } from './RoughBorder';
-import { RoughBackground } from './RoughBackground';
+import { RoughButton } from './RoughButton';
+import { RoughHoverBorder } from './RoughHoverBorder';
 import { IconButton } from './IconButton';
 import { 
   getDefaultFirebaseConfig, 
@@ -62,6 +62,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
   const [appId, setAppId] = useState(getDefaultFirebaseConfig().appId || '');
   const [saveSuccess, setSaveSuccess] = useState(false);
   const [importStatus, setImportStatus] = useState<string | null>(null);
+  const [hoveredPill, setHoveredPill] = useState<string | null>(null);
 
   const [notificationPrefs, setNotificationPrefs] = useState<NotificationPreferences>(DEFAULT_NOTIFICATION_PREFERENCES);
   const [isRegisteringPush, setIsRegisteringPush] = useState(false);
@@ -204,12 +205,11 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center sm:p-4 bg-[#332B25]/55 backdrop-blur-xs animate-fade-in">
-      <div className="relative w-full max-w-lg bg-[#FCF9F4] dark:bg-[#221F1D] shadow-notebook max-h-[92vh] flex flex-col overflow-hidden animate-slide-up sm:animate-scale-in">
-        <RoughBorder borderRadius={2} width={1.3} opacity={0.45} color="#8C7E72" darkColor="#7A6F66" />
+      <div className="relative w-full max-w-lg bg-[#FCF9F4] dark:bg-[#221F1D] rounded-t-2xl sm:rounded-2xl border border-[#8C7E72]/25 dark:border-[#7A6F66]/25 shadow-notebook max-h-[92vh] flex flex-col overflow-hidden animate-slide-up sm:animate-scale-in">
         
         {/* Mobile Drag Indicator */}
         <div className="sm:hidden pt-2.5 pb-1 flex justify-center shrink-0">
-          <div className="w-10 h-1 bg-[#8C7E72]/40 dark:bg-[#7A6F66]/40 rounded-none" />
+          <div className="w-10 h-1 bg-[#8C7E72]/40 dark:bg-[#7A6F66]/40 rounded-full" />
         </div>
 
         {/* Modal Header */}
@@ -234,12 +234,11 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
 
           {/* 1. Account & Sync Section */}
           <div>
-            <div className="text-xs font-sans font-bold uppercase tracking-wider text-[#7A6F66] dark:text-[#A3968B] px-1 mb-2">
+            <div className="text-xs font-sans font-bold text-[#7A6F66] dark:text-[#A3968B] px-1 mb-2">
               {t.settings.account}
             </div>
 
-            <div className="relative bg-[#F3EDE2]/55 dark:bg-[#191614]/80 divide-y divide-[#8C7E72]/20 dark:divide-[#7A6F66]/20 overflow-hidden">
-              <RoughBorder borderRadius={2} width={1.0} color="#8C7E72" darkColor="#7A6F66" opacity={0.35} />
+            <div className="relative bg-[#F3EDE2]/55 dark:bg-[#191614]/80 rounded-xl border border-[#8C7E72]/20 dark:border-[#7A6F66]/20 divide-y divide-[#8C7E72]/20 dark:divide-[#7A6F66]/20 overflow-hidden">
               {user ? (
                 <div className="relative z-10 p-3.5 sm:p-4 flex items-center justify-between gap-3">
                   <div className="flex items-center gap-3 min-w-0">
@@ -260,13 +259,15 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                     </div>
                   </div>
 
-                  <button
+                  <RoughButton
                     onClick={signOut}
-                    className="px-3 py-1.5 border-0 text-[#7A6F66] dark:text-[#A3968B] text-sm font-sans font-bold transition-colors flex items-center gap-1.5 shrink-0 sketch-btn-press"
+                    variant="default"
+                    size="sm"
+                    className="shrink-0"
                   >
                     <LogOut className="w-3.5 h-3.5 stroke-[2.2]" />
                     <span>{t.actions.signOut}</span>
-                  </button>
+                  </RoughButton>
                 </div>
               ) : (
                 <div className="relative z-10 p-4 space-y-3">
@@ -283,9 +284,11 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                   </div>
 
                   {isConfigured ? (
-                    <button
+                    <RoughButton
                       onClick={signInWithGoogle}
-                      className="relative w-full py-2.5 px-4 bg-[#332B25] dark:bg-[#EAE2D9] text-[#FAF6F0] dark:text-[#191614] font-sans font-bold text-base transition-all flex items-center justify-center gap-2 sketch-btn-press"
+                      variant="primary"
+                      size="md"
+                      className="w-full"
                     >
                       <svg className="w-4 h-4" viewBox="0 0 24 24">
                         <path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
@@ -294,7 +297,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                         <path fill="currentColor" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
                       </svg>
                       <span>{t.actions.signInWithGoogle}</span>
-                    </button>
+                    </RoughButton>
                   ) : (
                     <p className="text-xs text-[#7A6F66] font-serif italic">
                       Firebase ist lokal aktiv. Zur Cloud-Synchronisierung können eigene Firebase-Zugangsdaten hinterlegt werden.
@@ -353,13 +356,14 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                           <Check className="w-3.5 h-3.5 stroke-[2.5]" /> Gespeichert!
                         </span>
                       ) : <span />}
-                      <button
+                      <RoughButton
                         type="submit"
-                        className="relative px-4 py-1.5 text-[#FAF6F0] text-sm font-sans font-bold sketch-btn-press transition-all overflow-hidden"
+                        variant="primary"
+                        size="sm"
+                        seed={501}
                       >
-                        <RoughBackground fill="#C46345" darkFill="#B05236" fillStyle="cross-hatch" hachureGap={2.8} opacity={0.94} seed={501} />
-                        <span className="relative z-10">Speichern</span>
-                      </button>
+                        <span>Speichern</span>
+                      </RoughButton>
                     </div>
                   </form>
                 )}
@@ -369,12 +373,11 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
 
           {/* 2. Appearance & Language Section */}
           <div>
-            <div className="text-xs font-sans font-bold uppercase tracking-wider text-[#7A6F66] dark:text-[#A3968B] px-1 mb-2">
+            <div className="text-xs font-sans font-bold text-[#7A6F66] dark:text-[#A3968B] px-1 mb-2">
               {t.settings.appearance}
             </div>
 
-            <div className="relative bg-[#F3EDE2]/55 dark:bg-[#191614]/80 divide-y divide-[#8C7E72]/20 dark:divide-[#7A6F66]/20 overflow-hidden">
-              <RoughBorder borderRadius={2} width={1.0} color="#8C7E72" darkColor="#7A6F66" opacity={0.35} />
+            <div className="relative bg-[#F3EDE2]/55 dark:bg-[#191614]/80 rounded-xl border border-[#8C7E72]/20 dark:border-[#7A6F66]/20 divide-y divide-[#8C7E72]/20 dark:divide-[#7A6F66]/20 overflow-hidden">
               
               {/* Theme Row */}
               <div className="relative z-10 p-3.5 flex items-center justify-between gap-3">
@@ -389,30 +392,36 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                   </span>
                 </div>
 
-                <div className="inline-flex p-1 bg-[#EAE2D3] dark:bg-[#2A2623] border border-[#8C7E72]/30">
+                <div className="inline-flex p-1 rounded-full bg-[#EAE2D3] dark:bg-[#2A2623] border-0 gap-1">
                   <button
                     type="button"
                     onClick={() => setTheme('light')}
-                    className={`px-2.5 py-1 border-0 text-sm font-sans transition-all flex items-center gap-1 ${
+                    onMouseEnter={() => setHoveredPill('theme-light')}
+                    onMouseLeave={() => setHoveredPill(null)}
+                    className={`relative px-3 py-1 rounded-full border-0 text-sm font-sans transition-all flex items-center gap-1 overflow-visible ${
                       theme === 'light'
                         ? 'bg-[#FCF9F4] dark:bg-[#191614] text-[#332B25] dark:text-[#EAE2D9] font-bold'
                         : 'text-[#7A6F66] dark:text-[#A3968B]'
                     }`}
                   >
-                    <Sun className="w-3.5 h-3.5 text-[#B88028] stroke-[2.2]" />
-                    <span>{t.settings.light}</span>
+                    <RoughHoverBorder active={hoveredPill === 'theme-light'} />
+                    <Sun className="w-3.5 h-3.5 text-[#B88028] stroke-[2.2] relative z-10" />
+                    <span className="relative z-10">{t.settings.light}</span>
                   </button>
                   <button
                     type="button"
                     onClick={() => setTheme('dark')}
-                    className={`px-2.5 py-1 border-0 text-sm font-sans transition-all flex items-center gap-1 ${
+                    onMouseEnter={() => setHoveredPill('theme-dark')}
+                    onMouseLeave={() => setHoveredPill(null)}
+                    className={`relative px-3 py-1 rounded-full border-0 text-sm font-sans transition-all flex items-center gap-1 overflow-visible ${
                       theme === 'dark'
                         ? 'bg-[#FCF9F4] dark:bg-[#191614] text-[#332B25] dark:text-[#EAE2D9] font-bold'
                         : 'text-[#7A6F66] dark:text-[#A3968B]'
                     }`}
                   >
-                    <Moon className="w-3.5 h-3.5 text-[#B88028] stroke-[2.2]" />
-                    <span>{t.settings.dark}</span>
+                    <RoughHoverBorder active={hoveredPill === 'theme-dark'} />
+                    <Moon className="w-3.5 h-3.5 text-[#B88028] stroke-[2.2] relative z-10" />
+                    <span className="relative z-10">{t.settings.dark}</span>
                   </button>
                 </div>
               </div>
@@ -426,28 +435,34 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                   </span>
                 </div>
 
-                <div className="inline-flex p-1 bg-[#EAE2D3] dark:bg-[#2A2623] border border-[#8C7E72]/30">
+                <div className="inline-flex p-1 rounded-full bg-[#EAE2D3] dark:bg-[#2A2623] border-0 gap-1">
                   <button
                     type="button"
                     onClick={() => setLanguage('de')}
-                    className={`px-3 py-1 border-0 text-sm font-sans transition-all ${
+                    onMouseEnter={() => setHoveredPill('lang-de')}
+                    onMouseLeave={() => setHoveredPill(null)}
+                    className={`relative px-3 py-1 rounded-full border-0 text-sm font-sans transition-all overflow-visible ${
                       language === 'de'
                         ? 'bg-[#FCF9F4] dark:bg-[#191614] text-[#332B25] dark:text-[#EAE2D9] font-bold'
                         : 'text-[#7A6F66] dark:text-[#A3968B]'
                     }`}
                   >
-                    DE
+                    <RoughHoverBorder active={hoveredPill === 'lang-de'} />
+                    <span className="relative z-10">DE</span>
                   </button>
                   <button
                     type="button"
                     onClick={() => setLanguage('en')}
-                    className={`px-3 py-1 border-0 text-sm font-sans transition-all ${
+                    onMouseEnter={() => setHoveredPill('lang-en')}
+                    onMouseLeave={() => setHoveredPill(null)}
+                    className={`relative px-3 py-1 rounded-full border-0 text-sm font-sans transition-all overflow-visible ${
                       language === 'en'
                         ? 'bg-[#FCF9F4] dark:bg-[#191614] text-[#332B25] dark:text-[#EAE2D9] font-bold'
                         : 'text-[#7A6F66] dark:text-[#A3968B]'
                     }`}
                   >
-                    EN
+                    <RoughHoverBorder active={hoveredPill === 'lang-en'} />
+                    <span className="relative z-10">EN</span>
                   </button>
                 </div>
               </div>
@@ -457,15 +472,14 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
 
           {/* 3. Notifications Section */}
           <div>
-            <div className="text-xs font-sans font-bold uppercase tracking-wider text-[#7A6F66] dark:text-[#A3968B] px-1 mb-2 flex items-center justify-between">
+            <div className="text-xs font-sans font-bold text-[#7A6F66] dark:text-[#A3968B] px-1 mb-2 flex items-center justify-between">
               <span>{t.settings.notifications}</span>
-              <span className="text-2xs font-normal normal-case text-[#7A6F66] dark:text-[#A3968B] font-serif italic">
+              <span className="text-2xs font-normal text-[#7A6F66] dark:text-[#A3968B] font-serif italic">
                 So & Mo 17:00
               </span>
             </div>
 
-            <div className="relative bg-[#F3EDE2]/55 dark:bg-[#191614]/80 divide-y divide-[#8C7E72]/20 dark:divide-[#7A6F66]/20 overflow-hidden">
-              <RoughBorder borderRadius={2} width={1.0} color="#8C7E72" darkColor="#7A6F66" opacity={0.35} />
+            <div className="relative bg-[#F3EDE2]/55 dark:bg-[#191614]/80 rounded-xl border border-[#8C7E72]/20 dark:border-[#7A6F66]/20 divide-y divide-[#8C7E72]/20 dark:divide-[#7A6F66]/20 overflow-hidden">
               {user ? (
                 <>
                   {/* Push Notifications Row */}
@@ -489,12 +503,12 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                         aria-checked={notificationPrefs.pushEnabled}
                         disabled={isRegisteringPush || (!isPushSupported && !isIos)}
                         onClick={handleTogglePush}
-                        className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer border border-[#8C7E72] transition-colors duration-200 ease-in-out focus:outline-none ${
+                        className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-0 transition-colors duration-200 ease-in-out focus:outline-none p-0.5 ${
                           notificationPrefs.pushEnabled ? 'bg-[#C46345]' : 'bg-[#D9CEBF] dark:bg-[#332B25]'
                         } ${isRegisteringPush ? 'opacity-50 cursor-wait' : ''}`}
                       >
                         <span
-                          className={`pointer-events-none inline-block h-5 w-5 transform bg-[#FCF9F4] shadow-xs transition duration-200 ease-in-out ${
+                          className={`pointer-events-none inline-block h-5 w-5 rounded-full transform bg-[#FCF9F4] shadow-xs transition duration-200 ease-in-out ${
                             notificationPrefs.pushEnabled ? 'translate-x-5' : 'translate-x-0'
                           }`}
                         />
@@ -523,14 +537,15 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                         <span className="text-xs text-[#332B25] dark:text-[#EAE2D9] font-serif">
                           {t.notifications.deviceNotRegistered}
                         </span>
-                        <button
+                        <RoughButton
                           type="button"
                           onClick={handleRegisterCurrentDevice}
                           disabled={isRegisteringPush}
-                          className="px-3 py-1 bg-[#C46345] text-[#FAF6F0] text-sm font-sans font-bold sketch-btn-press transition-all whitespace-nowrap"
+                          variant="primary"
+                          size="sm"
                         >
                           {t.notifications.enableCurrentDevice}
-                        </button>
+                        </RoughButton>
                       </div>
                     )}
 
@@ -546,14 +561,15 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                             </span>
                           )}
                         </span>
-                        <button
+                        <RoughButton
                           type="button"
                           onClick={handleSendTestPush}
-                          className="px-2.5 py-1 border-0 text-sm text-[#332B25] dark:text-[#EAE2D9] font-sans font-bold flex items-center gap-1 sketch-btn-press transition-all"
+                          variant="default"
+                          size="sm"
                         >
                           <Send className="w-3 h-3 stroke-[2.2]" />
                           <span>{testSent ? t.notifications.testPushSent : t.notifications.sendTestPush}</span>
-                        </button>
+                        </RoughButton>
                       </div>
                     )}
                   </div>
@@ -577,12 +593,12 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                       role="switch"
                       aria-checked={notificationPrefs.emailEnabled}
                       onClick={handleToggleEmail}
-                      className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer border border-[#8C7E72] transition-colors duration-200 ease-in-out focus:outline-none ${
+                      className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-0 transition-colors duration-200 ease-in-out focus:outline-none p-0.5 ${
                         notificationPrefs.emailEnabled ? 'bg-[#C46345]' : 'bg-[#D9CEBF] dark:bg-[#332B25]'
                       }`}
                     >
                       <span
-                        className={`pointer-events-none inline-block h-5 w-5 transform bg-[#FCF9F4] shadow-xs transition duration-200 ease-in-out ${
+                        className={`pointer-events-none inline-block h-5 w-5 rounded-full transform bg-[#FCF9F4] shadow-xs transition duration-200 ease-in-out ${
                           notificationPrefs.emailEnabled ? 'translate-x-5' : 'translate-x-0'
                         }`}
                       />
@@ -600,12 +616,11 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
 
           {/* 4. Data & Backup Section */}
           <div>
-            <div className="text-xs font-sans font-bold uppercase tracking-wider text-[#7A6F66] dark:text-[#A3968B] px-1 mb-2">
+            <div className="text-xs font-sans font-bold text-[#7A6F66] dark:text-[#A3968B] px-1 mb-2">
               {t.settings.data}
             </div>
 
-            <div className="relative bg-[#F3EDE2]/55 dark:bg-[#191614]/80 divide-y divide-[#8C7E72]/20 dark:divide-[#7A6F66]/20 overflow-hidden">
-              <RoughBorder borderRadius={2} width={1.0} color="#8C7E72" darkColor="#7A6F66" opacity={0.35} />
+            <div className="relative bg-[#F3EDE2]/55 dark:bg-[#191614]/80 rounded-xl border border-[#8C7E72]/20 dark:border-[#7A6F66]/20 divide-y divide-[#8C7E72]/20 dark:divide-[#7A6F66]/20 overflow-hidden">
               
               {/* Export Row */}
               <div className="relative z-10 p-3.5 flex items-center justify-between gap-3">
@@ -621,12 +636,14 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                   </div>
                 </div>
 
-                <button
+                <RoughButton
                   onClick={handleExport}
-                  className="px-3.5 py-1.5 border border-[#8C7E72]/35 bg-[#FCF9F4] dark:bg-[#221F1D] text-sm font-sans font-bold text-[#332B25] dark:text-[#EAE2D9] sketch-btn-press transition-all shrink-0"
+                  variant="default"
+                  size="sm"
+                  className="shrink-0"
                 >
                   Exportieren
-                </button>
+                </RoughButton>
               </div>
 
               {/* Import Row */}
@@ -643,8 +660,13 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                   </div>
                 </div>
 
-                <label className="px-3.5 py-1.5 border border-[#8C7E72]/35 bg-[#FCF9F4] dark:bg-[#221F1D] text-sm font-sans font-bold text-[#332B25] dark:text-[#EAE2D9] cursor-pointer sketch-btn-press transition-all shrink-0">
-                  Importieren
+                <label
+                  onMouseEnter={() => setHoveredPill('import-btn')}
+                  onMouseLeave={() => setHoveredPill(null)}
+                  className="relative px-3.5 py-1.5 rounded-full border-0 bg-[#EAE2D3] dark:bg-[#2F2A26] text-sm font-sans font-bold text-[#332B25] dark:text-[#EAE2D9] cursor-pointer sketch-btn-press transition-all shrink-0 overflow-visible"
+                >
+                  <RoughHoverBorder active={hoveredPill === 'import-btn'} />
+                  <span className="relative z-10">Importieren</span>
                   <input
                     type="file"
                     accept=".json"

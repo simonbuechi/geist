@@ -14,6 +14,23 @@ export const translations = {
     viewReview: 'Wochenrückblick ansehen',
     editReview: 'Rückblick bearbeiten',
     reviewCompletedTitle: 'Wochenrückblick abgeschlossen',
+    reviewOutcomes: {
+      green: [
+        'Stark gemacht! Du hast den Großteil deiner Wochenziele erreicht.',
+        'Wunderbare Woche! Deine Achtsamkeit und dein Fokus zahlen sich aus.',
+        'Richtig gut! Du bist diese Woche toll in deiner Kraft geblieben.'
+      ],
+      yellow: [
+        'Schritt für Schritt! Jede kleine Umsetzung bringt dich weiter.',
+        'Eine solide Woche in Bewegung – nimm den Schwung mit in die nächste Woche.',
+        'Dranbleiben lohnt sich! Auch Teil-Erfolge sind wertvolle Fortschritte.'
+      ],
+      red: [
+        'Sei nachsichtig mit dir – die neue Woche ist ein frischer Anfang.',
+        'Manche Wochen sind herausfordernd. Atme durch und richte dich neu aus.',
+        'Kein Druck: Ehrliche Reflexion ist der beste Start für nächste Woche.'
+      ]
+    },
     pendingReviewBannerTitle: 'Wochenrückblick ausstehend',
     pendingReviewBannerDesc: 'Schließe diese Woche ab, um zur neuen Woche zu gelangen.',
     unlockNextWeek: 'Woche abschließen, um nächste Woche freizuschalten',
@@ -70,13 +87,13 @@ export const translations = {
       skip: 'Überspringen'
     },
     reviewModal: {
-      title: 'Wochenrückblick & Auswertung',
+      title: 'Woche abschliessen',
       description: 'Nimm dir einen achtsamen Moment, um deine Woche zu reflektieren. Wie liefen deine Ziele?',
       step1Title: '1. Ziele bewerten & kommentieren',
       step2Title: '2. Ziele für die nächste Woche übernehmen',
       step2Desc: 'Wähle Ziele aus, an denen du in der kommenden Woche weiterarbeiten möchtest:',
       generalReflectionPlaceholder: 'Was hat diese Woche besonders gut getan? Was nimmst du mit?',
-      finishButton: 'Rückblick speichern & nächste Woche vorbereiten',
+      finishButton: 'Speichern',
       successMessage: 'Wunderbar! Dein Wochenrückblick wurde festgehalten.'
     },
     historyView: {
@@ -161,6 +178,23 @@ export const translations = {
     viewReview: 'View Weekly Review',
     editReview: 'Edit Review',
     reviewCompletedTitle: 'Weekly Review Completed',
+    reviewOutcomes: {
+      green: [
+        'Well done! You achieved the majority of your goals this week.',
+        'Great week! Your mindfulness and focus are paying off.',
+        'Fantastic job! You stayed aligned with your intentions this week.'
+      ],
+      yellow: [
+        'Step by step! Every small effort moves you forward.',
+        'A solid week in motion — carry the good momentum into next week.',
+        'Keep going! Partial progress is still meaningful growth.'
+      ],
+      red: [
+        'Be gentle with yourself — next week is a fresh start.',
+        'Some weeks are challenging. Take a breath and realign for next week.',
+        'No pressure: honest reflection is the best start for the week ahead.'
+      ]
+    },
     pendingReviewBannerTitle: 'Weekly Review Pending',
     pendingReviewBannerDesc: 'Complete this week to proceed to the new week.',
     unlockNextWeek: 'Complete week to unlock next week',
@@ -217,13 +251,13 @@ export const translations = {
       skip: 'Skip'
     },
     reviewModal: {
-      title: 'Weekly Review & Reflection',
+      title: 'Complete Week',
       description: 'Take a mindful moment to reflect on your week. How did your intentions go?',
       step1Title: '1. Rate & Comment Goals',
       step2Title: '2. Carry Over to Next Week',
       step2Desc: 'Select any goals you want to continue in the upcoming week:',
       generalReflectionPlaceholder: 'What felt especially nourishing this week? What did you learn?',
-      finishButton: 'Save Review & Prepare Next Week',
+      finishButton: 'Save',
       successMessage: 'Wonderful! Your weekly review has been saved.'
     },
     historyView: {
